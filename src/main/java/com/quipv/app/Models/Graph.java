@@ -25,11 +25,11 @@ public class Graph extends ArrayList<GraphNode> {
     public void addEdge(GraphNode node, GraphNode neighbour){
 
         Edge edge = new Edge(node, neighbour, 1);
-        if(isNotInGraph(edge)){
+        Integer edgeIndex = edges.indexOf(edge);
+        if(edgeIndex == -1){
             edges.add(edge);
         }
         else {
-            Integer edgeIndex = edges.indexOf(edge);
             Edge oldEdge = edges.get(edgeIndex);
             edge.incrementWeight(oldEdge.getWeight());
             edges.set(edgeIndex, edge);
