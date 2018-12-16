@@ -4,12 +4,16 @@ import java.util.Objects;
 
 public class Edge {
     private GraphNode origin;
+    private Integer originIndex;
     private GraphNode destination;
+    private Integer destinationIndex;
     private Integer weight;
 
-    public Edge(GraphNode origin, GraphNode destination, Integer weight){
+    public Edge(GraphNode origin, Integer originIndex, GraphNode destination, Integer destinationIndex, Integer weight){
         this.origin = origin;
+        this.originIndex = originIndex;
         this.destination = destination;
+        this.destinationIndex = destinationIndex;
         this.weight = weight;
     }
 

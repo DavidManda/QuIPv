@@ -24,16 +24,6 @@ public class Graph extends ArrayList<GraphNode> {
 
     public void addEdge(GraphNode node, GraphNode neighbour){
 
-        Edge edge = new Edge(node, neighbour, 1);
-        Integer edgeIndex = edges.indexOf(edge);
-        if(edgeIndex == -1){
-            edges.add(edge);
-        }
-        else {
-            Edge oldEdge = edges.get(edgeIndex);
-            edge.incrementWeight(oldEdge.getWeight());
-            edges.set(edgeIndex, edge);
-        }
 
         node.addNeighbour(neighbour, 1);
         if(isNotInGraph(node)){
@@ -44,14 +34,25 @@ public class Graph extends ArrayList<GraphNode> {
             addNode(neighbour);
         }
 
+        Edge edge = new Edge(node, vertices.indexOf(node), neighbour, vertices.indexOf(neighbour), 1);
 
+        Integer edgeIndex = edges.indexOf(edge);
+        if(edgeIndex == -1){
+            edges.add(edge);
+        }
+        else {
+            Edge oldEdge = edges.get(edgeIndex);
+            edge.incrementWeight(oldEdge.getWeight());
+            edges.set(edgeIndex, edge);
+        }
     }
 
     public List<GraphNode> getVertices() {
         return vertices;
     }
 
-    public List<Edge> getEdges(){
+    public List<Edge> getEdges() {
+
         return edges;
     }
 
@@ -59,7 +60,4 @@ public class Graph extends ArrayList<GraphNode> {
         return !this.verticesSet.contains(node);
     }
 
-    private boolean isNotInGraph(Edge edge){
-        return this.edges.contains(edge);
-    }
 }
