@@ -10,6 +10,7 @@ import java.util.*;
 public class GraphNode {
     private String name;
     private int count;
+    private int index;
     private ArrayList<Neighbour> neighbours;
 
     public GraphNode(String name, int count) {
@@ -42,6 +43,14 @@ public class GraphNode {
     }
 
     public void setCount(int count) {this.count = count;}
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
 
     public ArrayList<Neighbour> getNeighbours() {
         return neighbours;

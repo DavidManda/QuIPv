@@ -19,11 +19,11 @@ public class Graph extends ArrayList<GraphNode> {
         if(isNotInGraph(node)){
             this.verticesSet.add(node);
             this.vertices.add(node);
+            node.setIndex(this.vertices.size()-1);
         }
     }
 
     public void addEdge(GraphNode node, GraphNode neighbour){
-
 
         node.addNeighbour(neighbour, 1);
         if(isNotInGraph(node)){
@@ -34,7 +34,7 @@ public class Graph extends ArrayList<GraphNode> {
             addNode(neighbour);
         }
 
-        Edge edge = new Edge(node, vertices.indexOf(node), neighbour, vertices.indexOf(neighbour), 1);
+        Edge edge = new Edge(node, neighbour, 1);
 
         Integer edgeIndex = edges.indexOf(edge);
         if(edgeIndex == -1){
@@ -52,7 +52,6 @@ public class Graph extends ArrayList<GraphNode> {
     }
 
     public List<Edge> getEdges() {
-
         return edges;
     }
 
