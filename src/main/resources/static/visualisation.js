@@ -295,7 +295,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var xLoc = width/2 - 25,
         yLoc = 100;
 
-    // initial node data
+    fetch("/data").then(function (value) { return value.json() }).then(function (value) { console.log(value)})
     var nodes = [{title: "new concept", id: 0, x: xLoc, y: yLoc},
         {title: "new concept", id: 1, x: xLoc, y: yLoc + 200}];
     var edges = [{source: nodes[1], target: nodes[0]}];
