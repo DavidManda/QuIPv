@@ -292,20 +292,42 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var xLoc = width/2 - 25,
+    var xLoc = 50,
         yLoc = 100;
 
-    fetch("/data").then(function (value) { return value.json() }).then(function (value) { console.log(value)})
-    var nodes = [{title: "new concept", id: 0, x: xLoc, y: yLoc},
-        {title: "new concept", id: 1, x: xLoc, y: yLoc + 200}];
-    var edges = [{source: nodes[1], target: nodes[0]}];
+    fetch("/data").then(function (value) { return value.json() }).then(function (data) {
+        var vertices = new Array();
+        var edges = new Array();
+        for (var i = 0; i < data.vertices.length; i++){
+            vertices.push({
+                title: data.vertices[i].name,
+                id: i,
+                x: xLoc,
+                y: yLoc
+            });
+
+            xLoc += 200;
+            yLoc += 200;
+        }
+
+        for (var i = 0; i < data.edges.length; i++){
+            edges.push({
+                source: vertices[data.edges[i].origin.index],
+                target: vertices[data.edges[i].destination.index]
+            });
+        }
+
+        /** MAIN SVG **/
+        var svg = d3.select("body").append("svg")
+            .attr("width", width)
+            .attr("height", height);
+        var graph = new GraphCreator(svg, vertices, edges);
+        graph.setIdCt(2);
+        graph.updateGraph();
+
+    });
+
+    // console.log(data);
 
 
-    /** MAIN SVG **/
-    var svg = d3.select("body").append("svg")
-        .attr("width", width)
-        .attr("height", height);
-    var graph = new GraphCreator(svg, nodes, edges);
-    graph.setIdCt(2);
-    graph.updateGraph();
 })(window.d3, window.saveAs, window.Blob);
