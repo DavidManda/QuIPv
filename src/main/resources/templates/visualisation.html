@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<head>
-    <meta charset="UTF-8">
-    <title>Visualisation</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.1/d3.min.js"></script>
-    <script src="app.js"></script>
-</head>
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="stylesheet" href="visualisation.css" type="text/css"/>
+    </head>
+
     <body>
-        This is my awesome visualisation
-        <p th:text="${project.getName()}"></p>
-        <div id="graph"></div>
+        <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
+        <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
+        <script src="visualisation.js"></script>
     </body>
 </html>
