@@ -17,7 +17,7 @@ public class DataController {
         Graph graph = GraphHelper.constructGraph(ProjectHelper.populate());
         HashMap<String, Object> map = new HashMap<>();
         map.put("key1", "value1");
-        map.put("nodes", graph.getVertices());
+        map.put("nodes", graph.getEdges());
         return map;
     }
 
