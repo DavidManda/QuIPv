@@ -102,10 +102,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         window.onresize = function(){thisGraph.updateWindow(svg);};
     };
 
-    GraphCreator.prototype.setIdCt = function(idct){
-        this.idct = idct;
-    };
-
     GraphCreator.prototype.consts =  {
         selectedClass: "selected",
         connectClass: "connect-node",
@@ -190,7 +186,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             }
         }
         state.mouseDownNode = null;
-        return;
 
     }; // end of circles mouseup
 
@@ -296,9 +291,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         yLoc = 100;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
-        var vertices = new Array();
-        var edges = new Array();
-        for (var i = 0; i < data.vertices.length; i++){
+        var vertices = [];
+        var edges = [];
+        var i;
+        for (i = 0; i < data.vertices.length; i++){
             vertices.push({
                 title: data.vertices[i].name,
                 id: i,
@@ -310,7 +306,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             yLoc += 200;
         }
 
-        for (var i = 0; i < data.edges.length; i++){
+        for (i = 0; i < data.edges.length; i++){
             edges.push({
                 source: vertices[data.edges[i].origin.index],
                 target: vertices[data.edges[i].destination.index]
@@ -322,12 +318,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             .attr("width", width)
             .attr("height", height);
         var graph = new GraphCreator(svg, vertices, edges);
-        graph.setIdCt(2);
         graph.updateGraph();
 
     });
-
-    // console.log(data);
-
-
+    
 })(window.d3, window.saveAs, window.Blob);
