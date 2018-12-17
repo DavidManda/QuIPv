@@ -1,9 +1,5 @@
-
-
-
+"use strict";
 document.onload = (function(d3, saveAs, Blob, undefined){
-    "use strict";
-
     // define graphcreator object
     var GraphCreator = function(svg, nodes, edges){
         var thisGraph = this;
@@ -287,30 +283,40 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var xLoc = 50,
+    var xLoc = 100,
         yLoc = 100;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
+        var sourceNodes = data.sourceNodes;
+        console.log(sourceNodes);
         var vertices = [];
         var edges = [];
         var i;
-        for (i = 0; i < data.vertices.length; i++){
+        for (i = 0; i < sourceNodes.length; i++){
+            var node = sourceNodes[i];
             vertices.push({
-                title: data.vertices[i].name,
-                id: i,
+                title: node.name,
+                id: vertices.length,
                 x: xLoc,
                 y: yLoc
             });
+            var sourceIndex = vertices.length - 1
+            var neighbours = node.neighbours;
+            for(var j = 0; j < neighbours.length; j++){
+                var neighbour = neighbours[j].node;
+                vertices.push({
+                    title: neighbour.name,
+                    id: vertices.length,
+                    x: xLoc + 500,
+                    y: yLoc + (j - Math.floor(neighbours.length/2))*200
+                })
 
-            xLoc += 200;
-            yLoc += 200;
-        }
-
-        for (i = 0; i < data.edges.length; i++){
-            edges.push({
-                source: vertices[data.edges[i].origin.index],
-                target: vertices[data.edges[i].destination.index]
-            });
+                edges.push({
+                    source: vertices[sourceIndex],
+                    target: vertices[vertices.length - 1]
+                })
+            }
+            yLoc += 650;
         }
 
         /** MAIN SVG **/
