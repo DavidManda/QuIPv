@@ -1,6 +1,7 @@
 package com.quipv.app.Models;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Graph extends ArrayList<GraphNode> {
 
@@ -55,6 +56,11 @@ public class Graph extends ArrayList<GraphNode> {
         return edges;
     }
 
+    public List<GraphNode> getSourceNodes(){
+        List<GraphNode> sourceNodes;
+        sourceNodes = vertices.stream().filter(vertex -> vertex.getNeighbours().size() == 0).collect(Collectors.toList());
+        return sourceNodes;
+    }
     private boolean isNotInGraph(GraphNode node){
         return !this.verticesSet.contains(node);
     }
