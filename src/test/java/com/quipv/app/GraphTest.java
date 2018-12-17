@@ -64,4 +64,15 @@ public class GraphTest
         assertEquals(1, node1.getNeighbours().size());
         assertEquals(1, node2.getNeighbours().size());
     }
+
+    public void testGetSourceNodes(){
+        Graph graph = new Graph();
+        GraphNode node1 = new GraphNode("Test node 1", 1);
+        GraphNode node2 = new GraphNode("Test node 2", 1);
+
+        graph.addEdge(node1, node2);
+
+        assertEquals(1, graph.getSourceNodes().size());
+        assertEquals(node1, graph.getSourceNodes().get(0));
+    }
 }

@@ -61,13 +61,14 @@ public class Graph extends ArrayList<GraphNode> {
         List<GraphNode> sourceNodes;
         Boolean[] nodeIsReached = new Boolean[vertices.size()];
 
+        Arrays.fill(nodeIsReached, Boolean.FALSE);
+
         for(GraphNode vertex : vertices){
             for(Neighbour neighbour : vertex.getNeighbours()){
                 nodeIsReached[neighbour.node.getIndex()] = true;
             }
         }
-
-        sourceNodes = vertices.stream().filter(vertex -> !nodeIsReached[vertex.getIndex()]).collect(Collectors.toList());
+        sourceNodes = vertices.stream().filter(vertex -> nodeIsReached[vertex.getIndex()] != true).collect(Collectors.toList());
         return sourceNodes;
     }
     private boolean isNotInGraph(GraphNode node){
