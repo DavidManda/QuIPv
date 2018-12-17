@@ -268,7 +268,29 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         svg.attr("width", x).attr("height", y);
     };
 
-
+    // Adds vertices and edges to visualisation by performing Depth First Search
+    // Adds children nodes to the right of the parent nodes
+    function DFS(node, nodes, edges, nodeIsVisited, x, y, sourceIndex){
+        var neighbours = node.neighbours;
+        for(var i = 0; i < neighbours.length; i++) {
+            var neighbour = neighbours[i].node;
+            if (nodeIsVisited[neighbour.index] === false) {
+                nodeIsVisited[neighbour.index] = true;
+                nodes.push({
+                    title: neighbour.name,
+                    id: neighbour.index,
+                    x: x + 600,
+                    y: y + (i - Math.floor(neighbours.length/2))*200
+                });
+                var neighbourIndex = nodes.length - 1;
+                edges.push({
+                    source: nodes[sourceIndex],
+                    target: nodes[neighbourIndex]
+                });
+                DFS(neighbour, nodes, edges, nodeIsVisited, x + 200, y + (i - Math.floor(neighbours.length/2))*200, neighbourIndex);
+            }
+        }
+    }
 
     /**** MAIN ****/
 
@@ -283,47 +305,35 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var xLoc = 100,
-        yLoc = 100;
+    var x = 100,
+        y = 100;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
-        var sourceNodes = data.sourceNodes;
-        console.log(sourceNodes);
-        var vertices = [];
+        var vertices = data.vertices;
+        var nodes = [];
         var edges = [];
         var i;
-        for (i = 0; i < sourceNodes.length; i++){
-            var node = sourceNodes[i];
-            vertices.push({
-                title: node.name,
-                id: vertices.length,
-                x: xLoc,
-                y: yLoc
-            });
-            var sourceIndex = vertices.length - 1
-            var neighbours = node.neighbours;
-            for(var j = 0; j < neighbours.length; j++){
-                var neighbour = neighbours[j].node;
-                vertices.push({
-                    title: neighbour.name,
-                    id: vertices.length,
-                    x: xLoc + 500,
-                    y: yLoc + (j - Math.floor(neighbours.length/2))*200
+        var nodeIsVisited = new Array(vertices.length).fill(false);
+        for(i = 0; i < vertices.length; i++){
+            var node = vertices[i];
+            if(nodeIsVisited[node.index] === false){
+                nodes.push({
+                    title: node.name,
+                    id: node.index,
+                    x: x,
+                    y: y
                 })
+                DFS(node, nodes, edges, nodeIsVisited, x, y, nodes.length - 1);
 
-                edges.push({
-                    source: vertices[sourceIndex],
-                    target: vertices[vertices.length - 1]
-                })
+                y += 600;
             }
-            yLoc += 650;
         }
 
         /** MAIN SVG **/
         var svg = d3.select("body").append("svg")
             .attr("width", width)
             .attr("height", height);
-        var graph = new GraphCreator(svg, vertices, edges);
+        var graph = new GraphCreator(svg, nodes, edges);
         graph.updateGraph();
 
     });
