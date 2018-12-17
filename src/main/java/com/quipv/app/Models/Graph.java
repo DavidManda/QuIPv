@@ -56,9 +56,18 @@ public class Graph extends ArrayList<GraphNode> {
         return edges;
     }
 
+    // returns a list of nodes that have no parents
     public List<GraphNode> getSourceNodes(){
         List<GraphNode> sourceNodes;
-        sourceNodes = vertices.stream().filter(vertex -> vertex.getNeighbours().size() == 0).collect(Collectors.toList());
+        Boolean[] nodeIsReached = new Boolean[vertices.size()];
+
+        for(GraphNode vertex : vertices){
+            for(Neighbour neighbour : vertex.getNeighbours()){
+                nodeIsReached[neighbour.node.getIndex()] = true;
+            }
+        }
+
+        sourceNodes = vertices.stream().filter(vertex -> !nodeIsReached[vertex.getIndex()]).collect(Collectors.toList());
         return sourceNodes;
     }
     private boolean isNotInGraph(GraphNode node){
