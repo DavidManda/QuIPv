@@ -317,6 +317,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         for(i = 0; i < vertices.length; i++){
             var node = vertices[i];
             if(nodeIsVisited[node.index] === false){
+                nodeIsVisited[node.index] = true;
                 nodes.push({
                     title: node.name,
                     id: node.index,
