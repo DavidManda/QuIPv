@@ -69,7 +69,7 @@ public class GraphNode {
 
         GraphNode node = (GraphNode) o;
 
-        return this.name == node.getName();
+        return this.name.equals(node.getName());
     }
 
     @Override

@@ -268,6 +268,16 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         svg.attr("width", x).attr("height", y);
     };
 
+    function findIndexById(array, value) {
+        for(var i = 0; i < array.length; i += 1) {
+            if(array[i].id === value) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+
     // Adds vertices and edges to visualisation by performing Depth First Search
     // Adds children nodes to the right of the parent nodes
     function DFS(node, nodes, edges, nodeIsVisited, x, y, sourceIndex){
@@ -289,6 +299,13 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 });
                 DFS(neighbour, nodes, edges, nodeIsVisited, x + 200, y + (i - Math.floor(neighbours.length/2))*200, neighbourIndex);
             }
+            else{
+                var neighbourIndex = findIndexById(nodes,neighbour.index);
+                edges.push({
+                    source: nodes[sourceIndex],
+                    target: nodes[neighbourIndex]
+                });
+            }
         }
     }
 
@@ -306,7 +323,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
     var x = 100,
-        y = 100;
+        y = 700;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
         var vertices = data.vertices;
@@ -323,7 +340,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                     id: node.index,
                     x: x,
                     y: y
-                })
+                });
                 DFS(node, nodes, edges, nodeIsVisited, x, y, nodes.length - 1);
 
                 y += 600;
@@ -338,5 +355,5 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         graph.updateGraph();
 
     });
-    
+
 })(window.d3, window.saveAs, window.Blob);

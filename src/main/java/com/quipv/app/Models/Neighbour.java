@@ -12,7 +12,7 @@ public class Neighbour {
     @Override
     public boolean equals(Object o){
 
-        return this.node == o;
+        return this.node.equals(o);
     }
 
     @Override
