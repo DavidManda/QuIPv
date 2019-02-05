@@ -1,0 +1,12 @@
+{
+  "runtime": {
+    "majorVersion": "11"
+  },
+  "command": "java -jar quipv*.jar",
+  "release": {
+    "build": "0",
+    "commit": "",
+    "version": "1.0.0"
+  },
+  "notes": "quipv"
+}

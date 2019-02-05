@@ -8,14 +8,17 @@
 		<version>2.1.1.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.quipv</groupId>
 	<artifactId>app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>app</name>
 	<description>Demo project for Spring Boot</description>
+	<packaging>jar</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
+		<!--todo fix the java version. Should be 11.-->
 	</properties>
 
 	<dependencies>
@@ -63,6 +66,27 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptors>
+						<descriptor>src/assembly/distribution.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
 		</plugins>
 	</build>
 

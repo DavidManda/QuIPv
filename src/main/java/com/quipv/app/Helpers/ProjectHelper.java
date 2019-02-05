@@ -46,7 +46,10 @@ public class ProjectHelper {
                 interiewEntries.add(interviewEntry);
             }
 
-        }catch (Exception e){System.out.println(e);}
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e);
+        }
 
         return interiewEntries;
     }

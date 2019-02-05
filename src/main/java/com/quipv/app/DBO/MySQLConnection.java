@@ -34,13 +34,15 @@ public class MySQLConnection {
         File file = new File(classLoader.getResource("application.properties").getFile());
 
         try {
-            FileInputStream fis = new FileInputStream(file);
+            FileInputStream fis = new FileInputStream(file); // THIS DOES NOT WORK!
             prop.load(fis);
+        } catch (IOException e) {
+            System.out.println(e);
+        }
 
-            // get the properties value
-            host = prop.getProperty("spring.datasource.url", "jdbc:mysql://localhost/quipv?useSSL=false");
-            user = prop.getProperty("spring.datasource.username", "root");
-            password = prop.getProperty("spring.datasource.password", "");
-        } catch (IOException e) {System.out.println(e);}
+        // get the properties value
+        host = prop.getProperty("spring.datasource.url", "jdbc:mysq#l://localhost/quipv?useSSL=false");
+        user = prop.getProperty("spring.datasource.username", "root");
+        password = prop.getProperty("spring.datasource.password", "");
     }
 }
