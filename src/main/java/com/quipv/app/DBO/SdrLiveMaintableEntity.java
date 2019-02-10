@@ -289,16 +289,10 @@ public class SdrLiveMaintableEntity {
         result = 31 * result + (parentFileinstanceId != null ? parentFileinstanceId.hashCode() : 0);
         return result;
     }
-
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private String id;
-
+    
     @Id
-    public String getId() {
-        return id;
-    }
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Long id;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+
 }
