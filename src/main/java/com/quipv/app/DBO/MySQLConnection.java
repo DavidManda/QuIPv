@@ -41,8 +41,8 @@ public class MySQLConnection {
         }
 
         // get the properties value
-        host = prop.getProperty("spring.datasource.url", "jdbc:mysq#l://localhost/quipv?useSSL=false");
-        user = prop.getProperty("spring.datasource.username", "root");
+        host = prop.getProperty("spring.datasource.url", "jdbc:mysql://localhost/quipv?useSSL=false");
+        user = prop.getProperty("spring.datasource.username", "ubuntu");
         password = prop.getProperty("spring.datasource.password", "");
     }
 }
