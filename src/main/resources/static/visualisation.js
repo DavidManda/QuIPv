@@ -353,7 +353,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             .attr("height", height);
         var graph = new GraphCreator(svg, nodes, edges);
         graph.updateGraph();
-
     });
 
 })(window.d3, window.saveAs, window.Blob);
