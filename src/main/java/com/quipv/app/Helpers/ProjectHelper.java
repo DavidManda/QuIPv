@@ -2,93 +2,64 @@ package com.quipv.app.Helpers;
 
 
 
-import com.quipv.app.DBO.MySQLConnection;
+import com.quipv.app.DBO.SdrLiveMaintableEntity;
 import com.quipv.app.Models.*;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.*;
 
 public class ProjectHelper {
-    public static Project populate(){
+    public static Project populate(MaintableRepository maintableRepository){
 
-        List<InterviewEntry> interviewEntries = populateInterviewEntries();
+        System.out.println(maintableRepository);
+        List<SdrLiveMaintableEntity> interviewEntries = new LinkedList<>();
+        Iterable<SdrLiveMaintableEntity> entries = populateInterviewEntries(maintableRepository);
+        entries.forEach(interviewEntries::add);
 
         Project project = populateProject(interviewEntries,interviewEntries.get(0).getProjectName());
 
         return project;
     }
 
-    private static List<InterviewEntry> populateInterviewEntries() {
-        List<InterviewEntry> interiewEntries = new LinkedList<>();
-        try {
-            Connection myConnection = MySQLConnection.getInstance().getConnection();
-            Statement stmt = myConnection.createStatement();
-            ResultSet rs=stmt.executeQuery("select * from SDR_LIVE_MainTable");
-            while(rs.next()){
-                InterviewEntry interviewEntry = new InterviewEntry.InterviewEntryBuilder().with($ -> {
-                    try {
-                        $.interviewType = rs.getString(3);
-                        $.respondentID = rs.getString(4);
-                        $.questionID = rs.getString(5);
-                        $.question = rs.getString(6);
-                        $.fullAnswer = rs.getString(7);
-                        $.brokenAnswer = rs.getString(8);
-                        $.driver = rs.getString(9);
-                        $.primaryOutcome = rs.getString(10);
-                        $.secondaryOutcome = rs.getString(11);
-                        $.tertiaryOutcome = rs.getString(12);
-                        $.projectName = rs.getString(18);
-                    } catch (Exception e){ System.out.println("Exception in lambda" + e);}
-
-                }).build();
-                interiewEntries.add(interviewEntry);
-            }
-
-        }catch (Exception e){
-            e.printStackTrace();
-            System.out.println(e);
-        }
-
+    private static Iterable<SdrLiveMaintableEntity> populateInterviewEntries(MaintableRepository maintableRepository) {
+        Iterable<SdrLiveMaintableEntity> interiewEntries = maintableRepository.findAll();
         return interiewEntries;
     }
 
-    private static Project populateProject(List<InterviewEntry> interiewEntries, String projectName) {
+    private static Project populateProject(List<SdrLiveMaintableEntity> interiewEntries, String projectName) {
         Project project;
         ArrayList<Question> questions = new ArrayList<Question>();
         ArrayList<Answer> answers = new ArrayList<Answer>();
         ArrayList<Respondent> respondents= new ArrayList<Respondent>();
 
-        for (InterviewEntry interviewEntry : interiewEntries) {
+        for (SdrLiveMaintableEntity interviewEntry : interiewEntries) {
             Question q = new Question.QuestionBuilder().with($ -> {
                 try {
-                    $.questionID = Integer.parseInt(interviewEntry.getQuestionID());
+                    $.questionID = Integer.parseInt(interviewEntry.getQuestionId());
                     $.text = interviewEntry.getQuestion();
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();
             questions.add(q);
 
             ArrayList<String> outcomes = new ArrayList<>();
-            outcomes.add(interviewEntry.getPrimaryOutcome());
-            outcomes.add(interviewEntry.getSecondaryOutcome());
-            outcomes.add(interviewEntry.getTertiaryOutcome());
+            outcomes.add(interviewEntry.getOutcome1());
+            outcomes.add(interviewEntry.getOutcome2());
+            outcomes.add(interviewEntry.getOutcome3());
 
             Answer a = new Answer.AnswerBuilder().with($ -> {
                 try {
                     $.fullAnswer =interviewEntry.getFullAnswer();
                     $.brokenAnswer = interviewEntry.getBrokenAnswer();
                     $.outcomes = outcomes;
-                    $.driver = interviewEntry.getDriver();
-                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentID());
-                    $.questionID = Integer.parseInt(interviewEntry.getQuestionID());
+                    $.driver = interviewEntry.getDriverOfChange();
+                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentId());
+                    $.questionID = Integer.parseInt(interviewEntry.getQuestionId());
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();
             answers.add(a);
 
             Respondent r = new Respondent.RespondentBuilder().with($ -> {
                 try {
-                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentID());
+                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentId());
                     $.interviewType = interviewEntry.getInterviewType();
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();

@@ -3,8 +3,9 @@ package com.quipv.app.DBO;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sdr_live_maintable", schema = "quipv")
+@Table(name = "sdr_live_maintable")
 public class SdrLiveMaintableEntity {
+    private int id;
     private Integer sourceFileinstanceId;
     private Integer rowId;
     private String interviewType;
@@ -26,8 +27,18 @@ public class SdrLiveMaintableEntity {
     private Integer fileinstanceId;
     private Integer parentFileinstanceId;
 
+    @Id
+    @Column(name = "id", nullable = false)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Basic
-    @Column(name = "SourceFileinstanceID")
+    @Column(name = "SourceFileinstanceID", nullable = true)
     public Integer getSourceFileinstanceId() {
         return sourceFileinstanceId;
     }
@@ -37,7 +48,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "row_id")
+    @Column(name = "row_id", nullable = true)
     public Integer getRowId() {
         return rowId;
     }
@@ -47,7 +58,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "InterviewType")
+    @Column(name = "InterviewType", nullable = true, length = 20)
     public String getInterviewType() {
         return interviewType;
     }
@@ -57,7 +68,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Respondent_ID")
+    @Column(name = "Respondent_ID", nullable = true, length = 10)
     public String getRespondentId() {
         return respondentId;
     }
@@ -67,7 +78,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Question_ID")
+    @Column(name = "Question_ID", nullable = true, length = 5)
     public String getQuestionId() {
         return questionId;
     }
@@ -77,7 +88,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Question")
+    @Column(name = "Question", nullable = true, length = 446)
     public String getQuestion() {
         return question;
     }
@@ -87,7 +98,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Full_Answer")
+    @Column(name = "Full_Answer", nullable = true, length = 1000)
     public String getFullAnswer() {
         return fullAnswer;
     }
@@ -97,7 +108,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Broken_Answer")
+    @Column(name = "Broken_Answer", nullable = true, length = 1000)
     public String getBrokenAnswer() {
         return brokenAnswer;
     }
@@ -107,7 +118,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Driver_of_Change")
+    @Column(name = "Driver_of_Change", nullable = true, length = 3)
     public String getDriverOfChange() {
         return driverOfChange;
     }
@@ -117,7 +128,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Outcome_1")
+    @Column(name = "Outcome_1", nullable = true, length = 10)
     public String getOutcome1() {
         return outcome1;
     }
@@ -127,7 +138,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Outcome_2")
+    @Column(name = "Outcome_2", nullable = true, length = 10)
     public String getOutcome2() {
         return outcome2;
     }
@@ -137,7 +148,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Outcome_3")
+    @Column(name = "Outcome_3", nullable = true, length = 10)
     public String getOutcome3() {
         return outcome3;
     }
@@ -147,7 +158,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Attribution__1_9")
+    @Column(name = "Attribution__1_9", nullable = true, length = 1)
     public String getAttribution19() {
         return attribution19;
     }
@@ -157,7 +168,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "Domain_Attributed")
+    @Column(name = "Domain_Attributed", nullable = true, length = 100)
     public String getDomainAttributed() {
         return domainAttributed;
     }
@@ -167,7 +178,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "RespDomain")
+    @Column(name = "RespDomain", nullable = true, length = 100)
     public String getRespDomain() {
         return respDomain;
     }
@@ -177,7 +188,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "RespDriver")
+    @Column(name = "RespDriver", nullable = true, length = 100)
     public String getRespDriver() {
         return respDriver;
     }
@@ -187,7 +198,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "RespDriverDomain")
+    @Column(name = "RespDriverDomain", nullable = true, length = 100)
     public String getRespDriverDomain() {
         return respDriverDomain;
     }
@@ -197,7 +208,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "ProjectName")
+    @Column(name = "ProjectName", nullable = true, length = 200)
     public String getProjectName() {
         return projectName;
     }
@@ -207,7 +218,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "FileinstanceID")
+    @Column(name = "FileinstanceID", nullable = true)
     public Integer getFileinstanceId() {
         return fileinstanceId;
     }
@@ -217,7 +228,7 @@ public class SdrLiveMaintableEntity {
     }
 
     @Basic
-    @Column(name = "ParentFileinstanceID")
+    @Column(name = "ParentFileinstanceID", nullable = true)
     public Integer getParentFileinstanceId() {
         return parentFileinstanceId;
     }
@@ -233,6 +244,7 @@ public class SdrLiveMaintableEntity {
 
         SdrLiveMaintableEntity that = (SdrLiveMaintableEntity) o;
 
+        if (id != that.id) return false;
         if (sourceFileinstanceId != null ? !sourceFileinstanceId.equals(that.sourceFileinstanceId) : that.sourceFileinstanceId != null)
             return false;
         if (rowId != null ? !rowId.equals(that.rowId) : that.rowId != null) return false;
@@ -267,7 +279,8 @@ public class SdrLiveMaintableEntity {
 
     @Override
     public int hashCode() {
-        int result = sourceFileinstanceId != null ? sourceFileinstanceId.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (sourceFileinstanceId != null ? sourceFileinstanceId.hashCode() : 0);
         result = 31 * result + (rowId != null ? rowId.hashCode() : 0);
         result = 31 * result + (interviewType != null ? interviewType.hashCode() : 0);
         result = 31 * result + (respondentId != null ? respondentId.hashCode() : 0);
@@ -289,10 +302,4 @@ public class SdrLiveMaintableEntity {
         result = 31 * result + (parentFileinstanceId != null ? parentFileinstanceId.hashCode() : 0);
         return result;
     }
-    
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
-    private Long id;
-
-
 }

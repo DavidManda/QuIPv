@@ -1,5 +1,6 @@
 package com.quipv.app;
 
+import com.quipv.app.Helpers.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Answer;
 import com.quipv.app.Models.Project;
@@ -8,6 +9,7 @@ import com.quipv.app.Models.Respondent;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 
@@ -36,12 +38,14 @@ public class ProjectHelperTest
     }
 
 
+    @Autowired
+    MaintableRepository maintableRepository;
     /**
      * Rigourous Test :-)
      */
     public void testProjectHelper()
     {
-        Project project = ProjectHelper.populate();
+        Project project = ProjectHelper.populate(maintableRepository);
         assertEquals( "This is dummy ProjectName 1", project.getName());
 
         ArrayList<Question> questions = project.getQuestions();
