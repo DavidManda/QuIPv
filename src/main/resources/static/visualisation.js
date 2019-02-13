@@ -322,8 +322,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var x = 100,
-        y = 700;
+    var x = 500,
+        y = 650;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
         var vertices = data.vertices;
