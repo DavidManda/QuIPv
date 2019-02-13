@@ -10,7 +10,6 @@ import java.util.*;
 public class ProjectHelper {
     public static Project populate(MaintableRepository maintableRepository){
 
-        System.out.println(maintableRepository);
         List<SdrLiveMaintableEntity> interviewEntries = new LinkedList<>();
         Iterable<SdrLiveMaintableEntity> entries = populateInterviewEntries(maintableRepository);
         entries.forEach(interviewEntries::add);
