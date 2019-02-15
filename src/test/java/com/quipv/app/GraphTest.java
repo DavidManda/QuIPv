@@ -1,41 +1,26 @@
 package com.quipv.app;
 
-import com.quipv.app.Helpers.GraphHelper;
-import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Graph;
 import com.quipv.app.Models.GraphNode;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for simple App.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class GraphTest
-    extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public GraphTest(String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( GraphTest.class );
-    }
-
 
     /**
      * Rigourous Test :-)
      */
+    @Test
     public void testAddNode()
     {
         Graph graph = new Graph();
@@ -49,6 +34,7 @@ public class GraphTest
         assertEquals( 2, graph.getVertices().size());
     }
 
+    @Test
     public void testAddEdge(){
         Graph graph = new Graph();
         GraphNode node1 = new GraphNode("Test node 1", 1);
@@ -70,21 +56,7 @@ public class GraphTest
         assertEquals(1, node2.getNeighbours().size());
     }
 
-//    public void testDbGraph(){
-//        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate());
-//
-//        System.out.println(graph.getVertices().indexOf(new GraphNode("O1",1)));
-//        GraphNode o_1 = graph.getVertices().get(graph.getVertices().indexOf(new GraphNode("O1",1)));
-//        GraphNode p_1 = graph.getVertices().get(graph.getVertices().indexOf(new GraphNode("P1",1)));
-//
-//        assertEquals(3, o_1.getNeighbours().size());
-//        assertEquals(3, p_1.getNeighbours().size());
-//
-//        for(GraphNode node : graph.getVertices()){
-//            System.out.println(node.getIndex());
-//        }
-//    }
-
+    @Test
     public void testGetSourceNodes(){
         Graph graph = new Graph();
         GraphNode node1 = new GraphNode("Test node 1", 1);

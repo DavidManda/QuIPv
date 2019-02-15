@@ -20,6 +20,7 @@ public class GraphHelper {
             for(String outcome : outcomes){
                 GraphNode outcomeNode = new GraphNode(outcome, 1);
                 graph.addEdge(driverNode, outcomeNode);
+                driverNode = outcomeNode;
             }
         }
 
