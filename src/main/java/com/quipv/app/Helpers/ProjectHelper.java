@@ -33,7 +33,7 @@ public class ProjectHelper {
         for (SdrLiveMaintableEntity interviewEntry : interiewEntries) {
             Question q = new Question.QuestionBuilder().with($ -> {
                 try {
-                    $.questionID = Integer.parseInt(interviewEntry.getQuestionId());
+                    $.questionID = interviewEntry.getQuestionId();
                     $.text = interviewEntry.getQuestion();
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();
@@ -50,23 +50,20 @@ public class ProjectHelper {
                     $.brokenAnswer = interviewEntry.getBrokenAnswer();
                     $.outcomes = outcomes;
                     $.driver = interviewEntry.getDriverOfChange();
-                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentId());
-                    $.questionID = Integer.parseInt(interviewEntry.getQuestionId());
+                    $.respondentID = interviewEntry.getRespondentId();
+                    $.questionID = interviewEntry.getQuestionId();
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();
             answers.add(a);
 
             Respondent r = new Respondent.RespondentBuilder().with($ -> {
                 try {
-                    $.respondentID = Integer.parseInt(interviewEntry.getRespondentId());
+                    $.respondentID = interviewEntry.getRespondentId();
                     $.interviewType = interviewEntry.getInterviewType();
                 } catch (Exception e){ System.out.println("Exception in lambda" + e);}
             }).build();
             respondents.add(r);
         }
-
-        Collections.sort(questions);
-        Collections.sort(respondents);
 
         Set<Question> questionsWithoutDuplicates = new LinkedHashSet<Question>(questions);
         Set<Answer> answersWithoutDuplicates = new LinkedHashSet<Answer>(answers);

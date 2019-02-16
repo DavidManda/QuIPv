@@ -13,8 +13,8 @@ public class Answer {
     private final String brokenAnswer;
     private final ArrayList<String> outcomes;
     private final String driver;
-    private final int respondentID;
-    private final int questionID;
+    private final String respondentID;
+    private final String questionID;
 
     public Answer(AnswerBuilder builder) {
         this.fullAnswer = builder.fullAnswer;
@@ -30,8 +30,8 @@ public class Answer {
         public String brokenAnswer;
         public ArrayList<String> outcomes;
         public String driver;
-        public int respondentID;
-        public int questionID;
+        public String respondentID;
+        public String questionID;
 
 
         public Answer build() {
@@ -61,7 +61,7 @@ public class Answer {
         return driver;
     }
 
-    public int getRespondentID() {return respondentID;}
+    public String getRespondentID() {return respondentID;}
 
-    public int getQuestionID() {return questionID;}
+    public String getQuestionID() {return questionID;}
 }

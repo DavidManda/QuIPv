@@ -46,8 +46,8 @@ public class AnswerTest
             $.brokenAnswer = "BA1";
             $.outcomes = outcomes;
             $.driver = "D1";
-            $.respondentID = 21;
-            $.questionID = 11;
+            $.respondentID = "21";
+            $.questionID = "11";
         }).build();
 
         assertEquals( "FA1", answer.getFullAnswer());

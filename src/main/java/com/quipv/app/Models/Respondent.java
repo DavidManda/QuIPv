@@ -7,8 +7,8 @@ package com.quipv.app.Models;
 
 import java.util.function.Consumer;
 
-public class Respondent implements Comparable<Respondent> {
-    private final int respondentID;
+public class Respondent{
+    private final String respondentID;
     private final String interviewType;
     private boolean showInVis;
 
@@ -19,7 +19,7 @@ public class Respondent implements Comparable<Respondent> {
     }
 
     public static class RespondentBuilder {
-        public int respondentID;
+        public String respondentID;
         public String interviewType;
 
         public Respondent build() {
@@ -33,7 +33,7 @@ public class Respondent implements Comparable<Respondent> {
 
     }
 
-    public int getRespondentID() {
+    public String getRespondentID() {
         return respondentID;
     }
 
@@ -47,9 +47,4 @@ public class Respondent implements Comparable<Respondent> {
         this.showInVis = showInVis;
     }
 
-    @Override
-    public int compareTo(Respondent r) {
-        int compareID=r.getRespondentID();
-        return this.respondentID-compareID;
-    }
 }

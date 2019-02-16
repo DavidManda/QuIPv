@@ -37,18 +37,17 @@ public class RespondentTest
     {
 
        Respondent respondent1 = new Respondent.RespondentBuilder().with($ -> {
-            $.respondentID = 1;
+            $.respondentID = "1";
             $.interviewType = "Individual";
         }).build();
 
         Respondent respondent11 = new Respondent.RespondentBuilder().with($ -> {
-            $.respondentID = 11;
+            $.respondentID = "11";
             $.interviewType = "Individual";
         }).build();
 
         assertEquals( 1, respondent1.getRespondentID());
         assertEquals( "Individual", respondent1.getInterviewType());
-        assertEquals( 10, respondent11.compareTo(respondent1));
 
         respondent11.setShowInVis(false);
         assertFalse(respondent11.isShowInVis());

@@ -49,17 +49,17 @@ public class ProjectTest
             $.brokenAnswer = "BA1";
             $.outcomes = outcomes;
             $.driver = "D1";
-            $.respondentID = 21;
-            $.questionID = 11;
+            $.respondentID = "21";
+            $.questionID = "11";
         }).build();
 
         Respondent respondent1 = new Respondent.RespondentBuilder().with($ -> {
-            $.respondentID = 1;
+            $.respondentID = "1";
             $.interviewType = "Individual";
         }).build();
 
         Question question1 = new Question.QuestionBuilder().with($ -> {
-            $.questionID = 1;
+            $.questionID = "1";
             $.text = "Question 1";
         }).build();
 
