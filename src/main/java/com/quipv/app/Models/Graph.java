@@ -55,6 +55,15 @@ public class Graph extends ArrayList<GraphNode> {
         return vertices;
     }
 
+    public Optional<GraphNode> getNodeByName(String name){
+        for(GraphNode node : this.vertices){
+            if(node.getName().equals(name)){
+                return Optional.of(node);
+            }
+        }
+        return Optional.empty();    
+    }
+
     public List<Edge> getEdges() {
         return edges;
     }
