@@ -5,6 +5,7 @@ import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Helpers.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Graph;
+import com.quipv.app.Models.GraphNode;
 import com.quipv.app.Models.Project;
 import org.junit.Assert;
 import org.junit.Before;
@@ -68,6 +69,14 @@ public class GraphHelperTest{
         Graph graph = GraphHelper.constructGraph(project);
         //Vertices should be D1, D2, O1, O2, O3, O4
         Assert.assertEquals(6,graph.getVertices().size());
-
+        GraphNode D1 = graph.getNodeByName("D1").get();
+        GraphNode O1 = graph.getNodeByName("O1").get();
+        GraphNode O2 = graph.getNodeByName("O2").get();
+        GraphNode O3 = graph.getNodeByName("O3").get();
+        GraphNode O4 = graph.getNodeByName("O4").get();
+        Assert.assertTrue(D1.getNeighbourNodes().contains(O1));
+        Assert.assertTrue(O1.getNeighbourNodes().contains(O2));
+        Assert.assertTrue(O2.getNeighbourNodes().contains(O3));
+        Assert.assertTrue(O4.getNeighbourNodes().contains(O1));
     }
 }

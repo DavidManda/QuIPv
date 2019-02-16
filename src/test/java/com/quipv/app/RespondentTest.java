@@ -26,7 +26,7 @@ public class RespondentTest
      */
     public static Test suite()
     {
-        return new TestSuite( GraphTest.class );
+        return new TestSuite( RespondentTest.class );
     }
 
 
@@ -46,7 +46,7 @@ public class RespondentTest
             $.interviewType = "Individual";
         }).build();
 
-        assertEquals( 1, respondent1.getRespondentID());
+        assertEquals( "1", respondent1.getRespondentID());
         assertEquals( "Individual", respondent1.getInterviewType());
 
         respondent11.setShowInVis(false);

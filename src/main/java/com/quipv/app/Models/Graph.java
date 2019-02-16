@@ -61,7 +61,7 @@ public class Graph extends ArrayList<GraphNode> {
                 return Optional.of(node);
             }
         }
-        return Optional.empty();    
+        return Optional.empty();
     }
 
     public List<Edge> getEdges() {

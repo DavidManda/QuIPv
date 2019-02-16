@@ -30,7 +30,7 @@ public class ProjectTest
      */
     public static Test suite()
     {
-        return new TestSuite( GraphTest.class );
+        return new TestSuite( ProjectTest.class );
     }
 
 

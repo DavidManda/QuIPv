@@ -19,4 +19,8 @@ public class Neighbour {
     public int hashCode() {
         return this.node.hashCode();
     }
+
+    public String toString(){
+        return this.node.toString();
+    }
 }

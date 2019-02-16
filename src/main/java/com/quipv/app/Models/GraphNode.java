@@ -6,6 +6,7 @@ package com.quipv.app.Models;
  */
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GraphNode {
     private String name;
@@ -56,6 +57,8 @@ public class GraphNode {
         return neighbours;
     }
 
+    public ArrayList<GraphNode> getNeighbourNodes(){return neighbours.stream().map(neighbour -> neighbour.node).collect(Collectors.toCollection(ArrayList::new));}
+
     @Override
     public boolean equals(Object o){
 
@@ -77,4 +80,7 @@ public class GraphNode {
         return this.name.hashCode();
     }
 
+    public String toString(){
+        return this.name;
+    }
 }

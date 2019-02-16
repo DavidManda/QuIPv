@@ -26,7 +26,7 @@ public class QuestionTest
      */
     public static Test suite()
     {
-        return new TestSuite( GraphTest.class );
+        return new TestSuite( QuestionTest.class );
     }
 
 
@@ -46,7 +46,7 @@ public class QuestionTest
             $.text = "Question 11";
         }).build();
 
-        assertEquals( 1, question1.getQuestionID());
+        assertEquals( "1", question1.getQuestionID());
         assertEquals( "Question 1", question1.getText());
 //        assertEquals( 10, question11.compareTo(question1));
 

@@ -26,7 +26,7 @@ public class InterviewEntryTest
      */
     public static Test suite()
     {
-        return new TestSuite( GraphTest.class );
+        return new TestSuite( InterviewEntryTest.class );
     }
 
 

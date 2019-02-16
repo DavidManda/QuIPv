@@ -27,7 +27,7 @@ public class AnswerTest
      */
     public static Test suite()
     {
-        return new TestSuite( GraphTest.class );
+        return new TestSuite( AnswerTest.class );
     }
 
 
@@ -54,7 +54,7 @@ public class AnswerTest
         assertEquals( "BA1", answer.getBrokenAnswer());
         assertEquals( outcomes, answer.getOutcomes());
         assertEquals( "D1", answer.getDriver());
-        assertEquals( 21, answer.getRespondentID());
-        assertEquals( 11, answer.getQuestionID());
+        assertEquals( "21", answer.getRespondentID());
+        assertEquals( "11", answer.getQuestionID());
     }
 }
