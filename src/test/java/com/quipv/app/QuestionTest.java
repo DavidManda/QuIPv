@@ -1,38 +1,27 @@
 package com.quipv.app;
 
 import com.quipv.app.Models.Question;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+
+
 
 /**
  * Unit test for Question module.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class QuestionTest
-        extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public QuestionTest(String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( QuestionTest.class );
-    }
-
-
     /**
      * Rigourous Test :-)
      */
+    @Test
     public void testCreateQuestion()
     {
 

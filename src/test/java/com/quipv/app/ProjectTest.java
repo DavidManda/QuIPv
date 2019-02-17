@@ -4,39 +4,28 @@ import com.quipv.app.Models.Answer;
 import com.quipv.app.Models.Project;
 import com.quipv.app.Models.Question;
 import com.quipv.app.Models.Respondent;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
 /**
  * Unit test for Project module.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class ProjectTest
-        extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public ProjectTest(String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( ProjectTest.class );
-    }
 
 
     /**
      * Rigourous Test :-)
      */
+    @Test
     public void testCreateProject()
     {
         ArrayList<String> outcomes = new ArrayList<>();

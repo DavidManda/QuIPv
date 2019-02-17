@@ -1,39 +1,27 @@
 package com.quipv.app;
 
 import com.quipv.app.Models.Answer;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * Unit test for Answer module.
  */
+@RunWith(SpringRunner.class)
+@SpringBootTest
 public class AnswerTest
-        extends TestCase
 {
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AnswerTest(String testName )
-    {
-        super( testName );
-    }
-
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AnswerTest.class );
-    }
-
 
     /**
      * Rigourous Test :-)
      */
+    @Test
     public void testCreateAnswer()
     {
         ArrayList<String> outcomes = new ArrayList<>();
