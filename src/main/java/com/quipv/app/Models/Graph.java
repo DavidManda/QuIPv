@@ -80,7 +80,7 @@ public class Graph extends ArrayList<GraphNode> {
                 nodeIsReached[neighbour.node.getIndex()] = true;
             }
         }
-        sourceNodes = vertices.stream().filter(vertex -> !nodeIsReached[vertex.getIndex()]).collect(Collectors.toList());
+        sourceNodes = vertices.stream().filter(vertex -> nodeIsReached[vertex.getIndex()] != true).collect(Collectors.toList());
         return sourceNodes;
     }
     private boolean isNotInGraph(GraphNode node){

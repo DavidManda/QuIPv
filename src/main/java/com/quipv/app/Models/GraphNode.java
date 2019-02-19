@@ -45,11 +45,11 @@ public class GraphNode {
 
     public void setCount(int count) {this.count = count;}
 
-    int getIndex() {
+    public int getIndex() {
         return index;
     }
 
-    void setIndex(int index) {
+    public void setIndex(int index) {
         this.index = index;
     }
 

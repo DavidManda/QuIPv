@@ -326,7 +326,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         y = 650;
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
-        console.log(data);
         var vertices = data.vertices;
         var nodes = [];
         var edges = [];
