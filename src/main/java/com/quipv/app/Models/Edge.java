@@ -3,22 +3,22 @@ package com.quipv.app.Models;
 import java.util.Objects;
 
 public class Edge {
-    private GraphNode origin;
-    private GraphNode destination;
+    private Integer originIndex;
+    private Integer destinationIndex;
     private Integer weight;
 
     public Edge(GraphNode origin, GraphNode destination, Integer weight){
-        this.origin = origin;
-        this.destination = destination;
+        this.originIndex = origin.getIndex();
+        this.destinationIndex = destination.getIndex();
         this.weight = weight;
     }
 
-    public GraphNode getOrigin() {
-        return origin;
+    public Integer getOriginIndex() {
+        return originIndex;
     }
 
-    public GraphNode getDestination() {
-        return destination;
+    public Integer getDestinationIndex() {
+        return destinationIndex;
     }
 
     public Integer getWeight() {
@@ -42,11 +42,11 @@ public class Edge {
 
         Edge edge = (Edge) o;
 
-        return this.origin == edge.origin && this.destination == edge.destination;
+        return this.originIndex == edge.originIndex && this.destinationIndex == edge.destinationIndex;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.origin.hashCode(), this.destination.hashCode());
+        return Objects.hash(this.originIndex.hashCode(), this.destinationIndex.hashCode());
     }
 }
