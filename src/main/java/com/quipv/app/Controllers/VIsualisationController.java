@@ -24,7 +24,7 @@ public class VIsualisationController {
 
     @GetMapping("/visualisation")
     public String visualisation(Model model){
-        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository));
+//        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository));
 //        model.addAttribute("edges", graph.getEdges());
 //        model.addAttribute("vertices", graph.getVertices());
         return "visualisation";
