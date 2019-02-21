@@ -322,36 +322,80 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var x = 500,
-        y = 650;
+    function compareBasedOnIndex(a,b){
+        if(a.index < b.index)
+            return -1;
+        return 1;
+    }
+
+    // Insert all nodes into graphNodes, node with id k will be at position k in the array.
+    // This property must be preserved.
+    function constructNodesForGraph(dataNodes){
+        var x = 600, y = 400;
+        // Sort nodes based on index
+        dataNodes.sort(compareBasedOnIndex);
+        var nodes = [];
+        for(var i = 0; i < dataNodes.length; i++){
+            var node = dataNodes[i];
+            nodes.push({
+                title: node.name,
+                id: node.index,
+                x: x,
+                y: y
+            })
+            x += 200;
+        }
+        return nodes;
+    }
+
+    function constructEdgesForGraph(dataEdges, graphNodes){
+        var edges = [];
+        for(var i = 0; i < dataEdges.length; i++){
+            var edge = dataEdges[i];
+            var sourceNodeIndex = edge.originIndex;
+            var destinationNodeIndex = edge.destinationIndex;
+            edges.push({
+                source: graphNodes[sourceNodeIndex],
+                target: graphNodes[destinationNodeIndex]
+            })
+        }
+        return edges;
+    }
 
     fetch("/data").then(function (value) { return value.json() }).then(function (data) {
-        var vertices = data.vertices;
-        var nodes = [];
-        var edges = [];
-        var i;
-        var nodeIsVisited = new Array(vertices.length).fill(false);
-        for(i = 0; i < vertices.length; i++){
-            var node = vertices[i];
-            if(nodeIsVisited[node.index] === false){
-                nodeIsVisited[node.index] = true;
-                nodes.push({
-                    title: node.name,
-                    id: node.index,
-                    x: x,
-                    y: y
-                });
-                DFS(node, nodes, edges, nodeIsVisited, x, y, nodes.length - 1);
+        var dataNodes = data.vertices;
+        var dataEdges = data.edgesList;
+        var graphNodes = constructNodesForGraph(dataNodes);
+        var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
 
-                y += 600;
-            }
-        }
+        // console.log(dataNodes);
+        // console.log(dataEdges);
+        // console.log(graphNodes);
+        // console.log(graphEdges);
+
+        // var i;
+        // var nodeIsVisited = new Array(vertices.length).fill(false);
+        // for(i = 0; i < vertices.length; i++){
+        //     var node = vertices[i];
+        //     if(nodeIsVisited[node.index] === false){
+        //         nodeIsVisited[node.index] = true;
+        //         nodes.push({
+        //             title: node.name,
+        //             id: node.index,
+        //             x: x,
+        //             y: y
+        //         });
+        //         DFS(node, nodes, edges, nodeIsVisited, x, y, nodes.length - 1);
+        //
+        //         y += 600;
+        //     }
+        // }
 
         /** MAIN SVG **/
         var svg = d3.select("body").append("svg")
             .attr("width", width)
             .attr("height", height);
-        var graph = new GraphCreator(svg, nodes, edges);
+        var graph = new GraphCreator(svg, graphNodes, graphEdges);
         graph.updateGraph();
     });
 
