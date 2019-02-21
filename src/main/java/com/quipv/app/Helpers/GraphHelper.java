@@ -1,11 +1,9 @@
 package com.quipv.app.Helpers;
 
 
-import com.quipv.app.Models.Answer;
-import com.quipv.app.Models.Graph;
-import com.quipv.app.Models.GraphNode;
-import com.quipv.app.Models.Project;
+import com.quipv.app.Models.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GraphHelper {
@@ -25,5 +23,13 @@ public class GraphHelper {
         }
 
         return graph;
+    }
+
+    public static List<GraphNodeWithoutNeighbours> getListOfNodes(Graph graph){
+        List<GraphNodeWithoutNeighbours> nodes = new ArrayList<>();
+        for(GraphNode node : graph.getVertices()){
+            nodes.add(new GraphNodeWithoutNeighbours(node));
+        }
+        return nodes;
     }
 }
