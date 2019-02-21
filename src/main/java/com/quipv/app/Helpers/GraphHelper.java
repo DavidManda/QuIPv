@@ -25,6 +25,8 @@ public class GraphHelper {
         return graph;
     }
 
+    // This method returns a list of nodes without neighbours. To be used to send the list as a JSON, in order to support
+    // cyclic graphs.
     public static List<GraphNodeWithoutNeighbours> getListOfNodes(Graph graph){
         List<GraphNodeWithoutNeighbours> nodes = new ArrayList<>();
         for(GraphNode node : graph.getVertices()){
