@@ -21,7 +21,9 @@ public class DataController {
 
         Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository));
         HashMap<String, Object> map = new HashMap<>();
-        map.put("vertices", graph.getVertices());
+        map.put("vertices", GraphHelper.getListOfNodes(graph));
+        map.put("edgesList", graph.getEdges());
+
         return map;
     }
 
