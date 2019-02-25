@@ -277,34 +277,35 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         return -1;
     }
 
+    function getNeighbours(nodeIndex, edges) {
+        var neighbours = new Array();
+        for(var i = 0; i< edges.length; i++){
+            var edge = edges[i];
+            var sourceNodeIndex = edge.source.id;
+            var destinationNodeIndex = edge.target.id;
+            if(sourceNodeIndex === nodeIndex){
+                neighbours.push(destinationNodeIndex)
+            }
+        }
+        return neighbours;
+    }
 
     // Adds vertices and edges to visualisation by performing Depth First Search
     // Adds children nodes to the right of the parent nodes
-    function DFS(node, nodes, edges, nodeIsVisited, x, y, sourceIndex){
-        var neighbours = node.neighbours;
+    function DFS(nodeIndex, graphNodes, graphEdges, nodeIsVisited, x, y){
+        var neighbours = getNeighbours(nodeIndex, graphEdges);
+
         for(var i = 0; i < neighbours.length; i++) {
-            var neighbour = neighbours[i].node;
-            if (nodeIsVisited[neighbour.index] === false) {
-                nodeIsVisited[neighbour.index] = true;
-                nodes.push({
-                    title: neighbour.name,
-                    id: neighbour.index,
-                    x: x + 600,
-                    y: y + (i - Math.floor(neighbours.length/2))*200
-                });
-                var neighbourIndex = nodes.length - 1;
-                edges.push({
-                    source: nodes[sourceIndex],
-                    target: nodes[neighbourIndex]
-                });
-                DFS(neighbour, nodes, edges, nodeIsVisited, x + 200, y + (i - Math.floor(neighbours.length/2))*200, neighbourIndex);
+
+            var neighbourIndex = neighbours[i];
+            if (nodeIsVisited[neighbourIndex] === false) {
+                nodeIsVisited[neighbourIndex] = true;
+                graphNodes[neighbourIndex].x = x+400;
+                graphNodes[neighbourIndex].y = y + (i - Math.floor(neighbours.length/2))*100;
+                DFS(neighbourIndex, graphNodes, graphEdges, nodeIsVisited, x + 200, y + (i - Math.floor(neighbours.length/2))*200);
             }
             else{
-                var neighbourIndex = findIndexById(nodes,neighbour.index);
-                edges.push({
-                    source: nodes[sourceIndex],
-                    target: nodes[neighbourIndex]
-                });
+                graphNodes[nodeIndex].y -= 200;
             }
         }
     }
@@ -322,36 +323,86 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    var x = 500,
-        y = 650;
+    function compareBasedOnIndex(a,b){
+        if(a.index < b.index)
+            return -1;
+        return 1;
+    }
 
-    fetch("/data").then(function (value) { return value.json() }).then(function (data) {
-        var vertices = data.vertices;
+    // Insert all nodes into graphNodes, node with id k will be at position k in the array.
+    // This property must be preserved.
+    function constructNodesForGraph(dataNodes){
+        var x = 600, y = 400;
+        // Sort nodes based on index
+        dataNodes.sort(compareBasedOnIndex);
         var nodes = [];
-        var edges = [];
-        var i;
-        var nodeIsVisited = new Array(vertices.length).fill(false);
-        for(i = 0; i < vertices.length; i++){
-            var node = vertices[i];
-            if(nodeIsVisited[node.index] === false){
-                nodeIsVisited[node.index] = true;
-                nodes.push({
-                    title: node.name,
-                    id: node.index,
-                    x: x,
-                    y: y
-                });
-                DFS(node, nodes, edges, nodeIsVisited, x, y, nodes.length - 1);
+        for(var i = 0; i < dataNodes.length; i++){
+            var node = dataNodes[i];
+            nodes.push({
+                title: node.name,
+                id: node.index,
+                x: x,
+                y: y
+            });
+            x += 200;
+        }
+        return nodes;
+    }
 
-                y += 600;
-            }
+    function constructEdgesForGraph(dataEdges, graphNodes){
+        var edges = [];
+        for(var i = 0; i < dataEdges.length; i++){
+            var edge = dataEdges[i];
+            var sourceNodeIndex = edge.originIndex;
+            var destinationNodeIndex = edge.destinationIndex;
+            edges.push({
+                source: graphNodes[sourceNodeIndex],
+                target: graphNodes[destinationNodeIndex]
+            })
+        }
+        return edges;
+    }
+
+    // This function returns an arbitrary node that has no incoming edges. If no such node exists, an arbitrary node will
+    // be returned.
+    function getRoot(nodes,edges){
+        var isRoot = new Array(nodes.length);
+        isRoot.fill(true);
+        for(var i=0; i<edges.length; i++){
+            var edge = edges[i];
+            var destinationNodeIndex = edge.destinationIndex;
+            isRoot[destinationNodeIndex] = false;
         }
 
+        for(var i=0;i<nodes.length;i++){
+            if(isRoot[nodes[i]])
+                return i;
+        }
+        return 0;
+    }
+
+    function modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges){
+        var isVisited = new Array(graphNodes.length);
+        isVisited.fill(false);
+        var x = 600, y = 400;
+        graphNodes[root].x = x;
+        graphNodes[root].y = y;
+        isVisited[root] = true;
+        DFS(root, graphNodes, graphEdges, isVisited, x, y);
+    }
+
+    fetch("/data").then(function (value) { return value.json() }).then(function (data) {
+        var dataNodes = data.vertices;
+        var dataEdges = data.edgesList;
+        var graphNodes = constructNodesForGraph(dataNodes);
+        var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
+        var root = getRoot(dataNodes,dataEdges);
+        modifyNodesCoordinatesForVisualisation(graphNodes, root,graphEdges);
         /** MAIN SVG **/
         var svg = d3.select("body").append("svg")
             .attr("width", width)
             .attr("height", height);
-        var graph = new GraphCreator(svg, nodes, edges);
+        var graph = new GraphCreator(svg, graphNodes, graphEdges);
         graph.updateGraph();
     });
 
