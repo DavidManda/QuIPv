@@ -15,7 +15,7 @@
 
             .sidenav {
                 height: 100%;
-                width: 15%;
+                width: 0px;
                 position: fixed;
                 z-index: 1;
                 top: 0;
@@ -23,6 +23,7 @@
                 background-color: #009698;
                 overflow-x: hidden;
                 padding-top: 20px;
+                transition: 0.5s;
             }
 
             .sidenav a {
@@ -31,16 +32,24 @@
                 font-size: 25px;
                 color: #F9F0F0;
                 display: block;
+                transition: 0.3s;
             }
 
             .sidenav a:hover {
                 color: #B3B3B3;
             }
 
-            .main {
-                margin-left: 15%; /* Same as the width of the sidenav */
-                font-size: 28px; /* Increased text to enable scrolling */
-                padding: 0px 10px;
+            .sidenav .closeButton {
+                position: absolute;
+                top: 0;
+                right: 25px;
+                font-size: 36px;
+                margin-left: 50px;
+            }
+
+            #main {
+                transition: margin-left .5s;
+                padding: 16px;
             }
 
             @media screen and (max-height: 450px) {
@@ -52,19 +61,60 @@
     </head>
 
     <body>
-        <<div class="sidenav">
-            <a href="#about">Content</a>
-            <a href="#services">DataSet</a>
-            <a href="#clients">Format</a>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
+            <a href="#">Import Data</a>
+            <a href="#" class="openCloseDataSet" onclick="openCloseDataSet()">DataSet</a>
+                <div id="myDataset" class="dataset">
 
+                </div>
+            <a href="#">Format</a>
+            <a href="#">Export Visualisation</a>
+
+        </div>
+
+        <div>
+            <a style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
         </div>
 
         <div class="main">
             <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
             <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
             <script src="visualisation.js"></script>
-            <!--<button id="exportVis" type="button" onclick="save();">Export Visualisation</button>-->
         </div>
+
+
+
+
+
+        <script>
+            function openNav() {
+                document.getElementById("mySidenav").style.width = "180px";
+                document.getElementById("main").style.marginLeft = "180px";
+            }
+
+            function closeNav() {
+                document.getElementById("mySidenav").style.width = "0";
+                document.getElementById("main").style.marginLeft= "0";
+            }
+
+            var open = "false";
+
+            function openCloseDataSet(){
+                if(open == "false"){
+                    document.getElementById("mySidenav").style.width = "300px";
+                    document.getElementById("main").style.marginLeft = "300px";
+
+                    open = "true";
+                }
+                if(open == "true"){
+                    document.getElementById("mySidenav").style.width = "0";
+                    document.getElementById("main").style.marginLeft= "0";
+
+                    open = "false";
+                }
+            }
+        </script>
     </body>
 
 </html>
