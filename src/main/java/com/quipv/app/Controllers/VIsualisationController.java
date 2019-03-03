@@ -1,5 +1,7 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.DBO.SankeyEntity;
+import com.quipv.app.DBO.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.DBO.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
@@ -21,9 +23,12 @@ public class VIsualisationController {
     @Autowired
     MaintableRepository maintableRepository;
 
+    @Autowired
+    SankeyRepository sankeyRepository;
+
     @GetMapping("/visualisation")
     public String visualisation(Model model){
-        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository));
+        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository,sankeyRepository));
         model.addAttribute("edges", graph.getEdges());
         model.addAttribute("vertices", graph.getVertices());
         return "visualisation";

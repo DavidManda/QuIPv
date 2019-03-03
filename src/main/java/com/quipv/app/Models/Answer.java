@@ -10,15 +10,19 @@ import java.util.function.Consumer;
 
 public class Answer {
     private final String fullAnswer;
+    private final String projectName;
     private final String brokenAnswer;
-    private final ArrayList<String> outcomes;
-    private final String driver;
+    private final Integer rowId;
+    private ArrayList<String> outcomes;
+    private String driver;
     private final String respondentID;
     private final String questionID;
 
     public Answer(AnswerBuilder builder) {
         this.fullAnswer = builder.fullAnswer;
         this.brokenAnswer = builder.brokenAnswer;
+        this.rowId = builder.rowId;
+        this.projectName = builder.projectName;
         this.outcomes = builder.outcomes;
         this.driver = builder.driver;
         this.respondentID = builder.respondentID;
@@ -30,8 +34,10 @@ public class Answer {
         public String brokenAnswer;
         public ArrayList<String> outcomes;
         public String driver;
+        public Integer rowId;
         public String respondentID;
         public String questionID;
+        public String projectName;
 
 
         public Answer build() {
@@ -43,6 +49,14 @@ public class Answer {
             return this;
         }
 
+    }
+
+    public Integer getRowId() {
+        return rowId;
+    }
+
+    public String getProjectName() {
+        return projectName;
     }
 
     public String getFullAnswer() {
@@ -64,4 +78,12 @@ public class Answer {
     public String getRespondentID() {return respondentID;}
 
     public String getQuestionID() {return questionID;}
+
+    public void setOutcomes(ArrayList<String> outcomes) {
+        this.outcomes = outcomes;
+    }
+
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
 }

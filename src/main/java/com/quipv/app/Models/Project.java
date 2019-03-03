@@ -6,12 +6,13 @@ package com.quipv.app.Models;
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
 
 public class Project {
     private final String name;
     private final ArrayList<Question> questions;
-    private final ArrayList<Answer> answers;
+    private final List<Answer> answers;
     private final ArrayList<Respondent> respondents;
 
     public Project(ProjectBuilder builder) {
@@ -24,7 +25,7 @@ public class Project {
     public static class ProjectBuilder {
         public String name;
         public ArrayList<Question> questions;
-        public ArrayList<Answer> answers;
+        public List<Answer> answers;
         public ArrayList<Respondent> respondents;
 
         public Project build() {return new Project(this);}
@@ -43,7 +44,7 @@ public class Project {
         return questions;
     }
 
-    public ArrayList<Answer> getAnswers() {
+    public List<Answer> getAnswers() {
         return answers;
     }
 

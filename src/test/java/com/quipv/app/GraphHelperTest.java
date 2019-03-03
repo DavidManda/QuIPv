@@ -1,6 +1,7 @@
 package com.quipv.app;
 
 import com.quipv.app.DBO.MaintableEntity;
+import com.quipv.app.DBO.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.DBO.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
@@ -26,6 +27,9 @@ public class GraphHelperTest{
 
     @MockBean
     private MaintableRepository maintableRepository;
+
+    @MockBean
+    private SankeyRepository sankeyRepository;
 
     @Before
     public void setup() {
@@ -65,7 +69,7 @@ public class GraphHelperTest{
 
     @Test
     public void testGraphIsConstructedCorrectly(){
-        Project project = ProjectHelper.populate(maintableRepository);
+        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
         Graph graph = GraphHelper.constructGraph(project);
         //Vertices should be D1, D2, O1, O2, O3, O4
         Assert.assertEquals(6,graph.getVertices().size());

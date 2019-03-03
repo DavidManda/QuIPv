@@ -10,7 +10,6 @@ public class GraphHelper {
     public static Graph constructGraph(Project project){
         Graph graph = new Graph();
         List<Answer> answers = project.getAnswers();
-
         for(Answer answer : answers){
             String driver = answer.getDriver();
             if(driver == null)
