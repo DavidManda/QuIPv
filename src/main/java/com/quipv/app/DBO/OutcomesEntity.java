@@ -3,7 +3,7 @@ package com.quipv.app.DBO;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "outcomes", schema = "quipv", catalog = "")
+@Table(name = "outcomes", schema = "quipv")
 public class OutcomesEntity {
     private int id;
     private String outcomeNegPos;
