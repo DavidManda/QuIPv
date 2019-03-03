@@ -1,10 +1,9 @@
 package com.quipv.app.Controllers;
 
 import com.quipv.app.Helpers.GraphHelper;
-import com.quipv.app.Helpers.MaintableRepository;
+import com.quipv.app.DBO.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Graph;
-import com.quipv.app.Models.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

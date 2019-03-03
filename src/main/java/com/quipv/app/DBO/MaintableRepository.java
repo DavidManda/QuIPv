@@ -1,6 +1,5 @@
-package com.quipv.app.Helpers;
+package com.quipv.app.DBO;
 
-import com.quipv.app.DBO.MaintableEntity;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;

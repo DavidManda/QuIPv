@@ -3,6 +3,7 @@ package com.quipv.app.Helpers;
 
 
 import com.quipv.app.DBO.MaintableEntity;
+import com.quipv.app.DBO.MaintableRepository;
 import com.quipv.app.Models.*;
 
 import java.util.*;

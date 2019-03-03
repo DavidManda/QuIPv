@@ -2,7 +2,7 @@ package com.quipv.app;
 
 import com.quipv.app.DBO.MaintableEntity;
 import com.quipv.app.Helpers.GraphHelper;
-import com.quipv.app.Helpers.MaintableRepository;
+import com.quipv.app.DBO.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Graph;
 import com.quipv.app.Models.GraphNode;

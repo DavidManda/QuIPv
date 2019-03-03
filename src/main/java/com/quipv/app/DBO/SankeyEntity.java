@@ -3,7 +3,7 @@ package com.quipv.app.DBO;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "sankey", schema = "quipv", catalog = "")
+@Table(name = "sankey", schema = "quipv")
 public class SankeyEntity {
     private int id;
     private String projectname;
