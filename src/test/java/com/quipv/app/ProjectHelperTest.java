@@ -1,6 +1,6 @@
 package com.quipv.app;
 
-import com.quipv.app.DBO.SdrLiveMaintableEntity;
+import com.quipv.app.DBO.MaintableEntity;
 import com.quipv.app.Helpers.MaintableRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,7 +10,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
@@ -24,9 +23,9 @@ public class ProjectHelperTest {
 
     @Before
     public void setup() {
-        List<SdrLiveMaintableEntity> interiewEntries = new ArrayList<>();
-        SdrLiveMaintableEntity entry = new SdrLiveMaintableEntity();
-        entry.setId(1);
+        List<MaintableEntity> interiewEntries = new ArrayList<>();
+        MaintableEntity entry = new MaintableEntity();
+        entry.setRowId(1);
         entry.setDriverOfChange("D1");
         entry.setOutcome1("O1");
         entry.setOutcome2("O2");
@@ -44,7 +43,7 @@ public class ProjectHelperTest {
 
     @Test
     public void dummyTest(){
-        Iterable<SdrLiveMaintableEntity> interviewEntries = maintableRepository.findAll();
+        Iterable<MaintableEntity> interviewEntries = maintableRepository.findAll();
         System.out.println("Entries are:");
         System.out.println(interviewEntries);
     }

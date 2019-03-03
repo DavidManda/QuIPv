@@ -13,12 +13,16 @@ public class GraphHelper {
 
         for(Answer answer : answers){
             String driver = answer.getDriver();
+            if(driver == null)
+                continue;
             List<String> outcomes = answer.getOutcomes();
             GraphNode driverNode = new GraphNode(driver, 1);
             for(String outcome : outcomes){
-                GraphNode outcomeNode = new GraphNode(outcome, 1);
-                graph.addEdge(driverNode, outcomeNode);
-                driverNode = outcomeNode;
+                if(outcome != null && !outcome.isEmpty()){
+                    GraphNode outcomeNode = new GraphNode(outcome, 1);
+                    graph.addEdge(driverNode, outcomeNode);
+                    driverNode = outcomeNode;
+                }
             }
         }
 

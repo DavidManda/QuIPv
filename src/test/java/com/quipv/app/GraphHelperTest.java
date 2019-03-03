@@ -1,6 +1,6 @@
 package com.quipv.app;
 
-import com.quipv.app.DBO.SdrLiveMaintableEntity;
+import com.quipv.app.DBO.MaintableEntity;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Helpers.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
@@ -29,9 +29,9 @@ public class GraphHelperTest{
 
     @Before
     public void setup() {
-        List<SdrLiveMaintableEntity> interiewEntries = new ArrayList<>();
-        SdrLiveMaintableEntity entry1 = new SdrLiveMaintableEntity();
-        entry1.setId(1);
+        List<MaintableEntity> interiewEntries = new ArrayList<>();
+        MaintableEntity entry1 = new MaintableEntity();
+        entry1.setRowId(1);
         entry1.setDriverOfChange("D1");
         entry1.setOutcome1("O1");
         entry1.setOutcome2("O2");
@@ -44,8 +44,8 @@ public class GraphHelperTest{
         entry1.setRespondentId("Test resp ID 1");
         entry1.setInterviewType("Test interview type 1");
 
-        SdrLiveMaintableEntity entry2 = new SdrLiveMaintableEntity();
-        entry2.setId(1);
+        MaintableEntity entry2 = new MaintableEntity();
+        entry2.setRowId(1);
         entry2.setDriverOfChange("D2");
         entry2.setOutcome1("O3");
         entry2.setOutcome2("O4");

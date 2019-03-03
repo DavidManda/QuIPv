@@ -2,7 +2,7 @@ package com.quipv.app.Helpers;
 
 
 
-import com.quipv.app.DBO.SdrLiveMaintableEntity;
+import com.quipv.app.DBO.MaintableEntity;
 import com.quipv.app.Models.*;
 
 import java.util.*;
@@ -10,8 +10,8 @@ import java.util.*;
 public class ProjectHelper {
     public static Project populate(MaintableRepository maintableRepository){
 
-        List<SdrLiveMaintableEntity> interviewEntries = new LinkedList<>();
-        Iterable<SdrLiveMaintableEntity> entries = populateInterviewEntries(maintableRepository);
+        List<MaintableEntity> interviewEntries = new LinkedList<>();
+        Iterable<MaintableEntity> entries = populateInterviewEntries(maintableRepository);
         entries.forEach(interviewEntries::add);
 
         Project project = populateProject(interviewEntries,interviewEntries.get(0).getProjectName());
@@ -19,18 +19,18 @@ public class ProjectHelper {
         return project;
     }
 
-    private static Iterable<SdrLiveMaintableEntity> populateInterviewEntries(MaintableRepository maintableRepository) {
-        Iterable<SdrLiveMaintableEntity> interiewEntries = maintableRepository.findAll();
+    private static Iterable<MaintableEntity> populateInterviewEntries(MaintableRepository maintableRepository) {
+        Iterable<MaintableEntity> interiewEntries = maintableRepository.findAll();
         return interiewEntries;
     }
 
-    private static Project populateProject(List<SdrLiveMaintableEntity> interiewEntries, String projectName) {
+    private static Project populateProject(List<MaintableEntity> interiewEntries, String projectName) {
         Project project;
         ArrayList<Question> questions = new ArrayList<Question>();
         ArrayList<Answer> answers = new ArrayList<Answer>();
         ArrayList<Respondent> respondents= new ArrayList<Respondent>();
 
-        for (SdrLiveMaintableEntity interviewEntry : interiewEntries) {
+        for (MaintableEntity interviewEntry : interiewEntries) {
             Question q = new Question.QuestionBuilder().with($ -> {
                 try {
                     $.questionID = interviewEntry.getQuestionId();
