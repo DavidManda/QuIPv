@@ -1,18 +1,25 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.Models.User;
 import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Repositories.MaintableRepository;
 import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.Graph;
+import com.quipv.app.Service.SecurityService;
+import com.quipv.app.Service.UserService;
+import com.quipv.app.Validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
-public class VIsualisationController {
+public class MainController {
 
     @GetMapping("/")
     public String home(){
@@ -24,6 +31,38 @@ public class VIsualisationController {
 
     @Autowired
     SankeyRepository sankeyRepository;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private SecurityService securityService;
+
+    @Autowired
+    private UserValidator userValidator;
+
+    @GetMapping("/registration")
+    public String registration(Model model) {
+        model.addAttribute("userForm", new User());
+
+        return "registration";
+    }
+
+    @PostMapping("/registration")
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+        userValidator.validate(userForm, bindingResult);
+
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+
+        userService.save(userForm);
+
+        securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
+
+        return "redirect:/welcome";
+    }
+
 
     @GetMapping("/visualisation")
     public String visualisation(Model model){
