@@ -1,4 +1,4 @@
-package com.quipv.app.DBO;
+package com.quipv.app.Models;
 
 import javax.persistence.*;
 

@@ -1,7 +1,7 @@
 package com.quipv.app;
 
-import com.quipv.app.DBO.MaintableEntity;
-import com.quipv.app.DBO.MaintableRepository;
+import com.quipv.app.Models.MaintableEntity;
+import com.quipv.app.Repositories.MaintableRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

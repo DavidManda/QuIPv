@@ -2,10 +2,10 @@ package com.quipv.app.Helpers;
 
 
 
-import com.quipv.app.DBO.MaintableEntity;
-import com.quipv.app.DBO.MaintableRepository;
-import com.quipv.app.DBO.SankeyEntity;
-import com.quipv.app.DBO.SankeyRepository;
+import com.quipv.app.Models.MaintableEntity;
+import com.quipv.app.Repositories.MaintableRepository;
+import com.quipv.app.Models.SankeyEntity;
+import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Models.*;
 
 import java.util.*;
