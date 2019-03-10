@@ -44,7 +44,5 @@ public class ProjectHelperTest {
     @Test
     public void dummyTest(){
         Iterable<MaintableEntity> interviewEntries = maintableRepository.findAll();
-        System.out.println("Entries are:");
-        System.out.println(interviewEntries);
     }
 }

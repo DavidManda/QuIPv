@@ -80,8 +80,6 @@ public class ProjectHelper {
         answers.addAll(answersWithoutDuplicates);
         final List<Answer> answersWithActualNames = getActualNamesForDriversAndOutcomes(answers,sankeyEntities,projectName);
 
-//        System.out.println(answers);
-//        System.out.println(getActualNamesForDriversAndOutcomes(answers,sankeyEntities,projectName));
         project = new Project.ProjectBuilder().with($ -> {
             try {
                 $.name = projectName;
@@ -132,7 +130,6 @@ public class ProjectHelper {
             answer.setOutcomes(actualOutcomesNames);
             answers.set(i,answer);
         }
-        System.out.println(answers);
         return answers;
     }
 
