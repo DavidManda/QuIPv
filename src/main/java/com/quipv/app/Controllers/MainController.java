@@ -49,18 +49,20 @@ public class MainController {
     }
 
     @PostMapping("/registration")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(Model model, @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
+        System.out.println(bindingResult.getAllErrors());
         if (bindingResult.hasErrors()) {
-            return "registration";
+            model.addAttribute("errors", bindingResult);
+            return "redirect:/registration";
         }
 
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/welcome";
+        return "redirect:/";
     }
 
 

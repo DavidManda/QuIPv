@@ -1,25 +1,22 @@
 <!DOCTYPE HTML>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head >
-    <meta http-equiv="content-type" content="text/html; charset=utf-8">
-    <title> QuiPV </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="default"
+>
 
-</head>
-<body>
-
-<div class="text-center py-5">
-    <img src="/images/header.png" class="w-25">
-</div>
-
-<div class="container">
-    <div class="jumbotron">
-        <h1 class="display-4">QuIPV</h1>
-        <p class="lead">Visualisation software for BathSDR (Bath Social &amp; Development Development Ltd)</p>
-        <hr class="my-4">
-        <a class="btn btn-primary btn-lg" href="/visualisation" role="button">Get your visualisation here</a>
+<body layout:fragment="content">
+    <div class="text-center py-5">
+        <img src="/images/header.png" class="w-25">
     </div>
-</div>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="display-4">QuIPV</h1>
+            <p class="lead">Visualisation software for BathSDR (Bath Social &amp; Development Development Ltd)</p>
+            <hr class="my-4">
+            <a class="btn btn-primary btn-lg" href="/visualisation" role="button">Get your visualisation here</a>
+        </div>
+    </div>
 </body>
 </html>
