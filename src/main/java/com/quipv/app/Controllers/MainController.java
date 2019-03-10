@@ -52,17 +52,15 @@ public class MainController {
     public String registration(Model model, @ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
-        System.out.println(bindingResult.getAllErrors());
         if (bindingResult.hasErrors()) {
-            model.addAttribute("errors", bindingResult);
-            return "redirect:/registration";
+            return "registration";
         }
 
         userService.save(userForm);
 
         securityService.autoLogin(userForm.getUsername(), userForm.getPasswordConfirm());
 
-        return "redirect:/";
+        return "redirect:/registration?successful";
     }
 
 
