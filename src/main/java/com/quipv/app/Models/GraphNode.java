@@ -12,11 +12,13 @@ public class GraphNode {
     private String name;
     private int count;
     private int index;
+    private boolean isDriver;
     private ArrayList<Neighbour> neighbours;
 
-    public GraphNode(String name, int count) {
+    public GraphNode(String name, int count, boolean isDriver) {
         this.name = name;
         this.count = count;
+        this.isDriver = isDriver;
         this.neighbours = new ArrayList<>();
     }
 
@@ -51,6 +53,10 @@ public class GraphNode {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public boolean isDriver() {
+        return isDriver;
     }
 
     public ArrayList<Neighbour> getNeighbours() {
