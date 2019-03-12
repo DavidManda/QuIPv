@@ -19,28 +19,31 @@ public class FileUploadController {
     String UPLOADED_FOLDER = System.getProperty("user.dir") + "//";
 
     @PostMapping("/visualisation/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile file,
+    public String handleFileUpload(@RequestParam("file") MultipartFile[] files,
                                    RedirectAttributes redirectAttributes) {
 
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return "redirect:/visualisation/upload";
+        for(MultipartFile file:files) {
+            System.out.println(file);
+            if (file.isEmpty()) {
+                System.out.println("Empty");
+                redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+                return "redirect:/visualisation";
+            }
+
+            try {
+
+                // Get the file and save it somewhere
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+                Files.write(path, bytes);
+                System.out.println("Here");
+                redirectAttributes.addFlashAttribute("message",
+                        "You successfully uploaded '" + file.getOriginalFilename() + "'");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
-        try {
-
-            // Get the file and save it somewhere
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
-
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
 
         return "redirect:/visualisation";
     }

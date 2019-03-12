@@ -21,7 +21,6 @@
                 background-color: #009698;
                 overflow-x: hidden;
                 padding-top: 20px;
-                transition: 0.5s;
             }
 
             .sidenav a {
@@ -30,7 +29,6 @@
                 font-size: 25px;
                 color: #F9F0F0;
                 display: block;
-                transition: 0.3s;
             }
 
             .sidenav a:hover {
@@ -46,7 +44,6 @@
             }
 
             #main {
-                transition: margin-left .5s;
                 padding: 16px;
             }
 
@@ -69,9 +66,15 @@
                 <!--<span id="custom_text">No file selected</span>-->
                 <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
                     <table>
-                        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
-                        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+                        <tr><td>Upload MainTable</td><td><input type="file" name="file" /></td></tr>
                     </table>
+                    <table>
+                        <tr><td>Upload Sankey</td><td><input type="file" name="file" /></td></tr>
+                    </table>
+                    <table>
+                        <tr><td>Upload Outcomes</td><td><input type="file" name="file" /></td></tr>
+                    </table>
+                    <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
                 </form>
 
                 <script type="text/javascript">
@@ -131,8 +134,8 @@
 
         <script>
             function openNav() {
-                document.getElementById("mySidenav").style.width = "180px";
-                document.getElementById("main").style.marginLeft = "180px";
+                document.getElementById("mySidenav").style.width = "220px";
+                document.getElementById("main").style.marginLeft = "220px";
             }
 
             function closeNav() {
