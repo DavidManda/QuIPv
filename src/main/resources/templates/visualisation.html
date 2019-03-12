@@ -64,9 +64,15 @@
 
             <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
             <div id="importDataContent" style="display:none;">
-                <input type="file" id="real_file" hidden="hidden"/>
-                <button type="button" id="custom_button">Select File</button>
-                <span id="custom_text">No file selected</span>
+                <!--<input type="file" id="real_file" hidden="hidden"/>-->
+                <!--<button type="button" id="custom_button">Select File</button>-->
+                <!--<span id="custom_text">No file selected</span>-->
+                <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
+                    <table>
+                        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+                    </table>
+                </form>
 
                 <script type="text/javascript">
                     realFileButton = document.getElementById("real_file");
