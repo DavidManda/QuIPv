@@ -16,7 +16,8 @@
                 Create a new user
             </h1>
             <div th:if="${param.successful}" class="alert alert-success" role="alert">
-                Successfully created new user!
+                Successfully created new user! <br>
+                <a href="/visualisation">Get your visualisation here</a>
             </div>
             <form action="#" th:action="@{/registration}" method="post" th:object="${userForm}">
                 <div class="form-group">
