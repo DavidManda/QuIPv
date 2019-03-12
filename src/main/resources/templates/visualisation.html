@@ -61,12 +61,52 @@
     <body layout:fragment="content">
         <div id="mySidenav" class="sidenav">
             <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
-            <a href="#">Import Data</a>
-            <a href="#" class="openCloseDataSet" onclick="openCloseDataSet()">DataSet</a>
-                <div id="myDataset" class="dataset">
 
-                </div>
-            <a href="#">Format</a>
+            <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
+            <div id="importDataContent" style="display:none;">
+                <!--<input type="file" id="real_file" hidden="hidden"/>-->
+                <!--<button type="button" id="custom_button">Select File</button>-->
+                <!--<span id="custom_text">No file selected</span>-->
+                <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
+                    <table>
+                        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                        <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+                    </table>
+                </form>
+
+                <script type="text/javascript">
+                    realFileButton = document.getElementById("real_file");
+                    customButton = document.getElementById("custom_button");
+                    customText = document.getElementById("custom_text");
+
+                    customButton.addEventListener("click", function(){
+                        realFileButton.click();
+                    });
+                    realFileButton.addEventListener("change", function(){
+                        if(realFileButton.value){
+                            customText.innerHTML = realFileButton.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                        }
+                        else{
+                            customText.innerHTML = "No file selected";
+                        }
+                    });
+                </script>
+            </div>
+
+            <a href="javascript:;" onClick="openCloseDataSet()">DataSet</a>
+            <div id="dataSetContent" style="display:none;">
+                <form action="/action_page.php" method="get">
+                    <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+                    <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+
+            <a href="javascript:;" onClick="openCloseFormat()">Format</a>
+            <div id="FormatContent" style="display:none;">Format the visualisation here</div>
+
+
+
             <a href="#">Export Visualisation</a>
             <form class="text-center pt-1" th:action="@{/logout}" method="post">
                 <button type="submit" class="btn btn-outline-light">Sign out</button>
@@ -99,20 +139,39 @@
                 document.getElementById("main").style.marginLeft= "0";
             }
 
-            var open = "false";
-
-            function openCloseDataSet(){
-                if(open == "false"){
-                    document.getElementById("mySidenav").style.width = "300px";
-                    document.getElementById("main").style.marginLeft = "300px";
-
-                    open = "true";
+            var i_1= 0;
+            function openCloseImportData(){
+                if(i_1 === 0) {
+                    i_1 = 1;
+                    return document.getElementById('importDataContent').style.display = 'block';
                 }
-                if(open == "true"){
-                    document.getElementById("mySidenav").style.width = "0";
-                    document.getElementById("main").style.marginLeft= "0";
+                if(i_1 === 1){
+                    i_1 = 0;
+                    return document.getElementById('importDataContent').style.display='none';
+                }
+            }
 
-                    open = "false";
+            var i_2 = 0;
+            function openCloseDataSet(){
+                if(i_2 === 0) {
+                    i_2 = 1;
+                    return document.getElementById('dataSetContent').style.display = 'block';
+                }
+                if(i_2 === 1){
+                    i_2 = 0;
+                    return document.getElementById('dataSetContent').style.display='none';
+                }
+            }
+
+            var i_3 = 0;
+            function openCloseFormat(){
+                if(i_3 === 0) {
+                    i_3 = 1;
+                    return document.getElementById('FormatContent').style.display = 'block';
+                }
+                if(i_3 === 1){
+                    i_3 = 0;
+                    return document.getElementById('FormatContent').style.display='none';
                 }
             }
         </script>

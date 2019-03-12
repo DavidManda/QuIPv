@@ -24,8 +24,8 @@ public class GraphTest
     public void testAddNode()
     {
         Graph graph = new Graph();
-        GraphNode node1 = new GraphNode("Test node 1", 1);
-        GraphNode node2 = new GraphNode("Test node 2", 1);
+        GraphNode node1 = new GraphNode("Test node 1", 1, true);
+        GraphNode node2 = new GraphNode("Test node 2", 1, true);
 
         graph.addNode(node1);
         graph.addNode(node2);
@@ -37,9 +37,9 @@ public class GraphTest
     @Test
     public void testAddEdge(){
         Graph graph = new Graph();
-        GraphNode node1 = new GraphNode("Test node 1", 1);
-        GraphNode node2 = new GraphNode("Test node 2", 2);
-        GraphNode node3 = new GraphNode("Test node 3", 4);
+        GraphNode node1 = new GraphNode("Test node 1", 1, true);
+        GraphNode node2 = new GraphNode("Test node 2", 2, false);
+        GraphNode node3 = new GraphNode("Test node 3", 4, false);
 
         graph.addEdge(node1, node2);
         graph.addEdge(node3, node2);
@@ -59,8 +59,8 @@ public class GraphTest
     @Test
     public void testGetSourceNodes(){
         Graph graph = new Graph();
-        GraphNode node1 = new GraphNode("Test node 1", 1);
-        GraphNode node2 = new GraphNode("Test node 2", 1);
+        GraphNode node1 = new GraphNode("Test node 1", 1, true);
+        GraphNode node2 = new GraphNode("Test node 2", 1, true);
 
         graph.addEdge(node1, node2);
 

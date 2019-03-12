@@ -15,10 +15,10 @@ public class GraphHelper {
             if(driver == null)
                 continue;
             List<String> outcomes = answer.getOutcomes();
-            GraphNode driverNode = new GraphNode(driver, 1);
+            GraphNode driverNode = new GraphNode(driver, 1, true);
             for(String outcome : outcomes){
                 if(outcome != null && !outcome.isEmpty()){
-                    GraphNode outcomeNode = new GraphNode(outcome, 1);
+                    GraphNode outcomeNode = new GraphNode(outcome, 1, false);
                     graph.addEdge(driverNode, outcomeNode);
                     driverNode = outcomeNode;
                 }
