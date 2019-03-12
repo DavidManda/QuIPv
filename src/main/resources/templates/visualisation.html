@@ -21,7 +21,6 @@
                 background-color: #009698;
                 overflow-x: hidden;
                 padding-top: 20px;
-                transition: 0.5s;
             }
 
             .sidenav a {
@@ -30,7 +29,6 @@
                 font-size: 25px;
                 color: #F9F0F0;
                 display: block;
-                transition: 0.3s;
             }
 
             .sidenav a:hover {
@@ -46,7 +44,6 @@
             }
 
             #main {
-                transition: margin-left .5s;
                 padding: 16px;
             }
 
@@ -64,24 +61,89 @@
 
             <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
             <div id="importDataContent" style="display:none;">
-                <input type="file" id="real_file" hidden="hidden"/>
-                <button type="button" id="custom_button">Select File</button>
-                <span id="custom_text">No file selected</span>
+                <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
+                    <table>
+                        <tr>
+                            <!--<td>Upload MainTable</td>
+                            <td><input type="file" name="file" /></td>-->
+                            <td><input type="file" id="file1" name="file" hidden="hidden"/></td>
+                            <td><button type="button" id="custom_button1">Upload Maintable</button></td>
+                            <td><span id="custom_text1">No file selected</span></td>
+
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <!--<td>Upload Sankey</td>
+                            <td><input type="file" name="file" /></td>-->
+                            <td><input type="file" id="file2" name="file" hidden="hidden"/></td>
+                            <td><button type="button" id="custom_button2">Upload Sankey</button></td>
+                            <td><span id="custom_text2">No file selected</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <!--<td>Upload Outcomes</td>
+                            <td><input type="file" name="file" /></td>-->
+                            <td><input type="file" id="file3" name="file" hidden="hidden"/></td>
+                            <td><button type="button" id="custom_button3">Upload Outcomes</button></td>
+                            <td><span id="custom_text3">No file selected</span></td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td></td>
+                            <td><input type="submit" value="Upload" /></td>
+                        </tr>
+                    </table>
+                </form>
 
                 <script type="text/javascript">
-                    realFileButton = document.getElementById("real_file");
-                    customButton = document.getElementById("custom_button");
-                    customText = document.getElementById("custom_text");
+                    realFileButton1 = document.getElementById("file1");
+                    customButton1 = document.getElementById("custom_button1");
+                    customText1 = document.getElementById("custom_text1");
 
-                    customButton.addEventListener("click", function(){
-                        realFileButton.click();
+                    customButton1.addEventListener("click", function(){
+                        realFileButton1.click();
                     });
-                    realFileButton.addEventListener("change", function(){
-                        if(realFileButton.value){
-                            customText.innerHTML = realFileButton.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                    realFileButton1.addEventListener("change", function(){
+                        if(realFileButton1.value){
+                            customText1.innerHTML = realFileButton1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
                         }
                         else{
-                            customText.innerHTML = "No file selected";
+                            customText1.innerHTML = "No file selected";
+                        }
+                    });
+
+                    realFileButton2 = document.getElementById("file2");
+                    customButton2 = document.getElementById("custom_button2");
+                    customText2 = document.getElementById("custom_text2");
+
+                    customButton2.addEventListener("click", function(){
+                        realFileButton2.click();
+                    });
+                    realFileButton2.addEventListener("change", function(){
+                        if(realFileButton2.value){
+                            customText2.innerHTML = realFileButton2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                        }
+                        else{
+                            customText2.innerHTML = "No file selected";
+                        }
+                    });
+
+                    realFileButton3 = document.getElementById("file3");
+                    customButton3 = document.getElementById("custom_button3");
+                    customText3 = document.getElementById("custom_text3");
+
+                    customButton3.addEventListener("click", function(){
+                        realFileButton3.click();
+                    });
+                    realFileButton3.addEventListener("change", function(){
+                        if(realFileButton3.value){
+                            customText3.innerHTML = realFileButton3.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                        }
+                        else{
+                            customText3.innerHTML = "No file selected";
                         }
                     });
                 </script>
@@ -118,14 +180,15 @@
             <script src="/js/visualisation.js"></script>
         </div>
 
-
-
-
+        <div class="slidecontainer">
+            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <p>Value: <span id="demo"></span></p>
+        </div>
 
         <script>
             function openNav() {
-                document.getElementById("mySidenav").style.width = "180px";
-                document.getElementById("main").style.marginLeft = "180px";
+                document.getElementById("mySidenav").style.width = "320px";
+                document.getElementById("main").style.marginLeft = "320px";
             }
 
             function closeNav() {
@@ -168,7 +231,18 @@
                     return document.getElementById('FormatContent').style.display='none';
                 }
             }
-        </script>
-    </body>
 
+            //slider JS
+            var slider = document.getElementById("myRange");
+            var output = document.getElementById("demo");
+            output.innerHTML = slider.value; // Display the default slider value
+
+            // Update the current slider value (each time you drag the slider handle)
+            slider.oninput = function() {
+                output.innerHTML = this.value;
+            };
+
+        </script>
+
+    </body>
 </html>
