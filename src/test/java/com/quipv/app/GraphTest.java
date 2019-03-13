@@ -75,6 +75,7 @@ public class GraphTest
         GraphNode node2 = new GraphNode("T2", 1, true);
         GraphNode node3 = new GraphNode("T3", 7, true);
 
+        //Test node added with initial weight 1
         graph.addEdge(node1, node2);
         graph.addEdge(node1, node3);
         Assert.assertEquals((long)1, (long)graph.getEdges().stream()
@@ -86,18 +87,22 @@ public class GraphTest
                 .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T3").get().getIndex())
                 .findFirst().get().getWeight());
 
-
-        graph.addEdge(node2, node1);
-        Assert.assertEquals((long)1,(long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T2").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T1").get().getIndex())
-                .findFirst().get().getWeight());
-
+        //Test weight is added on duplicate edge
         graph.addEdge(node1, node2);
         Assert.assertEquals((long)2,(long)graph.getEdges().stream()
                 .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
                 .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T2").get().getIndex())
                 .findFirst().get().getWeight());
 
+        //Test nodes are directed
+        graph.addEdge(node2, node1);
+        Assert.assertEquals((long)1,(long)graph.getEdges().stream()
+                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T2").get().getIndex())
+                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T1").get().getIndex())
+                .findFirst().get().getWeight());
+        Assert.assertEquals((long)2,(long)graph.getEdges().stream()
+                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
+                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T2").get().getIndex())
+                .findFirst().get().getWeight());
     }
 }
