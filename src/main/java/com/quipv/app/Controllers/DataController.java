@@ -1,5 +1,6 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.Models.Project;
 import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Repositories.MaintableRepository;
@@ -24,7 +25,11 @@ public class DataController {
     @GetMapping("/data")
     public HashMap<String, Object> get() {
 
-        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository,sankeyRepository));
+        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
+        Graph graph = new Graph();
+        if(project != null){
+            graph = GraphHelper.constructGraph(project);
+        }
         HashMap<String, Object> map = new HashMap<>();
         map.put("vertices", GraphHelper.getListOfNodes(graph));
         map.put("edgesList", graph.getEdges());

@@ -23,6 +23,9 @@ public class ProjectHelper {
         entries.forEach(maintableEntries::add);
         sankeyEntities.forEach(sankeyEntries::add);
 
+        if(maintableEntries.isEmpty()){
+            return null;
+        }
         Project project = populateProject(maintableEntries,maintableEntries.get(0).getProjectName(), sankeyEntries);
 
         return project;

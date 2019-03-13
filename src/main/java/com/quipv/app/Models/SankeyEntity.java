@@ -18,7 +18,8 @@ public class SankeyEntity {
     private String targetNegPos;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     public int getId() {
         return id;
     }

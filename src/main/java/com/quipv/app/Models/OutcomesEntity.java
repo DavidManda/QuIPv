@@ -16,7 +16,8 @@ public class OutcomesEntity {
     private String description;
 
     @Id
-    @Column(name = "id", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     public int getId() {
         return id;
     }

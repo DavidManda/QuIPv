@@ -1,5 +1,6 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.Models.Project;
 import com.quipv.app.Models.User;
 import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
@@ -66,7 +67,11 @@ public class MainController {
 
     @GetMapping("/visualisation")
     public String visualisation(Model model){
-        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableRepository,sankeyRepository));
+        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
+        Graph graph = new Graph();
+        if(project != null){
+             graph = GraphHelper.constructGraph(project);
+        }
         model.addAttribute("edges", graph.getEdges());
         model.addAttribute("vertices", graph.getVertices());
         return "visualisation";
