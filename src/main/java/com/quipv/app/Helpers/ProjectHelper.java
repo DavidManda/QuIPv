@@ -97,6 +97,12 @@ public class ProjectHelper {
     }
 
     private static List<Answer> getActualNamesForDriversAndOutcomes(List<Answer> answers, List<SankeyEntity> sankeyEntities, String projectName){
+
+        //Remove null entries
+        sankeyEntities = sankeyEntities.stream()
+                .filter(a -> a.getSource() != null)
+                .collect(Collectors.toList());
+
         for(int i=0; i<answers.size();i++){
             Answer answer = answers.get(i);
             Integer rowId = answer.getRowId();
@@ -109,6 +115,7 @@ public class ProjectHelper {
             List<SankeyEntity> sankeyEntries = sankeyEntities.stream()
                                             .filter(a -> a.getRowId() == rowId && a.getProjectname().equals(projectName))
                                             .collect(Collectors.toList());
+
             SankeyEntity driverEntry = sankeyEntities.stream()
                                                     .filter(a -> a.getSource().equals(driverName))
                                                     .findAny()
@@ -122,7 +129,9 @@ public class ProjectHelper {
                             .filter(a -> a.getSource().equals(outcome))
                             .findAny()
                             .orElse(null);
-                    actualOutcomesNames.add(sankeyEntity.getSourceDescription());
+                    if(sankeyEntity != null) {
+                        actualOutcomesNames.add(sankeyEntity.getSourceDescription());
+                    }
                 }
                 else{
                     actualOutcomesNames.add(null);

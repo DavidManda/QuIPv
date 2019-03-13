@@ -2,7 +2,9 @@ package com.quipv.app.Controllers;
 
 import com.quipv.app.Helpers.CsvToEntityConverter;
 import com.quipv.app.Models.MaintableEntity;
+import com.quipv.app.Models.SankeyEntity;
 import com.quipv.app.Repositories.MaintableRepository;
+import com.quipv.app.Repositories.SankeyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,42 +27,65 @@ public class FileUploadController {
     @Autowired
     MaintableRepository maintableRepository;
 
+    @Autowired
+    SankeyRepository sankeyRepository;
+
     @PostMapping("/visualisation/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile[] files,
                                    RedirectAttributes redirectAttributes) {
+
+        if(files.length != 3){
+            redirectAttributes.addFlashAttribute("message", "Please select all three files");
+            return "redirect:/visualisation";
+        }
 
         for(MultipartFile file:files) {
             if (file.isEmpty()) {
                 redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
                 return "redirect:/visualisation";
-            }
-            else{
+            } else {
                 String extension = "";
                 String fileName = file.getOriginalFilename();
                 int i = fileName.lastIndexOf('.');
                 if (i > 0) {
-                    extension = fileName.substring(i+1);
+                    extension = fileName.substring(i + 1);
                 }
-                if(!extension.equals("csv")){
+                if (!extension.equals("csv")) {
                     redirectAttributes.addFlashAttribute("message", "Please select a csv file");
                     return "redirect:/visualisation";
                 }
             }
+        }
 
-            try {
+        MultipartFile mainTableFile = files[0];
+        MultipartFile sankeyFile = files[1];
 
-                // Get the file and save it somewhere
-                byte[] bytes = file.getBytes();
-                Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
-                Files.write(path, bytes);
-                redirectAttributes.addFlashAttribute("message",
-                        "You successfully uploaded '" + file.getOriginalFilename() + "'");
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = mainTableFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + mainTableFile.getOriginalFilename());
+            Files.write(path, bytes);
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded '" + mainTableFile.getOriginalFilename() + "'");
 
-                List<MaintableEntity> maintableEntities = CsvToEntityConverter.getMainTableEntities(path);
-                maintableRepository.saveAll(maintableEntities);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            List<MaintableEntity> maintableEntities = CsvToEntityConverter.getMainTableEntities(path);
+            maintableRepository.saveAll(maintableEntities);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // Get the file and save it somewhere
+            byte[] bytes = sankeyFile.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + sankeyFile.getOriginalFilename());
+            Files.write(path, bytes);
+            redirectAttributes.addFlashAttribute("message",
+                    "You successfully uploaded '" + sankeyFile.getOriginalFilename() + "'");
+
+            List<SankeyEntity> sankeyEntities = CsvToEntityConverter.getSankeyEntities(path);
+            sankeyRepository.saveAll(sankeyEntities);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return "redirect:/visualisation";

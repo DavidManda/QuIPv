@@ -2,6 +2,8 @@ package com.quipv.app.Helpers;
 
 import com.opencsv.CSVReader;
 import com.quipv.app.Models.MaintableEntity;
+import com.quipv.app.Models.SankeyEntity;
+import com.quipv.app.Repositories.SankeyRepository;
 
 import java.io.FileReader;
 import java.nio.file.Path;
@@ -28,6 +30,26 @@ public class CsvToEntityConverter {
             maintableEntities.add(getMaintableEntityFromString(record));
         }
         return maintableEntities;
+    }
+
+    public static List<SankeyEntity> getSankeyEntities(Path path){
+        List<SankeyEntity> sankeyEntities = new ArrayList<>();
+        List<List<String>> records = new ArrayList<>();
+        try (CSVReader csvReader = new CSVReader(new FileReader(path.toString()));) {
+            String[] values = null;
+            while ((values = csvReader.readNext()) != null) {
+                records.add(Arrays.asList(values));
+            }
+        }
+        catch (Exception e){
+            //TODO implement this
+        }
+
+        records.remove(0);
+        for(List<String> record:records){
+            sankeyEntities.add(getSankeyEntityFromString(record));
+        }
+        return sankeyEntities;
     }
 
     private static MaintableEntity getMaintableEntityFromString(List<String> record){
@@ -93,6 +115,32 @@ public class CsvToEntityConverter {
         return maintableEntity;
     }
 
+    private static SankeyEntity getSankeyEntityFromString(List<String> record){
+        SankeyEntity sankeyEntity = new SankeyEntity();
+
+        String projectname = nullStringHelper(record.get(0));
+        int rowId = Integer.parseInt(record.get(1));
+        String interviewType = nullStringHelper(record.get(2));
+        String source = nullStringHelper(record.get(3));
+        String target = nullStringHelper(record.get(4));
+        String sourceDescription = nullStringHelper(record.get(5));
+        String targetDescription = nullStringHelper(record.get(6));
+        int fileinstanceId = Integer.parseInt(record.get(7));
+        String sourceNegPos = nullStringHelper(record.get(8));
+        String targetNegPos = nullStringHelper(record.get(9));
+
+        sankeyEntity.setProjectname(projectname);
+        sankeyEntity.setRowId(rowId);
+        sankeyEntity.setInterviewType(interviewType);
+        sankeyEntity.setSource(source);
+        sankeyEntity.setTarget(target);
+        sankeyEntity.setSourceDescription(sourceDescription);
+        sankeyEntity.setTargetDescription(targetDescription);
+        sankeyEntity.setFileinstanceId(fileinstanceId);
+        sankeyEntity.setSourceNegPos(sourceNegPos);
+        sankeyEntity.setTargetNegPos(targetNegPos);
+        return sankeyEntity;
+    }
     private static String nullStringHelper(String string){
         if(string.equals("NULL")){
             return null;
