@@ -10,6 +10,7 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CsvToEntityConverter {
     public static List<MaintableEntity> getMainTableEntities(Path path){
@@ -49,6 +50,9 @@ public class CsvToEntityConverter {
         for(List<String> record:records){
             sankeyEntities.add(getSankeyEntityFromString(record));
         }
+        sankeyEntities = sankeyEntities.stream()
+                            .filter(a -> a.getSource() != null)
+                            .collect(Collectors.toList());
         return sankeyEntities;
     }
 
