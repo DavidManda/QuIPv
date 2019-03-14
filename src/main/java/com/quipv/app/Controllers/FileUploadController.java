@@ -22,8 +22,6 @@ import java.util.List;
 @Controller
 public class FileUploadController {
 
-    String UPLOADED_FOLDER = System.getProperty("user.dir") + "//";
-
     @Autowired
     MaintableRepository maintableRepository;
 
@@ -60,33 +58,17 @@ public class FileUploadController {
         MultipartFile mainTableFile = files[0];
         MultipartFile sankeyFile = files[1];
 
-        try {
-            // Get the file and save it somewhere
-            byte[] bytes = mainTableFile.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + mainTableFile.getOriginalFilename());
-            Files.write(path, bytes);
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + mainTableFile.getOriginalFilename() + "'");
+        List<MaintableEntity> maintableEntities = CsvToEntityConverter.getMainTableEntities(mainTableFile);
+        maintableRepository.saveAll(maintableEntities);
 
-            List<MaintableEntity> maintableEntities = CsvToEntityConverter.getMainTableEntities(path);
-            maintableRepository.saveAll(maintableEntities);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded '" + mainTableFile.getOriginalFilename() + "'");
 
-        try {
-            // Get the file and save it somewhere
-            byte[] bytes = sankeyFile.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER + sankeyFile.getOriginalFilename());
-            Files.write(path, bytes);
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + sankeyFile.getOriginalFilename() + "'");
+        List<SankeyEntity> sankeyEntities = CsvToEntityConverter.getSankeyEntities(sankeyFile);
+        sankeyRepository.saveAll(sankeyEntities);
 
-            List<SankeyEntity> sankeyEntities = CsvToEntityConverter.getSankeyEntities(path);
-            sankeyRepository.saveAll(sankeyEntities);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        redirectAttributes.addFlashAttribute("message",
+                "You successfully uploaded '" + sankeyFile.getOriginalFilename() + "'");
 
         return "redirect:/visualisation";
     }

@@ -3,20 +3,19 @@ package com.quipv.app.Helpers;
 import com.opencsv.CSVReader;
 import com.quipv.app.Models.MaintableEntity;
 import com.quipv.app.Models.SankeyEntity;
-import com.quipv.app.Repositories.SankeyRepository;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileReader;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class CsvToEntityConverter {
-    public static List<MaintableEntity> getMainTableEntities(Path path){
+    public static List<MaintableEntity> getMainTableEntities(MultipartFile file){
         List<MaintableEntity> maintableEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new FileReader(path.toString()));) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
             String[] values = null;
             while ((values = csvReader.readNext()) != null) {
                 records.add(Arrays.asList(values));
@@ -33,10 +32,10 @@ public class CsvToEntityConverter {
         return maintableEntities;
     }
 
-    public static List<SankeyEntity> getSankeyEntities(Path path){
+    public static List<SankeyEntity> getSankeyEntities(MultipartFile file){
         List<SankeyEntity> sankeyEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new FileReader(path.toString()));) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
             String[] values = null;
             while ((values = csvReader.readNext()) != null) {
                 records.add(Arrays.asList(values));
