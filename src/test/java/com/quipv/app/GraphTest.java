@@ -78,31 +78,23 @@ public class GraphTest
         //Test node added with initial weight 1
         graph.addEdge(node1, node2);
         graph.addEdge(node1, node3);
-        Assert.assertEquals((long)1, (long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T2").get().getIndex())
-                .findFirst().get().getWeight());
-        Assert.assertEquals((long)1, (long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T3").get().getIndex())
-                .findFirst().get().getWeight());
+        Assert.assertEquals(1, getEdgeWeight(graph, "T1", "T2"));
+        Assert.assertEquals(1, getEdgeWeight(graph, "T1", "T3"));
 
         //Test weight is added on duplicate edge
         graph.addEdge(node1, node2);
-        Assert.assertEquals((long)2,(long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T2").get().getIndex())
-                .findFirst().get().getWeight());
+        Assert.assertEquals(2, getEdgeWeight(graph, "T1", "T2"));
 
         //Test nodes are directed
         graph.addEdge(node2, node1);
-        Assert.assertEquals((long)1,(long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T2").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T1").get().getIndex())
-                .findFirst().get().getWeight());
-        Assert.assertEquals((long)2,(long)graph.getEdges().stream()
-                .filter(p -> p.getOriginIndex() == graph.getNodeByName("T1").get().getIndex())
-                .filter(p -> p.getDestinationIndex() == graph.getNodeByName("T2").get().getIndex())
-                .findFirst().get().getWeight());
+        Assert.assertEquals(1, getEdgeWeight(graph, "T2", "T1"));
+        Assert.assertEquals(2,getEdgeWeight(graph, "T1", "T2"));
+    }
+
+    private int getEdgeWeight(Graph graph, String source, String destination){
+        return graph.getEdges().stream()
+                .filter(p -> p.getOriginIndex() == graph.getNodeByName(source).get().getIndex())
+                .filter(p -> p.getDestinationIndex() == graph.getNodeByName(destination).get().getIndex())
+                .findFirst().get().getWeight();
     }
 }
