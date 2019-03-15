@@ -6,6 +6,9 @@
     <head>
         <link rel="stylesheet" href="/css/visualisation.css" type="text/css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <style>
             body {
                 font-family: "Lato", sans-serif;
@@ -51,6 +54,7 @@
                 .sidenav {padding-top: 15px;}
                 .sidenav a {font-size: 18px;}
             }
+
         </style>
 
     </head>
@@ -62,43 +66,53 @@
             <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
             <div id="importDataContent" style="display:none;">
                 <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
-                    <table>
-                        <tr>
-                            <!--<td>Upload MainTable</td>
-                            <td><input type="file" name="file" /></td>-->
-                            <td><input type="file" id="file1" name="file" hidden="hidden"/></td>
-                            <td><button type="button" id="custom_button1">Upload Maintable</button></td>
-                            <td><span id="custom_text1">No file selected</span></td>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="file" id="file1" name="file" hidden="hidden"/>
+                            <button type="button" id="custom_button1" class="btn btn-light btn-block">Upload Maintable</button>
+                        </div>
+                        <div>
+                            <span id="custom_text1">No file selected</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="file" id="file2" name="file" hidden="hidden"/>
+                            <button type="button" id="custom_button2" class="btn btn-light btn-block">Upload Sankey</button>
+                        </div>
+                        <div>
+                            <span id="custom_text2">No file selected</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <input type="file" id="file3" name="file" hidden="hidden"/>
+                            <button type="button" id="custom_button3" class="btn btn-light btn-block">Upload Outcomes</button>
+                        </div>
+                        <div>
+                            <span id="custom_text3">No file selected</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                            <input type="submit" id="uploadButton" class="btn btn-light" value="Upload" />
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <div class="col-sm-12">
+                           Alert goes here
+                        </div>
+                    </div>
 
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <!--<td>Upload Sankey</td>
-                            <td><input type="file" name="file" /></td>-->
-                            <td><input type="file" id="file2" name="file" hidden="hidden"/></td>
-                            <td><button type="button" id="custom_button2">Upload Sankey</button></td>
-                            <td><span id="custom_text2">No file selected</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <!--<td>Upload Outcomes</td>
-                            <td><input type="file" name="file" /></td>-->
-                            <td><input type="file" id="file3" name="file" hidden="hidden"/></td>
-                            <td><button type="button" id="custom_button3">Upload Outcomes</button></td>
-                            <td><span id="custom_text3">No file selected</span></td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td></td>
-                            <td><input type="submit" value="Upload" /></td>
-                        </tr>
-                    </table>
                 </form>
 
                 <script type="text/javascript">
+                    var filesSelected = 0;
+
                     realFileButton1 = document.getElementById("file1");
                     customButton1 = document.getElementById("custom_button1");
                     customText1 = document.getElementById("custom_text1");
@@ -109,9 +123,11 @@
                     realFileButton1.addEventListener("change", function(){
                         if(realFileButton1.value){
                             customText1.innerHTML = realFileButton1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                            filesSelected++;
                         }
                         else{
                             customText1.innerHTML = "No file selected";
+                            filesSelected--;
                         }
                     });
 
@@ -125,9 +141,12 @@
                     realFileButton2.addEventListener("change", function(){
                         if(realFileButton2.value){
                             customText2.innerHTML = realFileButton2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                            filesSelected++;
+
                         }
                         else{
                             customText2.innerHTML = "No file selected";
+                            filesSelected--;
                         }
                     });
 
@@ -141,11 +160,14 @@
                     realFileButton3.addEventListener("change", function(){
                         if(realFileButton3.value){
                             customText3.innerHTML = realFileButton3.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                            filesSelected++;
                         }
                         else{
                             customText3.innerHTML = "No file selected";
+                            filesSelected--;
                         }
                     });
+
                 </script>
             </div>
 
@@ -160,8 +182,6 @@
 
             <a href="javascript:;" onClick="openCloseFormat()">Format</a>
             <div id="FormatContent" style="display:none;">Format the visualisation here</div>
-
-
 
             <a href="#">Export Visualisation</a>
             <form class="text-center pt-1" th:action="@{/logout}" method="post">
