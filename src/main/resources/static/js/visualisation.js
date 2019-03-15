@@ -203,7 +203,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             })
             .attr("d", function(d){
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
-            });
+            })
+            .attr("stroke-width", function(d) { return (d.edgeWeight); })
+        ;
 
         // add new paths
         paths.enter()
@@ -212,7 +214,11 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             .classed("link", true)
             .attr("d", function(d){
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
-            });
+            })
+            .attr("stroke-width", function(d) { return (d.edgeWeight); })
+        ;
+
+
 
         // remove old links
         paths.exit().remove();
@@ -355,9 +361,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             var edge = dataEdges[i];
             var sourceNodeIndex = edge.originIndex;
             var destinationNodeIndex = edge.destinationIndex;
+            var weight = edge.weight;
+            console.log(weight);
             edges.push({
                 source: graphNodes[sourceNodeIndex],
-                target: graphNodes[destinationNodeIndex]
+                target: graphNodes[destinationNodeIndex],
+                edgeWeight: weight
             })
         }
         return edges;
