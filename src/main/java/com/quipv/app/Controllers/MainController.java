@@ -66,14 +66,7 @@ public class MainController {
 
 
     @GetMapping("/visualisation")
-    public String visualisation(Model model){
-        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
-        Graph graph = new Graph();
-        if(project != null){
-             graph = GraphHelper.constructGraph(project);
-        }
-        model.addAttribute("edges", graph.getEdges());
-        model.addAttribute("vertices", graph.getVertices());
+    public String visualisation(){
         return "visualisation";
     }
 
