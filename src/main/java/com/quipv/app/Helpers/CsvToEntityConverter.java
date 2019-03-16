@@ -17,13 +17,7 @@ public class CsvToEntityConverter {
 
 
     public static List<MaintableEntity> getMainTableEntities(MultipartFile file){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = UserHelper.getUserName();
         List<MaintableEntity> maintableEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
@@ -44,13 +38,7 @@ public class CsvToEntityConverter {
     }
 
     public static List<SankeyEntity> getSankeyEntities(MultipartFile file){
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = UserHelper.getUserName();
         List<SankeyEntity> sankeyEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
