@@ -3,6 +3,8 @@ package com.quipv.app.Helpers;
 import com.opencsv.CSVReader;
 import com.quipv.app.Models.MaintableEntity;
 import com.quipv.app.Models.SankeyEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStreamReader;
@@ -12,7 +14,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CsvToEntityConverter {
+
+
     public static List<MaintableEntity> getMainTableEntities(MultipartFile file){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
         List<MaintableEntity> maintableEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
@@ -27,12 +38,19 @@ public class CsvToEntityConverter {
 
         records.remove(0);
         for(List<String> record:records){
-            maintableEntities.add(getMaintableEntityFromString(record));
+            maintableEntities.add(getMaintableEntityFromString(record,username));
         }
         return maintableEntities;
     }
 
     public static List<SankeyEntity> getSankeyEntities(MultipartFile file){
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+        if (principal instanceof UserDetails) {
+            username = ((UserDetails)principal).getUsername();
+        } else {
+            username = principal.toString();
+        }
         List<SankeyEntity> sankeyEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
         try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
@@ -47,7 +65,7 @@ public class CsvToEntityConverter {
 
         records.remove(0);
         for(List<String> record:records){
-            sankeyEntities.add(getSankeyEntityFromString(record));
+            sankeyEntities.add(getSankeyEntityFromString(record,username));
         }
         sankeyEntities = sankeyEntities.stream()
                             .filter(a -> a.getSource() != null)
@@ -55,7 +73,7 @@ public class CsvToEntityConverter {
         return sankeyEntities;
     }
 
-    private static MaintableEntity getMaintableEntityFromString(List<String> record){
+    private static MaintableEntity getMaintableEntityFromString(List<String> record, String username){
         MaintableEntity maintableEntity = new MaintableEntity();
 
         int row_id = Integer.parseInt(record.get(0));
@@ -90,6 +108,7 @@ public class CsvToEntityConverter {
             fileinstanceId = Integer.parseInt(record.get(23));
         }catch (Exception e){}
 
+        maintableEntity.setUploader(username);
         maintableEntity.setRowId(row_id);
         maintableEntity.setInterviewType(interviewType);
         maintableEntity.setRespondentId(respondentId);
@@ -118,7 +137,7 @@ public class CsvToEntityConverter {
         return maintableEntity;
     }
 
-    private static SankeyEntity getSankeyEntityFromString(List<String> record){
+    private static SankeyEntity getSankeyEntityFromString(List<String> record, String username){
         SankeyEntity sankeyEntity = new SankeyEntity();
 
         String projectname = nullStringHelper(record.get(0));
@@ -132,6 +151,7 @@ public class CsvToEntityConverter {
         String sourceNegPos = nullStringHelper(record.get(8));
         String targetNegPos = nullStringHelper(record.get(9));
 
+        sankeyEntity.setUploader(username);
         sankeyEntity.setProjectname(projectname);
         sankeyEntity.setRowId(rowId);
         sankeyEntity.setInterviewType(interviewType);

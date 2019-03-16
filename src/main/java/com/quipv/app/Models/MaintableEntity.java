@@ -29,6 +29,7 @@ public class MaintableEntity {
     private String posNegAtribution;
     private String attributionSummary;
     private int fileinstanceId;
+    private String uploader;
 
     @Id
     @Column(name = "row_id", nullable = false)
@@ -48,6 +49,16 @@ public class MaintableEntity {
 
     public void setInterviewType(String interviewType) {
         this.interviewType = interviewType;
+    }
+
+    @Basic
+    @Column(name = "uploader", nullable = false)
+    public String getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
     }
 
     @Basic

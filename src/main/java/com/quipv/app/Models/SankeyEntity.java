@@ -16,6 +16,7 @@ public class SankeyEntity {
     private int fileinstanceId;
     private String sourceNegPos;
     private String targetNegPos;
+    private String uploader;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,13 +30,23 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "projectname", nullable = false, length = 7)
+    @Column(name = "projectname", nullable = false)
     public String getProjectname() {
         return projectname;
     }
 
     public void setProjectname(String projectname) {
         this.projectname = projectname;
+    }
+
+    @Basic
+    @Column(name = "uploader", nullable = false)
+    public String getUploader() {
+        return uploader;
+    }
+
+    public void setUploader(String uploader) {
+        this.uploader = uploader;
     }
 
     @Basic
@@ -49,7 +60,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "interviewType", nullable = false, length = 18)
+    @Column(name = "interviewType", nullable = false)
     public String getInterviewType() {
         return interviewType;
     }
@@ -59,7 +70,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "Source", nullable = true, length = 4)
+    @Column(name = "Source", nullable = true)
     public String getSource() {
         return source;
     }
@@ -69,7 +80,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "Target", nullable = true, length = 4)
+    @Column(name = "Target", nullable = true)
     public String getTarget() {
         return target;
     }
@@ -79,7 +90,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "SourceDescription", nullable = true, length = 38)
+    @Column(name = "SourceDescription", nullable = true)
     public String getSourceDescription() {
         return sourceDescription;
     }
@@ -89,7 +100,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "TargetDescription", nullable = true, length = 32)
+    @Column(name = "TargetDescription", nullable = true)
     public String getTargetDescription() {
         return targetDescription;
     }
@@ -109,7 +120,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "SourceNegPos", nullable = false, length = 16)
+    @Column(name = "SourceNegPos", nullable = false)
     public String getSourceNegPos() {
         return sourceNegPos;
     }
@@ -119,7 +130,7 @@ public class SankeyEntity {
     }
 
     @Basic
-    @Column(name = "TargetNegPos", nullable = false, length = 16)
+    @Column(name = "TargetNegPos", nullable = false)
     public String getTargetNegPos() {
         return targetNegPos;
     }
