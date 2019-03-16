@@ -14,6 +14,8 @@ public class GraphNode {
     private int index;
     private boolean isDriver;
     private ArrayList<Neighbour> neighbours;
+    private float x;
+    private float y;
 
     public GraphNode(String name, int count, boolean isDriver) {
         this.name = name;
@@ -57,6 +59,22 @@ public class GraphNode {
 
     public boolean isDriver() {
         return isDriver;
+    }
+
+    public float getX() {
+        return x;
+    }
+
+    public void setX(float x) {
+        this.x = x;
+    }
+
+    public float getY() {
+        return y;
+    }
+
+    public void setY(float y) {
+        this.y = y;
     }
 
     public ArrayList<Neighbour> getNeighbours() {
