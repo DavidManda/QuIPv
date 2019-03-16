@@ -160,7 +160,7 @@ public class GraphHelperTest{
 
     @Test
     public void testGraphIsConstructedCorrectly(){
-        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
+        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository, "user");
         Graph graph = GraphHelper.constructGraph(project);
         //Vertices should be D1, D2, O1, O2, O3, O4
         Assert.assertEquals(6,graph.getVertices().size());

@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "maintable", schema = "quipv")
 public class MaintableEntity {
+    private int id;
     private int rowId;
     private String interviewType;
     private String respondentId;
@@ -32,6 +33,16 @@ public class MaintableEntity {
     private String uploader;
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Column(name = "row_id", nullable = false)
     public int getRowId() {
         return rowId;

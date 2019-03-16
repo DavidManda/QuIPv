@@ -1,5 +1,6 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.Helpers.UserHelper;
 import com.quipv.app.Models.Project;
 import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Helpers.GraphHelper;
@@ -24,8 +25,8 @@ public class DataController {
 
     @GetMapping("/data")
     public HashMap<String, Object> get() {
-
-        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository);
+        String username = UserHelper.getUserName();
+        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository, username);
         Graph graph = new Graph();
         if(project != null){
             graph = GraphHelper.constructGraph(project);

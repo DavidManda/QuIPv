@@ -362,7 +362,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             var sourceNodeIndex = edge.originIndex;
             var destinationNodeIndex = edge.destinationIndex;
             var weight = edge.weight;
-            console.log(weight);
             edges.push({
                 source: graphNodes[sourceNodeIndex],
                 target: graphNodes[destinationNodeIndex],
@@ -405,6 +404,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         var dataEdges = data.edgesList;
         var graphNodes = constructNodesForGraph(dataNodes);
         var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
+        console.log(graphNodes.length);
         var root = getRoot(dataNodes,dataEdges);
         modifyNodesCoordinatesForVisualisation(graphNodes, root,graphEdges);
         /** MAIN SVG **/

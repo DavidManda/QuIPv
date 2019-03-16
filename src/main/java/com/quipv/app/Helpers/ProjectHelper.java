@@ -12,16 +12,19 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectHelper {
-    public static Project populate(MaintableRepository maintableRepository, SankeyRepository sankeyRepository){
+    public static Project populate(MaintableRepository maintableRepository, SankeyRepository sankeyRepository, String username){
 
-        List<MaintableEntity> maintableEntries = new LinkedList<>();
-        List<SankeyEntity> sankeyEntries = new LinkedList<>();
+        List<MaintableEntity> maintableEntries = new ArrayList<>();
+        List<SankeyEntity> sankeyEntries = new ArrayList<>();
 
         Iterable<MaintableEntity> entries = maintableRepository.findAll();
         Iterable<SankeyEntity> sankeyEntities = sankeyRepository.findAll();
 
         entries.forEach(maintableEntries::add);
         sankeyEntities.forEach(sankeyEntries::add);
+
+        maintableEntries = maintableEntries.stream().filter(a -> a.getUploader().equals(username)).collect(Collectors.toList());
+        sankeyEntries = sankeyEntries.stream().filter(a -> a.getUploader().equals(username)).collect(Collectors.toList());
 
         if(maintableEntries.isEmpty()){
             return null;
