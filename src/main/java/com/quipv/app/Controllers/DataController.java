@@ -41,7 +41,6 @@ public class DataController {
 
     @PostMapping("/storeGraphState")
     public void storeGraphState(@RequestBody GraphNodeWithoutNeighbours[] nodes){
-        System.out.println(nodes);
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
         graphNodeRepository.findAll().forEach(graphNodeEntities::add);
@@ -52,6 +51,17 @@ public class DataController {
         }).collect(Collectors.toList());
         graphNodeRepository.saveAll(graphNodeEntities);
 
+    }
+
+    @PostMapping("/updateNodePosition")
+    public void updateNodePosition(@RequestBody GraphNodeWithoutNeighbours node){
+        List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
+        //TODO filter for projectId
+        graphNodeRepository.findAll().forEach(graphNodeEntities::add);
+        GraphNodeEntity graphNodeEntity = graphNodeEntities.stream().filter(n -> n.getIndex() == node.getId()).findAny().get();
+        graphNodeEntity.setX(node.getX());
+        graphNodeEntity.setY(node.getY());
+        graphNodeRepository.save(graphNodeEntity);
     }
 
 }

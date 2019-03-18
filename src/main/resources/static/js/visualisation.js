@@ -120,6 +120,14 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             d.x += d3.event.dx;
             d.y +=  d3.event.dy;
             thisGraph.updateGraph();
+            $.ajax({
+                type: 'POST',
+                url: '/updateNodePosition',
+                headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(d)
+            });
         }
     };
 
@@ -407,12 +415,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         return nodes[0].x != null;
     }
     fetch("/data").then(function (value) { return value.json()}).then(function (data) {
-        console.log(data);
         var dataNodes = data.vertices;
         var dataEdges = data.edgesList;
         var graphNodes = constructNodesForGraph(dataNodes);
         var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
-        console.log(graphNodes.length);
         var root = getRoot(dataNodes,dataEdges);
         if(!nodesHaveCoordinates(dataNodes)){
             modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
