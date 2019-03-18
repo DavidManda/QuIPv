@@ -330,7 +330,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
     function compareBasedOnIndex(a,b){
-        if(a.index < b.index)
+        if(a.id < b.id)
             return -1;
         return 1;
     }
@@ -344,9 +344,13 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         var nodes = [];
         for(var i = 0; i < dataNodes.length; i++){
             var node = dataNodes[i];
+            if(node.x != null && node.y != null){
+                x = node.x;
+                y = node.y;
+            }
             nodes.push({
                 title: node.name,
-                id: node.index,
+                id: node.id,
                 x: x,
                 y: y
             });
@@ -399,6 +403,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         DFS(root, graphNodes, graphEdges, isVisited, x, y);
     }
 
+    function nodesHaveCoordinates(nodes){
+        return nodes[0].x != null;
+    }
     fetch("/data").then(function (value) { return value.json()}).then(function (data) {
         console.log(data);
         var dataNodes = data.vertices;
@@ -407,13 +414,23 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
         console.log(graphNodes.length);
         var root = getRoot(dataNodes,dataEdges);
-        modifyNodesCoordinatesForVisualisation(graphNodes, root,graphEdges);
+        if(!nodesHaveCoordinates(dataNodes)){
+            modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
+        }
         /** MAIN SVG **/
         var svg = d3.select("body").append("svg")
             .attr("width", width)
             .attr("height", height);
         var graph = new GraphCreator(svg, graphNodes, graphEdges);
         graph.updateGraph();
+        $.ajax({
+            type: 'POST',
+            url: '/storeGraphState',
+            headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(graphNodes)
+        });
     });
 
 })(window.d3, window.saveAs, window.Blob);
