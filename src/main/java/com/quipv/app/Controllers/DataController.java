@@ -1,5 +1,6 @@
 package com.quipv.app.Controllers;
 
+import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Helpers.UserHelper;
 import com.quipv.app.Models.*;
 import com.quipv.app.Repositories.EdgeRepository;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,8 +24,9 @@ public class DataController {
     @Autowired
     EdgeRepository edgeRepository;
 
-    @GetMapping("/data")
-    public HashMap<String, Object> get() {
+    @GetMapping("/data/{minArrowWeight}")
+    public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight) {
+        Integer minWeight = Integer.parseInt(minArrowWeight);
         String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         List<EdgeEntity> edgeEntities = new ArrayList<>();
@@ -32,9 +35,11 @@ public class DataController {
         edgeRepository.findAll().forEach(edgeEntities::add);
         List<GraphNodeWithoutNeighbours> vertices = graphNodeEntities.stream().map(node -> new GraphNodeWithoutNeighbours(node.getName(), node.getIndex(), node.isDriver(), node.getX(), node.getY())).collect(Collectors.toList());
         List<Edge> edges = edgeEntities.stream().map(edge -> new Edge(edge.getSourceIndex(), edge.getDestinationIndex(), edge.getWeight())).collect(Collectors.toList());
+        VisualisationGraph graph = new VisualisationGraph(vertices, edges);
+        graph = GraphHelper.filterEdges(graph, minWeight);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("vertices", vertices);
-        map.put("edgesList", edges);
+        map.put("vertices", graph.getVertices());
+        map.put("edgesList", graph.getEdges());
 
         return map;
     }
@@ -44,11 +49,14 @@ public class DataController {
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
         graphNodeRepository.findAll().forEach(graphNodeEntities::add);
-        graphNodeEntities = graphNodeEntities.stream().map(node -> {
-            node.setX(nodes[node.getIndex()].getX());
-            node.setY(nodes[node.getIndex()].getY());
-            return node;
-        }).collect(Collectors.toList());
+        for(int i = 0; i<graphNodeEntities.size(); i++){
+            final GraphNodeEntity graphNodeEntity = graphNodeEntities.get(i);
+            GraphNodeWithoutNeighbours node = Arrays.stream(nodes).filter(n -> n.getId() == graphNodeEntity.getIndex()).findAny().orElse(null);
+            if(node != null){
+                graphNodeEntities.get(i).setX(node.getX());
+                graphNodeEntities.get(i).setY(node.getY());
+            }
+        }
         graphNodeRepository.saveAll(graphNodeEntities);
 
     }

@@ -3,8 +3,8 @@ package com.quipv.app.Helpers;
 
 import com.quipv.app.Models.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class GraphHelper {
     public static Graph constructGraph(Project project){
@@ -36,5 +36,20 @@ public class GraphHelper {
             nodes.add(new GraphNodeWithoutNeighbours(node));
         }
         return nodes;
+    }
+
+    public static VisualisationGraph filterEdges(VisualisationGraph graph, Integer minWeight){
+        List<GraphNodeWithoutNeighbours> vertices = graph.getVertices();
+        List<Edge> edges = graph.getEdges();
+        edges = edges.stream().filter(edge -> edge.getWeight() >= minWeight).collect(Collectors.toList());
+        List<Integer> usedOriginIndices = edges.stream().map(Edge::getOriginIndex).collect(Collectors.toList());
+        List<Integer> usedDestinationIndices = edges.stream().map(Edge::getDestinationIndex).collect(Collectors.toList());
+        Set<Integer> usedIndices = new HashSet<Integer>(usedDestinationIndices);
+        usedIndices.addAll(usedOriginIndices);
+        vertices = vertices.stream().filter(vertex -> usedIndices.contains(vertex.getId())).collect(Collectors.toList());
+
+        graph.setEdges(edges);
+        graph.setVertices(vertices);
+        return graph;
     }
 }

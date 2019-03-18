@@ -374,9 +374,11 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             var sourceNodeIndex = edge.originIndex;
             var destinationNodeIndex = edge.destinationIndex;
             var weight = edge.weight;
+            var source = graphNodes.find(function (value) { return(value.id === sourceNodeIndex)});
+            var target = graphNodes.find(function (value) { return (value.id === destinationNodeIndex) });
             edges.push({
-                source: graphNodes[sourceNodeIndex],
-                target: graphNodes[destinationNodeIndex],
+                source: source,
+                target: target,
                 edgeWeight: weight
             })
         }
@@ -414,7 +416,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     function nodesHaveCoordinates(nodes){
         return nodes[0].x != null;
     }
-    fetch("/data").then(function (value) { return value.json()}).then(function (data) {
+    fetch("/data/2").then(function (value) { return value.json()}).then(function (data) {
         var dataNodes = data.vertices;
         var dataEdges = data.edgesList;
         var graphNodes = constructNodesForGraph(dataNodes);
