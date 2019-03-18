@@ -3,13 +3,16 @@ package com.quipv.app.Models;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "graphnode", schema = "quipv")
+@Table(name = "nodes", schema = "quipv")
 public class GraphNodeEntity {
     private int id;
-    private float x;
-    private float y;
+    private int index;
+    private Float x;
+    private Float y;
     private String user;
-    private String projectName;
+    private String name;
+    private boolean isDriver;
+    private int projectId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,23 +25,33 @@ public class GraphNodeEntity {
         this.id = id;
     }
 
+    public GraphNodeEntity(){}
+
+    public GraphNodeEntity(String user, String name, int projectId, int index, boolean isDriver){
+        this.user = user;
+        this.name = name;
+        this.projectId = projectId;
+        this.index = index;
+        this.isDriver =  isDriver;
+    }
+
     @Basic
-    @Column(name = "x",nullable = false)
-    public float getX() {
+    @Column(name = "x")
+    public Float getX() {
         return x;
     }
 
-    public void setX(float x) {
+    public void setX(Float x) {
         this.x = x;
     }
 
     @Basic
-    @Column(name = "y",nullable = false)
-    public float getY() {
+    @Column(name = "y")
+    public Float getY() {
         return y;
     }
 
-    public void setY(float y) {
+    public void setY(Float y) {
         this.y = y;
     }
 
@@ -53,12 +66,44 @@ public class GraphNodeEntity {
     }
 
     @Basic
-    @Column(name = "projectName",nullable = false)
-    public String getProjectName() {
-        return projectName;
+    @Column(name = "projectId",nullable = false)
+    public int getProjectId() {
+        return projectId;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
+    public void setProjectId(int projectId) {
+        this.projectId = projectId;
+    }
+
+    @Basic
+    @Column(name = "name",nullable = false)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "nodeIndex",nullable = false)
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    @Basic
+    @Column(name = "isDriver",nullable = false)
+    public boolean isDriver() {
+        return isDriver;
+    }
+
+    public void setDriver(boolean driver) {
+        isDriver = driver;
     }
 }
+
+

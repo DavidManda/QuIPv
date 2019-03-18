@@ -1,21 +1,18 @@
 package com.quipv.app.Controllers;
 
 import com.quipv.app.Helpers.CsvToEntityConverter;
-import com.quipv.app.Models.MaintableEntity;
-import com.quipv.app.Models.SankeyEntity;
-import com.quipv.app.Repositories.MaintableRepository;
-import com.quipv.app.Repositories.SankeyRepository;
+import com.quipv.app.Helpers.GraphHelper;
+import com.quipv.app.Helpers.ProjectHelper;
+import com.quipv.app.Models.*;
+import com.quipv.app.Repositories.EdgeRepository;
+import com.quipv.app.Repositories.GraphNodeRepository;
+import com.quipv.app.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 
@@ -23,13 +20,16 @@ import java.util.List;
 public class FileUploadController {
 
     @Autowired
-    MaintableRepository maintableRepository;
+    ProjectRepository projectRepository;
 
     @Autowired
-    SankeyRepository sankeyRepository;
+    GraphNodeRepository graphNodeRepository;
+
+    @Autowired
+    EdgeRepository edgeRepository;
 
     @PostMapping("/visualisation/upload")
-    public String handleFileUpload(@RequestParam("file") MultipartFile[] files,
+    public String handleFileUpload(@RequestParam("projectName") String projectName, @RequestParam("file") MultipartFile[] files,
                                    RedirectAttributes redirectAttributes) {
 
         if(files.length != 3){
@@ -55,17 +55,22 @@ public class FileUploadController {
             }
         }
 
+        ProjectEntity projectEntity = new ProjectEntity();
+        projectEntity.setName(projectName);
+        projectEntity = projectRepository.save(projectEntity);
+
         MultipartFile mainTableFile = files[0];
         MultipartFile sankeyFile = files[1];
 
         List<MaintableEntity> maintableEntities = CsvToEntityConverter.getMainTableEntities(mainTableFile);
-        maintableRepository.saveAll(maintableEntities);
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded '" + mainTableFile.getOriginalFilename() + "'");
 
         List<SankeyEntity> sankeyEntities = CsvToEntityConverter.getSankeyEntities(sankeyFile);
-        sankeyRepository.saveAll(sankeyEntities);
+
+        Graph graph = GraphHelper.constructGraph(ProjectHelper.populate(maintableEntities,sankeyEntities));
+        graph.saveToDb(projectEntity.getId(), graphNodeRepository,edgeRepository );
 
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded '" + sankeyFile.getOriginalFilename() + "'");

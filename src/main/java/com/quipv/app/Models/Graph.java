@@ -1,5 +1,9 @@
 package com.quipv.app.Models;
 
+import com.quipv.app.Helpers.UserHelper;
+import com.quipv.app.Repositories.EdgeRepository;
+import com.quipv.app.Repositories.GraphNodeRepository;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -89,6 +93,14 @@ public class Graph extends ArrayList<GraphNode> {
 
     private boolean isInGraph(GraphNode node){
         return this.verticesSet.contains(node);
+    }
+
+    public void saveToDb(int projectId, GraphNodeRepository graphNodeRepository, EdgeRepository edgeRepository){
+        String username = UserHelper.getUserName();
+        List<GraphNodeEntity> graphNodeEntities = this.vertices.stream().map(node -> new GraphNodeEntity(username, node.getName(), projectId, node.getIndex(), node.isDriver())).collect(Collectors.toList());
+        List<EdgeEntity> edgeEntities = this.edges.stream().map(edge -> new EdgeEntity(edge.getOriginIndex(), edge.getDestinationIndex(), edge.getWeight(), projectId)).collect(Collectors.toList());
+        graphNodeRepository.saveAll(graphNodeEntities);
+        edgeRepository.saveAll(edgeEntities);
     }
 
 }

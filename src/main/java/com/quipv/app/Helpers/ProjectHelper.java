@@ -3,28 +3,14 @@ package com.quipv.app.Helpers;
 
 
 import com.quipv.app.Models.MaintableEntity;
-import com.quipv.app.Repositories.MaintableRepository;
 import com.quipv.app.Models.SankeyEntity;
-import com.quipv.app.Repositories.SankeyRepository;
 import com.quipv.app.Models.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ProjectHelper {
-    public static Project populate(MaintableRepository maintableRepository, SankeyRepository sankeyRepository, String username){
-
-        List<MaintableEntity> maintableEntries = new ArrayList<>();
-        List<SankeyEntity> sankeyEntries = new ArrayList<>();
-
-        Iterable<MaintableEntity> entries = maintableRepository.findAll();
-        Iterable<SankeyEntity> sankeyEntities = sankeyRepository.findAll();
-
-        entries.forEach(maintableEntries::add);
-        sankeyEntities.forEach(sankeyEntries::add);
-
-        maintableEntries = maintableEntries.stream().filter(a -> a.getUploader().equals(username)).collect(Collectors.toList());
-        sankeyEntries = sankeyEntries.stream().filter(a -> a.getUploader().equals(username)).collect(Collectors.toList());
+    public static Project populate(List<MaintableEntity> maintableEntries,  List<SankeyEntity> sankeyEntries){
 
         if(maintableEntries.isEmpty()){
             return null;

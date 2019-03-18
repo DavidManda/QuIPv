@@ -1,9 +1,5 @@
 package com.quipv.app.Models;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "sankey", schema = "quipv")
 public class SankeyEntity {
     private int id;
     private String projectname;
@@ -18,9 +14,6 @@ public class SankeyEntity {
     private String targetNegPos;
     private String uploader;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     public int getId() {
         return id;
     }
@@ -29,8 +22,6 @@ public class SankeyEntity {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "projectname", nullable = false)
     public String getProjectname() {
         return projectname;
     }
@@ -39,8 +30,6 @@ public class SankeyEntity {
         this.projectname = projectname;
     }
 
-    @Basic
-    @Column(name = "uploader", nullable = false)
     public String getUploader() {
         return uploader;
     }
@@ -49,8 +38,6 @@ public class SankeyEntity {
         this.uploader = uploader;
     }
 
-    @Basic
-    @Column(name = "row_id", nullable = false)
     public int getRowId() {
         return rowId;
     }
@@ -59,8 +46,6 @@ public class SankeyEntity {
         this.rowId = rowId;
     }
 
-    @Basic
-    @Column(name = "interviewType", nullable = false)
     public String getInterviewType() {
         return interviewType;
     }
@@ -69,8 +54,6 @@ public class SankeyEntity {
         this.interviewType = interviewType;
     }
 
-    @Basic
-    @Column(name = "Source", nullable = true)
     public String getSource() {
         return source;
     }
@@ -79,8 +62,6 @@ public class SankeyEntity {
         this.source = source;
     }
 
-    @Basic
-    @Column(name = "Target", nullable = true)
     public String getTarget() {
         return target;
     }
@@ -89,8 +70,6 @@ public class SankeyEntity {
         this.target = target;
     }
 
-    @Basic
-    @Column(name = "SourceDescription", nullable = true)
     public String getSourceDescription() {
         return sourceDescription;
     }
@@ -99,8 +78,6 @@ public class SankeyEntity {
         this.sourceDescription = sourceDescription;
     }
 
-    @Basic
-    @Column(name = "TargetDescription", nullable = true)
     public String getTargetDescription() {
         return targetDescription;
     }
@@ -109,8 +86,6 @@ public class SankeyEntity {
         this.targetDescription = targetDescription;
     }
 
-    @Basic
-    @Column(name = "FileinstanceID", nullable = false)
     public int getFileinstanceId() {
         return fileinstanceId;
     }
@@ -119,8 +94,6 @@ public class SankeyEntity {
         this.fileinstanceId = fileinstanceId;
     }
 
-    @Basic
-    @Column(name = "SourceNegPos", nullable = false)
     public String getSourceNegPos() {
         return sourceNegPos;
     }
@@ -129,8 +102,6 @@ public class SankeyEntity {
         this.sourceNegPos = sourceNegPos;
     }
 
-    @Basic
-    @Column(name = "TargetNegPos", nullable = false)
     public String getTargetNegPos() {
         return targetNegPos;
     }

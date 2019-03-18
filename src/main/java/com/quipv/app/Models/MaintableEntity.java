@@ -1,9 +1,5 @@
 package com.quipv.app.Models;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "maintable", schema = "quipv")
 public class MaintableEntity {
     private int id;
     private int rowId;
@@ -32,9 +28,6 @@ public class MaintableEntity {
     private int fileinstanceId;
     private String uploader;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
     public int getId() {
         return id;
     }
@@ -43,7 +36,6 @@ public class MaintableEntity {
         this.id = id;
     }
 
-    @Column(name = "row_id", nullable = false)
     public int getRowId() {
         return rowId;
     }
@@ -52,8 +44,6 @@ public class MaintableEntity {
         this.rowId = rowId;
     }
 
-    @Basic
-    @Column(name = "InterviewType", nullable = false, length = 18)
     public String getInterviewType() {
         return interviewType;
     }
@@ -62,8 +52,6 @@ public class MaintableEntity {
         this.interviewType = interviewType;
     }
 
-    @Basic
-    @Column(name = "uploader", nullable = false)
     public String getUploader() {
         return uploader;
     }
@@ -72,8 +60,6 @@ public class MaintableEntity {
         this.uploader = uploader;
     }
 
-    @Basic
-    @Column(name = "Respondent_ID", nullable = false, length = 7)
     public String getRespondentId() {
         return respondentId;
     }
@@ -82,8 +68,6 @@ public class MaintableEntity {
         this.respondentId = respondentId;
     }
 
-    @Basic
-    @Column(name = "Question_ID", nullable = false, length = 3)
     public String getQuestionId() {
         return questionId;
     }
@@ -92,8 +76,6 @@ public class MaintableEntity {
         this.questionId = questionId;
     }
 
-    @Basic
-    @Column(name = "Question", nullable = false, length = 344)
     public String getQuestion() {
         return question;
     }
@@ -102,8 +84,6 @@ public class MaintableEntity {
         this.question = question;
     }
 
-    @Basic
-    @Column(name = "Full_Answer", nullable = true, length = 1274)
     public String getFullAnswer() {
         return fullAnswer;
     }
@@ -112,8 +92,6 @@ public class MaintableEntity {
         this.fullAnswer = fullAnswer;
     }
 
-    @Basic
-    @Column(name = "Broken_Answer", nullable = true, length = 882)
     public String getBrokenAnswer() {
         return brokenAnswer;
     }
@@ -122,8 +100,6 @@ public class MaintableEntity {
         this.brokenAnswer = brokenAnswer;
     }
 
-    @Basic
-    @Column(name = "Driver_of_Change", nullable = true, length = 4)
     public String getDriverOfChange() {
         return driverOfChange;
     }
@@ -132,8 +108,6 @@ public class MaintableEntity {
         this.driverOfChange = driverOfChange;
     }
 
-    @Basic
-    @Column(name = "Outcome_1", nullable = true, length = 4)
     public String getOutcome1() {
         return outcome1;
     }
@@ -142,8 +116,6 @@ public class MaintableEntity {
         this.outcome1 = outcome1;
     }
 
-    @Basic
-    @Column(name = "Outcome_2", nullable = true, length = 4)
     public String getOutcome2() {
         return outcome2;
     }
@@ -152,8 +124,6 @@ public class MaintableEntity {
         this.outcome2 = outcome2;
     }
 
-    @Basic
-    @Column(name = "Outcome_3", nullable = true, length = 4)
     public String getOutcome3() {
         return outcome3;
     }
@@ -162,8 +132,6 @@ public class MaintableEntity {
         this.outcome3 = outcome3;
     }
 
-    @Basic
-    @Column(name = "Attribution_1_9", nullable = true)
     public Integer getAttribution19() {
         return attribution19;
     }
@@ -172,8 +140,6 @@ public class MaintableEntity {
         this.attribution19 = attribution19;
     }
 
-    @Basic
-    @Column(name = "Domain_Attributed", nullable = false, length = 34)
     public String getDomainAttributed() {
         return domainAttributed;
     }
@@ -182,8 +148,6 @@ public class MaintableEntity {
         this.domainAttributed = domainAttributed;
     }
 
-    @Basic
-    @Column(name = "RespDomain", nullable = false, length = 42)
     public String getRespDomain() {
         return respDomain;
     }
@@ -192,8 +156,6 @@ public class MaintableEntity {
         this.respDomain = respDomain;
     }
 
-    @Basic
-    @Column(name = "RespDriver", nullable = false, length = 12)
     public String getRespDriver() {
         return respDriver;
     }
@@ -202,8 +164,6 @@ public class MaintableEntity {
         this.respDriver = respDriver;
     }
 
-    @Basic
-    @Column(name = "RespDriverDomain", nullable = false, length = 47)
     public String getRespDriverDomain() {
         return respDriverDomain;
     }
@@ -212,8 +172,6 @@ public class MaintableEntity {
         this.respDriverDomain = respDriverDomain;
     }
 
-    @Basic
-    @Column(name = "ProjectName", nullable = false, length = 7)
     public String getProjectName() {
         return projectName;
     }
@@ -222,8 +180,6 @@ public class MaintableEntity {
         this.projectName = projectName;
     }
 
-    @Basic
-    @Column(name = "DriverDescription", nullable = true, length = 38)
     public String getDriverDescription() {
         return driverDescription;
     }
@@ -232,8 +188,6 @@ public class MaintableEntity {
         this.driverDescription = driverDescription;
     }
 
-    @Basic
-    @Column(name = "cluster", nullable = true, length = 4)
     public String getCluster() {
         return cluster;
     }
@@ -242,8 +196,6 @@ public class MaintableEntity {
         this.cluster = cluster;
     }
 
-    @Basic
-    @Column(name = "clusterDescription", nullable = true, length = 4)
     public String getClusterDescription() {
         return clusterDescription;
     }
@@ -252,8 +204,6 @@ public class MaintableEntity {
         this.clusterDescription = clusterDescription;
     }
 
-    @Basic
-    @Column(name = "Attribution", nullable = true, length = 138)
     public String getAttribution() {
         return attribution;
     }
@@ -262,8 +212,6 @@ public class MaintableEntity {
         this.attribution = attribution;
     }
 
-    @Basic
-    @Column(name = "PosNegAtribution", nullable = true, length = 8)
     public String getPosNegAtribution() {
         return posNegAtribution;
     }
@@ -272,8 +220,6 @@ public class MaintableEntity {
         this.posNegAtribution = posNegAtribution;
     }
 
-    @Basic
-    @Column(name = "Attribution_Summary", nullable = true, length = 27)
     public String getAttributionSummary() {
         return attributionSummary;
     }
@@ -282,8 +228,6 @@ public class MaintableEntity {
         this.attributionSummary = attributionSummary;
     }
 
-    @Basic
-    @Column(name = "FileinstanceID", nullable = false)
     public int getFileinstanceId() {
         return fileinstanceId;
     }

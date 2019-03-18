@@ -2,15 +2,19 @@ package com.quipv.app.Models;
 
 public class GraphNodeWithoutNeighbours {
     private String name;
-    private int count;
     private int index;
     private boolean isDriver;
 
     public GraphNodeWithoutNeighbours(GraphNode node){
         this.name = node.getName();
-        this.count = node.getCount();
         this.index = node.getIndex();
         this.isDriver = node.isDriver();
+    }
+
+    public GraphNodeWithoutNeighbours(String name, int index, boolean isDriver){
+        this.name = name;
+        this.index = index;
+        this.isDriver = isDriver;
     }
 
     public boolean isDriver() {
@@ -19,10 +23,6 @@ public class GraphNodeWithoutNeighbours {
 
     public String getName() {
         return name;
-    }
-
-    public int getCount() {
-        return count;
     }
 
     public int getIndex() {

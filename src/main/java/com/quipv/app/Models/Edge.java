@@ -13,6 +13,12 @@ public class Edge {
         this.weight = weight;
     }
 
+    public Edge(Integer originIndex, Integer destinationIndex, Integer weight){
+        this.originIndex = originIndex;
+        this.destinationIndex = destinationIndex;
+        this.weight = weight;
+    }
+
     public Integer getOriginIndex() {
         return originIndex;
     }

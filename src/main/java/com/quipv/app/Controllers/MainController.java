@@ -1,12 +1,6 @@
 package com.quipv.app.Controllers;
 
-import com.quipv.app.Models.Project;
 import com.quipv.app.Models.User;
-import com.quipv.app.Repositories.SankeyRepository;
-import com.quipv.app.Helpers.GraphHelper;
-import com.quipv.app.Repositories.MaintableRepository;
-import com.quipv.app.Helpers.ProjectHelper;
-import com.quipv.app.Models.Graph;
 import com.quipv.app.Service.SecurityService;
 import com.quipv.app.Service.UserService;
 import com.quipv.app.Validator.UserValidator;
@@ -26,12 +20,6 @@ public class MainController {
     public String home(){
         return "home";
     }
-
-    @Autowired
-    MaintableRepository maintableRepository;
-
-    @Autowired
-    SankeyRepository sankeyRepository;
 
     @Autowired
     private UserService userService;

@@ -399,7 +399,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         DFS(root, graphNodes, graphEdges, isVisited, x, y);
     }
 
-    fetch("/data").then(function (value) { return value.json() }).then(function (data) {
+    fetch("/data").then(function (value) { return value.json()}).then(function (data) {
+        console.log(data);
         var dataNodes = data.vertices;
         var dataEdges = data.edgesList;
         var graphNodes = constructNodesForGraph(dataNodes);
