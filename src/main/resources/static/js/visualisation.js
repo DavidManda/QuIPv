@@ -450,36 +450,42 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         // Update the current slider value (each time you drag the slider handle)
         slider.oninput = function() {
             output.innerHTML = this.value;
+            // updateVisualisation(this.value)
         };
     }
 
-    var min, max;
-    fetch("/data/2").then(function (value) { return value.json()}).then(function (data) {
-        var dataNodes = data.vertices;
-        var dataEdges = data.edgesList;
-        var graphNodes = constructNodesForGraph(dataNodes);
-        var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
-        var root = getRoot(dataNodes,dataEdges);
-        if(!nodesHaveCoordinates(dataNodes)){
-            modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
-        }
+    function updateVisualisation(sliderValue){
+        fetch("/data/"+sliderValue).then(function (value) { return value.json()}).then(function (data) {
+            var dataNodes = data.vertices;
+            var dataEdges = data.edgesList;
+            var graphNodes = constructNodesForGraph(dataNodes);
+            var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
+            var root = getRoot(dataNodes,dataEdges);
+            if(!nodesHaveCoordinates(dataNodes)){
+                modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
+            }
 
-        setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges));
-        /** MAIN SVG **/
-        var svg = d3.select("body").append("svg")
-            .attr("width", width)
-            .attr("height", height);
-        var graph = new GraphCreator(svg, graphNodes, graphEdges);
-        graph.updateGraph();
-        $.ajax({
-            type: 'POST',
-            url: '/storeGraphState',
-            headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
-            dataType: 'json',
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(graphNodes)
+            setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges));
+
+            /** MAIN SVG **/
+            var svg = d3.select("body").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            var graph = new GraphCreator(svg, graphNodes, graphEdges);
+            graph.updateGraph();
+            $.ajax({
+                type: 'POST',
+                url: '/storeGraphState',
+                headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(graphNodes)
+            });
         });
-    });
+    }
+
+    updateVisualisation("0");
+
 
 })(window.d3, window.saveAs, window.Blob);
 
