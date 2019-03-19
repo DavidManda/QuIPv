@@ -5,6 +5,7 @@ import com.quipv.app.Helpers.UserHelper;
 import com.quipv.app.Models.*;
 import com.quipv.app.Repositories.EdgeRepository;
 import com.quipv.app.Repositories.GraphNodeRepository;
+import com.quipv.app.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class DataController {
     @Autowired
     EdgeRepository edgeRepository;
 
-    @GetMapping("/data/{minArrowWeight}")
+    @GetMapping("/data/{pid}/{minArrowWeight}")
     public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight) {
         Integer minWeight = Integer.parseInt(minArrowWeight);
         String username = UserHelper.getUserName();

@@ -6,7 +6,9 @@ import javax.persistence.*;
 @Table(name = "projects", schema = "quipv")
 public class ProjectEntity {
     private int id;
-    private String projectName;
+    private String name;
+    private String user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
@@ -21,10 +23,20 @@ public class ProjectEntity {
     @Basic
     @Column(name = "name",nullable = false)
     public String getName() {
-        return projectName;
+        return name;
     }
 
     public void setName(String name) {
-        this.projectName = name;
+        this.name = name;
+    }
+
+    @Basic
+    @Column(name = "user",nullable = false)
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

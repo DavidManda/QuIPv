@@ -3,6 +3,7 @@ package com.quipv.app.Controllers;
 import com.quipv.app.Helpers.CsvToEntityConverter;
 import com.quipv.app.Helpers.GraphHelper;
 import com.quipv.app.Helpers.ProjectHelper;
+import com.quipv.app.Helpers.UserHelper;
 import com.quipv.app.Models.*;
 import com.quipv.app.Repositories.EdgeRepository;
 import com.quipv.app.Repositories.GraphNodeRepository;
@@ -57,6 +58,7 @@ public class FileUploadController {
 
         ProjectEntity projectEntity = new ProjectEntity();
         projectEntity.setName(projectName);
+        projectEntity.setUser(UserHelper.getUserName());
         projectEntity = projectRepository.save(projectEntity);
 
         MultipartFile mainTableFile = files[0];

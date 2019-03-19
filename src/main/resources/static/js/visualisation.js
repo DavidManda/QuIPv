@@ -486,6 +486,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     }
 
     function createVisualisation(){
+        var url = window.location.pathname;
+        console.log(url);
         fetch("/data/1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
@@ -513,10 +515,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         });
     }
 
-
-
     createVisualisation();
-
 
 })(window.d3, window.saveAs, window.Blob);
 
