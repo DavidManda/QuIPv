@@ -439,10 +439,12 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         return maximum;
     }
 
-    function setSliderValues(min, max){
-        document.getElementById("myRange").max = max.toString();
-        document.getElementById("myRange").min = min.toString();
-        document.getElementById("myRange").value = "0";
+    function setSliderValues(min, max, shouldSetValues){
+        if(shouldSetValues){
+            document.getElementById("myRange").max = max.toString();
+            document.getElementById("myRange").min = min.toString();
+            document.getElementById("myRange").value = "0";
+        }
         var slider = document.getElementById("myRange");
         var output = document.getElementById("demo");
         output.innerHTML = slider.value; // Display the default slider value
@@ -450,12 +452,41 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         // Update the current slider value (each time you drag the slider handle)
         slider.oninput = function() {
             output.innerHTML = this.value;
-            // updateVisualisation(this.value)
+            updateVisualisation(this.value, false)
         };
     }
 
+    var min ,max;
+    var graph;
+    var svg = d3.select("body").append("svg")
+        .attr("width", width)
+        .attr("height", height);
     function updateVisualisation(sliderValue){
         fetch("/data/"+sliderValue).then(function (value) { return value.json()}).then(function (data) {
+            var dataNodes = data.vertices;
+            var dataEdges = data.edgesList;
+            graph.nodes = constructNodesForGraph(dataNodes);
+            graph.edges = constructEdgesForGraph(dataEdges,graph.nodes);
+            var root = getRoot(dataNodes,dataEdges);
+            if(!nodesHaveCoordinates(dataNodes)){
+                modifyNodesCoordinatesForVisualisation(graph.nodes, root, graph.edges);
+            }
+
+            setSliderValues(min, max, false);
+            graph.updateGraph();
+            $.ajax({
+                type: 'POST',
+                url: '/storeGraphState',
+                headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+                dataType: 'json',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(graph.nodes)
+            });
+        });
+    }
+
+    function createVisualisation(){
+        fetch("/data/1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
             var graphNodes = constructNodesForGraph(dataNodes);
@@ -465,13 +496,11 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
             }
 
-            setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges));
+            setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges), true);
 
             /** MAIN SVG **/
-            var svg = d3.select("body").append("svg")
-                .attr("width", width)
-                .attr("height", height);
-            var graph = new GraphCreator(svg, graphNodes, graphEdges);
+
+            graph = new GraphCreator(svg, graphNodes, graphEdges);
             graph.updateGraph();
             $.ajax({
                 type: 'POST',
@@ -484,7 +513,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         });
     }
 
-    updateVisualisation("0");
+
+
+    createVisualisation();
 
 
 })(window.d3, window.saveAs, window.Blob);
