@@ -1,5 +1,7 @@
 "use strict";
 document.onload = (function(d3, saveAs, Blob, undefined){
+
+
     // define graphcreator object
     var GraphCreator = function(svg, nodes, edges){
         var thisGraph = this;
@@ -416,6 +418,42 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     function nodesHaveCoordinates(nodes){
         return nodes[0].x != null;
     }
+
+    function findMinWeight(dataEdges) {
+        var minimum = 1000;
+        for(var i=0; i<dataEdges.length; i++) {
+            if (dataEdges[i].weight < minimum){
+                minimum = dataEdges[i].weight;
+            }
+        }
+        return minimum;
+    }
+
+    function findMaxWeight(dataEdges) {
+        var maximum = 0;
+        for(var i=0; i<dataEdges.length; i++) {
+            if (dataEdges[i].weight > maximum){
+                maximum = dataEdges[i].weight;
+            }
+        }
+        return maximum;
+    }
+
+    function setSliderValues(min, max){
+        document.getElementById("myRange").max = max.toString();
+        document.getElementById("myRange").min = min.toString();
+        document.getElementById("myRange").value = "0";
+        var slider = document.getElementById("myRange");
+        var output = document.getElementById("demo");
+        output.innerHTML = slider.value; // Display the default slider value
+
+        // Update the current slider value (each time you drag the slider handle)
+        slider.oninput = function() {
+            output.innerHTML = this.value;
+        };
+    }
+
+    var min, max;
     fetch("/data/2").then(function (value) { return value.json()}).then(function (data) {
         var dataNodes = data.vertices;
         var dataEdges = data.edgesList;
@@ -425,6 +463,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         if(!nodesHaveCoordinates(dataNodes)){
             modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
         }
+
+        setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges));
         /** MAIN SVG **/
         var svg = d3.select("body").append("svg")
             .attr("width", width)

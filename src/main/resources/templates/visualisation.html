@@ -9,6 +9,8 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <style>
             body {
                 font-family: "Lato", sans-serif;
@@ -207,8 +209,24 @@
         </div>
 
         <div class="slidecontainer">
-            <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+            <input type="range" class="slider" id="myRange">
             <p>Value: <span id="demo"></span></p>
+            <!--<script>-->
+            <!--$("#myRange").slider({-->
+            <!--range: "min",-->
+            <!--animate: true,-->
+            <!--value:0,-->
+            <!--min: 0,-->
+            <!--max: 30,-->
+            <!--step: 1,-->
+            <!--slide: function(event, ui) {-->
+            <!--update(2,ui.value); //changed-->
+            <!--}-->
+            <!--});-->
+            <!--</script>-->
+            <!--<script>-->
+                <!---->
+            <!--</script>-->
         </div>
 
         <script>
@@ -259,14 +277,7 @@
             }
 
             //slider JS
-            var slider = document.getElementById("myRange");
-            var output = document.getElementById("demo");
-            output.innerHTML = slider.value; // Display the default slider value
 
-            // Update the current slider value (each time you drag the slider handle)
-            slider.oninput = function() {
-                output.innerHTML = this.value;
-            };
 
         </script>
 
