@@ -37,8 +37,8 @@ public class ProjectHelperTest {
 //        given(maintableRepository.findAll()).willAnswer(invocationOnMock -> interiewEntries);
 //    }
 //
-//    @Test
-//    public void dummyTest(){
+    @Test
+    public void dummyTest(){
 //        Iterable<MaintableEntity> interviewEntries = maintableRepository.findAll();
-//    }
+    }
 }

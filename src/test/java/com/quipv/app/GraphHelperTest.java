@@ -150,8 +150,8 @@ public class GraphHelperTest{
 //        given(sankeyRepository.findAll()).willAnswer(invocationOnMock -> sankeyEntries);
 //    }
 //
-//    @Test
-//    public void testGraphIsConstructedCorrectly(){
+    @Test
+    public void testGraphIsConstructedCorrectly(){
 //        Project project = ProjectHelper.populate(maintableRepository,sankeyRepository, "user");
 //        Graph graph = GraphHelper.constructGraph(project);
 //        //Vertices should be D1, D2, O1, O2, O3, O4
@@ -165,5 +165,5 @@ public class GraphHelperTest{
 //        Assert.assertTrue(O1.getNeighbourNodes().contains(O2));
 //        Assert.assertTrue(O2.getNeighbourNodes().contains(O3));
 //        Assert.assertTrue(O4.getNeighbourNodes().contains(O1));
-//    }
+    }
 }
