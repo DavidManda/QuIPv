@@ -31,8 +31,8 @@ public class DataController {
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         List<EdgeEntity> edgeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findAll().forEach(graphNodeEntities::add);
-        edgeRepository.findAll().forEach(edgeEntities::add);
+        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
+        edgeRepository.findEdgesForUser(username).forEach(edgeEntities::add);
         List<GraphNodeWithoutNeighbours> vertices = graphNodeEntities.stream().map(node -> new GraphNodeWithoutNeighbours(node.getName(), node.getIndex(), node.isDriver(), node.getX(), node.getY())).collect(Collectors.toList());
         List<Edge> edges = edgeEntities.stream().map(edge -> new Edge(edge.getSourceIndex(), edge.getDestinationIndex(), edge.getWeight())).collect(Collectors.toList());
         VisualisationGraph graph = new VisualisationGraph(vertices, edges);
@@ -46,9 +46,11 @@ public class DataController {
 
     @PostMapping("/storeGraphState")
     public void storeGraphState(@RequestBody GraphNodeWithoutNeighbours[] nodes){
+
+        String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findAll().forEach(graphNodeEntities::add);
+        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
         for(int i = 0; i<graphNodeEntities.size(); i++){
             final GraphNodeEntity graphNodeEntity = graphNodeEntities.get(i);
             GraphNodeWithoutNeighbours node = Arrays.stream(nodes).filter(n -> n.getId() == graphNodeEntity.getIndex()).findAny().orElse(null);
@@ -63,9 +65,11 @@ public class DataController {
 
     @PostMapping("/updateNodePosition")
     public void updateNodePosition(@RequestBody GraphNodeWithoutNeighbours node){
+
+        String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findAll().forEach(graphNodeEntities::add);
+        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
         GraphNodeEntity graphNodeEntity = graphNodeEntities.stream().filter(n -> n.getIndex() == node.getId()).findAny().get();
         graphNodeEntity.setX(node.getX());
         graphNodeEntity.setY(node.getY());

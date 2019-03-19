@@ -8,15 +8,17 @@ public class EdgeEntity {
     private int sourceIndex;
     private int destinationIndex;
     private int weight;
+    private String user;
     private int projectId;
 
     public EdgeEntity(){}
 
-    public EdgeEntity(int sourceIndex, int destinationIndex, int weight, int projectId){
+    public EdgeEntity(int sourceIndex, int destinationIndex, int weight, int projectId, String user){
         this.sourceIndex = sourceIndex;
         this.destinationIndex = destinationIndex;
         this.weight = weight;
         this.projectId = projectId;
+        this.user = user;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +29,16 @@ public class EdgeEntity {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "user",nullable = false)
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 
     @Basic

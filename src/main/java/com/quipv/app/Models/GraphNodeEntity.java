@@ -1,9 +1,12 @@
 package com.quipv.app.Models;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "nodes", schema = "quipv")
+//@NamedQuery(name = "GraphNodeEntity.findByName", query = "SELECT n FROM GraphNodeEntity n WHERE n.user = ?1")
 public class GraphNodeEntity {
     private int id;
     private int index;
