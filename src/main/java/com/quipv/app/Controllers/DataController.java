@@ -25,8 +25,8 @@ public class DataController {
     @Autowired
     EdgeRepository edgeRepository;
 
-    @GetMapping("/data/{pid}/{minArrowWeight}")
-    public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight) {
+    @GetMapping("/data/pid={pid}/minVal={minArrowWeight}")
+    public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight, @PathVariable(value="pid") String pid) {
         Integer minWeight = Integer.parseInt(minArrowWeight);
         String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();

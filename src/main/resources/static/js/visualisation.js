@@ -462,7 +462,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         .attr("width", width)
         .attr("height", height);
     function updateVisualisation(sliderValue){
-        fetch("/data/"+sliderValue).then(function (value) { return value.json()}).then(function (data) {
+        var url = window.location.pathname;
+        var filters = url.split("/");
+        var pid = getPID(filters);
+        fetch("/data/pid="+pid+"/minVal="+sliderValue).then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
             graph.nodes = constructNodesForGraph(dataNodes);
@@ -485,10 +488,20 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         });
     }
 
+    function getPID(filters) {
+        for(var i=0; i<filters.length; i++){
+            var filter = filters[i];
+            if(filter.includes("pid=")){
+                return filter.slice(4,filter.length);
+            }
+        }
+    }
+
     function createVisualisation(){
         var url = window.location.pathname;
-        console.log(url);
-        fetch("/data/1").then(function (value) { return value.json()}).then(function (data) {
+        var filters = url.split("/");
+        var pid = getPID(filters);
+        fetch("/data/pid="+pid+"/minVal=1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
             var graphNodes = constructNodesForGraph(dataNodes);

@@ -63,13 +63,13 @@ public class MainController {
     }
 
     @GetMapping("/visualisation")
-    public String visualisationWithoutId(Model model, @RequestParam(value = "pid") Optional<String> pid){
+    public String visualisationWithoutId(Model model){
         List<ProjectEntity> projectList = projectRepository.findProjectForUser(UserHelper.getUserName());
         model.addAttribute("projectList",projectList);
         return "visualisation";
     }
 
-    @GetMapping("/visualisation/{pid}")
+    @GetMapping("/visualisation/pid={pid}")
     public String visualisation(Model model, @RequestParam(value = "pid") Optional<String> pid){
         List<ProjectEntity> projectList = projectRepository.findProjectForUser(UserHelper.getUserName());
         model.addAttribute("projectList",projectList);
