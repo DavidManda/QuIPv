@@ -33,11 +33,6 @@ public class FileUploadController {
     public String handleFileUpload(@RequestParam("projectName") String projectName, @RequestParam("file") MultipartFile[] files,
                                    RedirectAttributes redirectAttributes) {
 
-        if(files.length != 3){
-            redirectAttributes.addFlashAttribute("message", "Please select all three files");
-            return "redirect:/visualisation";
-        }
-
         for(MultipartFile file:files) {
             if (file.isEmpty()) {
                 redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
