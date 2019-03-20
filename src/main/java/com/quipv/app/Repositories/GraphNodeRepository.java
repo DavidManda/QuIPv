@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface GraphNodeRepository extends CrudRepository<GraphNodeEntity, Integer> {
 
-    @Query("SELECT p FROM GraphNodeEntity p WHERE p.user = :user")
-    List<GraphNodeEntity> findNodesForUser(@Param("user") String user);
+    @Query("SELECT n FROM GraphNodeEntity n WHERE n.user = :user AND n.projectId = :pid")
+    List<GraphNodeEntity> findNodesForUserAndProject(@Param("user") String user, @Param("pid") Integer pid);
 }

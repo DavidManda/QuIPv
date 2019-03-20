@@ -5,7 +5,6 @@ import com.quipv.app.Helpers.UserHelper;
 import com.quipv.app.Models.*;
 import com.quipv.app.Repositories.EdgeRepository;
 import com.quipv.app.Repositories.GraphNodeRepository;
-import com.quipv.app.Repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,14 +25,14 @@ public class DataController {
     EdgeRepository edgeRepository;
 
     @GetMapping("/data/pid={pid}/minVal={minArrowWeight}")
-    public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight, @PathVariable(value="pid") String pid) {
+    public @ResponseBody HashMap<String, Object> get(@PathVariable(value="minArrowWeight") String minArrowWeight, @PathVariable(value="pid") Integer pid) {
         Integer minWeight = Integer.parseInt(minArrowWeight);
         String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         List<EdgeEntity> edgeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
-        edgeRepository.findEdgesForUser(username).forEach(edgeEntities::add);
+        graphNodeRepository.findNodesForUserAndProject(username, pid).forEach(graphNodeEntities::add);
+        edgeRepository.findEdgesForUserAndProject(username, pid).forEach(edgeEntities::add);
         List<GraphNodeWithoutNeighbours> vertices = graphNodeEntities.stream().map(node -> new GraphNodeWithoutNeighbours(node.getName(), node.getIndex(), node.isDriver(), node.getX(), node.getY())).collect(Collectors.toList());
         List<Edge> edges = edgeEntities.stream().map(edge -> new Edge(edge.getSourceIndex(), edge.getDestinationIndex(), edge.getWeight())).collect(Collectors.toList());
         VisualisationGraph graph = new VisualisationGraph(vertices, edges);
@@ -45,13 +44,13 @@ public class DataController {
         return map;
     }
 
-    @PostMapping("/storeGraphState")
-    public void storeGraphState(@RequestBody GraphNodeWithoutNeighbours[] nodes){
+    @PostMapping("/storeGraphState/pid={pid}")
+    public void storeGraphState(@RequestBody GraphNodeWithoutNeighbours[] nodes, @PathVariable(value="pid") Integer pid){
 
         String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
+        graphNodeRepository.findNodesForUserAndProject(username,pid).forEach(graphNodeEntities::add);
         for(int i = 0; i<graphNodeEntities.size(); i++){
             final GraphNodeEntity graphNodeEntity = graphNodeEntities.get(i);
             GraphNodeWithoutNeighbours node = Arrays.stream(nodes).filter(n -> n.getId() == graphNodeEntity.getIndex()).findAny().orElse(null);
@@ -64,13 +63,13 @@ public class DataController {
 
     }
 
-    @PostMapping("/updateNodePosition")
-    public void updateNodePosition(@RequestBody GraphNodeWithoutNeighbours node){
+    @PostMapping("/updateNodePosition/pid={pid}")
+    public void updateNodePosition(@RequestBody GraphNodeWithoutNeighbours node, @PathVariable(value="pid") Integer pid){
 
         String username = UserHelper.getUserName();
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
-        graphNodeRepository.findNodesForUser(username).forEach(graphNodeEntities::add);
+        graphNodeRepository.findNodesForUserAndProject(username,pid).forEach(graphNodeEntities::add);
         GraphNodeEntity graphNodeEntity = graphNodeEntities.stream().filter(n -> n.getIndex() == node.getId()).findAny().get();
         graphNodeEntity.setX(node.getX());
         graphNodeEntity.setY(node.getY());

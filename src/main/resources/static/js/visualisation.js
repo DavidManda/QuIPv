@@ -122,9 +122,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             d.x += d3.event.dx;
             d.y +=  d3.event.dy;
             thisGraph.updateGraph();
+            var pid = getPID();
             $.ajax({
                 type: 'POST',
-                url: '/updateNodePosition',
+                url: '/updateNodePosition/pid='+pid,
                 headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
@@ -462,9 +463,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         .attr("width", width)
         .attr("height", height);
     function updateVisualisation(sliderValue){
-        var url = window.location.pathname;
-        var filters = url.split("/");
-        var pid = getPID(filters);
+        var pid = getPID();
         fetch("/data/pid="+pid+"/minVal="+sliderValue).then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
@@ -488,7 +487,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         });
     }
 
-    function getPID(filters) {
+    function getPID() {
+        var url = window.location.pathname;
+        var filters = url.split("/");
         for(var i=0; i<filters.length; i++){
             var filter = filters[i];
             if(filter.includes("pid=")){
@@ -498,9 +499,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     }
 
     function createVisualisation(){
-        var url = window.location.pathname;
-        var filters = url.split("/");
-        var pid = getPID(filters);
+        var pid = getPID();
         fetch("/data/pid="+pid+"/minVal=1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
@@ -519,7 +518,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             graph.updateGraph();
             $.ajax({
                 type: 'POST',
-                url: '/storeGraphState',
+                url: '/storeGraphState/pid='+pid,
                 headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",

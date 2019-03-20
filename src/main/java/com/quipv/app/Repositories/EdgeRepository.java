@@ -13,6 +13,6 @@ import java.util.List;
 @Repository
 public interface EdgeRepository extends CrudRepository<EdgeEntity, Integer> {
 
-    @Query("SELECT e FROM EdgeEntity e WHERE e.user = :user")
-    List<EdgeEntity> findEdgesForUser(@Param("user") String user);
+    @Query("SELECT e FROM EdgeEntity e WHERE e.user = :user AND e.projectId = :pid")
+    List<EdgeEntity> findEdgesForUserAndProject(@Param("user") String user, @Param("pid") Integer pid);
 }
