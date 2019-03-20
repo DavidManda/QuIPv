@@ -77,7 +77,7 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("message",
                 "You successfully uploaded '" + sankeyFile.getOriginalFilename() + "'");
 
-        return "redirect:/visualisation";
+        return "redirect:/visualisation/pid="+projectEntity.getId();
     }
 
 }
