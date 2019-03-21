@@ -3,260 +3,284 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorator="default"
 >
-    <head>
-        <link rel="stylesheet" href="/css/visualisation.css" type="text/css"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        <style>
-            body {
-                font-family: "Lato", sans-serif;
-            }
+<head>
+    <link rel="stylesheet" href="/css/visualisation.css" type="text/css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <style>
+        body {
+            font-family: "Lato", sans-serif;
+        }
+        .sidenav {
+            height: 100%;
+            width: 0px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #009698;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #F9F0F0;
+            display: block;
+        }
+        .sidenav a:hover {
+            color: #B3B3B3;
+        }
+        .sidenav .closeButton {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+        #main {
+            padding: 16px;
+        }
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
 
-            .sidenav {
-                height: 100%;
-                width: 0px;
-                position: fixed;
-                z-index: 1;
-                top: 0;
-                left: 0;
-                background-color: #009698;
-                overflow-x: hidden;
-                padding-top: 20px;
-            }
+        /* The alert message box */
+        .alert {
+            padding: 20px;
+            background-color: #f44336; /* Red */
+            color: white;
+            margin-bottom: 15px;
+        }
 
-            .sidenav a {
-                padding: 6px 8px 6px 16px;
-                text-decoration: none;
-                font-size: 25px;
-                color: #F9F0F0;
-                display: block;
-            }
+        /* The success message box */
+        .success {
+            padding: 20px;
+            background-color: #77b300;
+            color: white;
+            margin-bottom: 15px;
+        }
 
-            .sidenav a:hover {
-                color: #B3B3B3;
-            }
+        /* The close button */
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-            .sidenav .closeButton {
-                position: absolute;
-                top: 0;
-                right: 25px;
-                font-size: 36px;
-                margin-left: 50px;
-            }
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+    </style>
 
-            #main {
-                padding: 16px;
-            }
+</head>
 
-            @media screen and (max-height: 450px) {
-                .sidenav {padding-top: 15px;}
-                .sidenav a {font-size: 18px;}
-            }
+<body layout:fragment="content">
+<div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
 
-        </style>
-
-    </head>
-
-    <body layout:fragment="content">
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
-
-            <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
-            <div id="importDataContent" style="display:none;">
-                <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" id="projectName" name="projectName" placeholder="Enter project name">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="file" id="file1" name="file" hidden="hidden"/>
-                            <button type="button" id="custom_button1" class="btn btn-light btn-block">Upload Maintable</button>
-                        </div>
-                        <div>
-                            <span id="custom_text1">No file selected</span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <input type="file" id="file2" name="file" hidden="hidden"/>
-                            <button type="button" id="custom_button2" class="btn btn-light btn-block">Upload Sankey</button>
-                        </div>
-                        <div>
-                            <span id="custom_text2">No file selected</span>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                            <input type="submit" id="uploadButton" class="btn btn-light" value="Upload" />
-                        </div>
-                    </div>
-                    <div class="row text-center">
-                        <div class="col-sm-12">
-                           Alert goes here
-                        </div>
-                    </div>
-
-                </form>
-
-                <script type="text/javascript">
-                    var filesSelected = 0;
-
-                    realFileButton1 = document.getElementById("file1");
-                    customButton1 = document.getElementById("custom_button1");
-                    customText1 = document.getElementById("custom_text1");
-
-                    customButton1.addEventListener("click", function(){
-                        realFileButton1.click();
-                    });
-                    realFileButton1.addEventListener("change", function(){
-                        if(realFileButton1.value){
-                            customText1.innerHTML = realFileButton1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-                            filesSelected++;
-                        }
-                        else{
-                            customText1.innerHTML = "No file selected";
-                            filesSelected--;
-                        }
-                    });
-
-                    realFileButton2 = document.getElementById("file2");
-                    customButton2 = document.getElementById("custom_button2");
-                    customText2 = document.getElementById("custom_text2");
-
-                    customButton2.addEventListener("click", function(){
-                        realFileButton2.click();
-                    });
-                    realFileButton2.addEventListener("change", function(){
-                        if(realFileButton2.value){
-                            customText2.innerHTML = realFileButton2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-                            filesSelected++;
-
-                        }
-                        else{
-                            customText2.innerHTML = "No file selected";
-                            filesSelected--;
-                        }
-                    });
-
-                    realFileButton3 = document.getElementById("file3");
-                    customButton3 = document.getElementById("custom_button3");
-                    customText3 = document.getElementById("custom_text3");
-
-                    customButton3.addEventListener("click", function(){
-                        realFileButton3.click();
-                    });
-                    realFileButton3.addEventListener("change", function(){
-                        if(realFileButton3.value){
-                            customText3.innerHTML = realFileButton3.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-                            filesSelected++;
-                        }
-                        else{
-                            customText3.innerHTML = "No file selected";
-                            filesSelected--;
-                        }
-                    });
-
-                </script>
+    <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
+    <div id="importDataContent" style="display:none;">
+        <form method="POST" enctype="multipart/form-data" th:action="@{/visualisation/upload?{key}={value}(key=${_csrf.parameterName},value=${_csrf.token})}">
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="projectName" name="projectName" placeholder="Enter project name">
+                </div>
             </div>
-
-            <a href="#">Projects</a>
-            <div>
-                <ul>
-                    <li th:each="project: ${projectList}">
-                        <a th:href="@{/visualisation/pid={pid}(pid=${project.id})}" th:text="${project.name}"></a>
-                    </li>
-                </ul>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="file" id="file1" name="file" hidden="hidden"/>
+                    <button type="button" id="custom_button1" class="btn btn-light btn-block">Upload Maintable</button>
+                </div>
+                <div>
+                    <span id="custom_text1">No file selected</span>
+                </div>
             </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-6">
+                    <input type="file" id="file2" name="file" hidden="hidden"/>
+                    <button type="button" id="custom_button2" class="btn btn-light btn-block">Upload Sankey</button>
+                </div>
+                <div>
+                    <span id="custom_text2">No file selected</span>
+                </div>
+            </div>
+            <br>
+            <div class="row text-center" style="display:none;">
+                <div class="col-sm-12">
+                    <input type="submit" id="formUpload" class="btn btn-light" value="Upload" />
+                </div>
+            </div>
+        </form>
 
-            <a href="javascript:;" onClick="openCloseDataSet()">DataSet</a>
-            <div id="dataSetContent" style="display:none;"></div>
-
-            <a href="javascript:;" onClick="openCloseFormat()">Format</a>
-            <div id="FormatContent" style="display:none;">Format the visualisation here</div>
-
-            <a href="#">Export Visualisation</a>
-            <form class="text-center pt-1" th:action="@{/logout}" method="post">
-                <button type="submit" class="btn btn-outline-light">Sign out</button>
-            </form>
-
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button id="uploadButton" class="btn btn-light">Upload Files</button>
+            </div>
         </div>
 
-        <div>
-            <a style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
+        <br>
+
+        <div class="row text-center">
+            <div class="col-sm-12" id="uploadAlert" style="display:none;">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Error</strong> Please upload all files
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-12" id="uploadSuccess" style="display:none;">
+                <div class="success">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Success</strong> All files successfully uploaded
+                </div>
+            </div>
         </div>
 
-        <div class="main">
-            <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
-            <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
-            <script src="/js/visualisation.js"></script>
-        </div>
-
-        <div class="slidecontainer">
-            <input type="range" class="slider" id="myRange">
-            <p>Value: <span id="demo"></span></p>
-        </div>
-
-        <script>
-            function openNav() {
-                document.getElementById("mySidenav").style.width = "320px";
-                document.getElementById("main").style.marginLeft = "320px";
-            }
-
-            function closeNav() {
-                document.getElementById("mySidenav").style.width = "0";
-                document.getElementById("main").style.marginLeft= "0";
-            }
-
-            var i_1= 0;
-            function openCloseImportData(){
-                if(i_1 === 0) {
-                    i_1 = 1;
-                    return document.getElementById('importDataContent').style.display = 'block';
+        <script type="text/javascript">
+            var filesSelected = 0;
+            realFileButton1 = document.getElementById("file1");
+            customButton1 = document.getElementById("custom_button1");
+            customText1 = document.getElementById("custom_text1");
+            customButton1.addEventListener("click", function(){
+                realFileButton1.click();
+            });
+            realFileButton1.addEventListener("change", function(){
+                if(realFileButton1.value){
+                    customText1.innerHTML = realFileButton1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                    filesSelected++;
                 }
-                if(i_1 === 1){
-                    i_1 = 0;
-                    return document.getElementById('importDataContent').style.display='none';
+                else{
+                    customText1.innerHTML = "No file selected";
+                    filesSelected--;
                 }
-            }
-
-            var i_2 = 0;
-            function openCloseDataSet(){
-                if(i_2 === 0) {
-                    i_2 = 1;
-                    return document.getElementById('dataSetContent').style.display = 'block';
+            });
+            realFileButton2 = document.getElementById("file2");
+            customButton2 = document.getElementById("custom_button2");
+            customText2 = document.getElementById("custom_text2");
+            customButton2.addEventListener("click", function(){
+                realFileButton2.click();
+            });
+            realFileButton2.addEventListener("change", function(){
+                if(realFileButton2.value){
+                    customText2.innerHTML = realFileButton2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
+                    filesSelected++;
                 }
-                if(i_2 === 1){
-                    i_2 = 0;
-                    return document.getElementById('dataSetContent').style.display='none';
+                else{
+                    customText2.innerHTML = "No file selected";
+                    filesSelected--;
                 }
-            }
+            });
 
-            var i_3 = 0;
-            function openCloseFormat(){
-                if(i_3 === 0) {
-                    i_3 = 1;
-                    return document.getElementById('FormatContent').style.display = 'block';
+            document.getElementById("uploadButton").addEventListener("click", function (){
+                if(filesSelected !== 2){
+                    document.getElementById('uploadAlert').style.display = 'block';
                 }
-                if(i_3 === 1){
-                    i_3 = 0;
-                    return document.getElementById('FormatContent').style.display='none';
+                if(filesSelected === 2){
+                    document.getElementById('uploadSuccess').style.display = 'block';
+                    document.getElementById("formUpload").click();
                 }
-            }
-
-            //slider JS
-
-
+            });
         </script>
+    </div>
 
-    </body>
+    <a href="#">Projects</a>
+    <div>
+        <ul>
+            <li th:each="project: ${projectList}">
+                <a th:href="@{/visualisation/pid={pid}(pid=${project.id})}" th:text="${project.name}"></a>
+            </li>
+        </ul>
+    </div>
+
+    <a href="javascript:;" onClick="openCloseDataSet()">DataSet</a>
+    <div id="dataSetContent" style="display:none;"></div>
+
+    <a href="javascript:;" onClick="openCloseFormat()">Format</a>
+    <div id="FormatContent" style="display:none;">Format the visualisation here</div>
+
+    <a href="#">Export Visualisation</a>
+    <form class="text-center pt-1" th:action="@{/logout}" method="post">
+        <button type="submit" class="btn btn-outline-light">Sign out</button>
+    </form>
+
+</div>
+
+<div>
+    <a style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
+</div>
+
+<div class="main">
+    <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
+    <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
+    <script src="/js/visualisation.js"></script>
+</div>
+
+<div class="slidecontainer">
+    <input type="range" class="slider" id="myRange">
+    <p>Value: <span id="demo"></span></p>
+</div>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "320px";
+        document.getElementById("main").style.marginLeft = "320px";
+    }
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginLeft= "0";
+    }
+    var i_1= 0;
+    function openCloseImportData(){
+        if(i_1 === 0) {
+            i_1 = 1;
+            return document.getElementById('importDataContent').style.display = 'block';
+        }
+        if(i_1 === 1){
+            i_1 = 0;
+            return document.getElementById('importDataContent').style.display='none';
+        }
+    }
+    var i_2 = 0;
+    function openCloseDataSet(){
+        if(i_2 === 0) {
+            i_2 = 1;
+            return document.getElementById('dataSetContent').style.display = 'block';
+        }
+        if(i_2 === 1){
+            i_2 = 0;
+            return document.getElementById('dataSetContent').style.display='none';
+        }
+    }
+    var i_3 = 0;
+    function openCloseFormat(){
+        if(i_3 === 0) {
+            i_3 = 1;
+            return document.getElementById('FormatContent').style.display = 'block';
+        }
+        if(i_3 === 1){
+            i_3 = 0;
+            return document.getElementById('FormatContent').style.display='none';
+        }
+    }
+    //slider JS
+</script>
+
+</body>
 </html>
