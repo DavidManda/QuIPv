@@ -145,6 +145,22 @@
             </div>
         </div>
         <div class="row text-center">
+            <div class="col-sm-12" id="mainFileTypeAlert" style="display:none;">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Error</strong> Please ensure Maintable has correct file type
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-12" id="sankeyFileTypeAlert" style="display:none;">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Error</strong> Please ensure Sankey has correct file type
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
             <div class="col-sm-12" id="uploadSuccess" style="display:none;">
                 <div class="success">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -192,11 +208,37 @@
                 if(filesSelected !== 2){
                     document.getElementById('uploadAlert').style.display = 'block';
                 }
+                if(maintableFileValidation() === false){
+                    document.getElementById('mainFileTypeAlert').style.display = 'block';
+                }
+                if(sankeyFileValidation() === false){
+                    document.getElementById('sankeyFileTypeAlert').style.display = 'block';
+                }
+
                 if(filesSelected === 2){
                     document.getElementById('uploadSuccess').style.display = 'block';
                     document.getElementById("formUpload").click();
                 }
             });
+
+
+            function maintableFileValidation() {
+                var fileInput = document.getElementById('file1');
+                var filePath = fileInput.value;
+                var allowedExtensions = /(\.csv)$/i;
+                if (!allowedExtensions.exec(filePath)) {
+                    return false;
+                }
+            }
+
+            function sankeyFileValidation() {
+                var fileInput = document.getElementById('file2');
+                var filePath = fileInput.value;
+                var allowedExtensions = /(\.csv)$/i;
+                if (!allowedExtensions.exec(filePath)) {
+                    return false;
+                }
+            }
         </script>
     </div>
 

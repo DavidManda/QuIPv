@@ -50,4 +50,23 @@ public class Question {
         this.showInVis = showInVis;
     }
 
+    @Override
+    public boolean equals(Object o){
+        if(o == this){
+            return true;
+        }
+
+        if(!(o instanceof Question)){
+            return false;
+        }
+
+        Question q = (Question) o;
+        return this.questionID.equals(q.getQuestionID());
+    }
+
+    @Override
+    public int hashCode() {
+        return this.questionID.hashCode();
+    }
+
 }
