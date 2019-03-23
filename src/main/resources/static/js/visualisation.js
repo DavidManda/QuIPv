@@ -351,7 +351,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 checkbox.type = "checkbox";
                 checkbox.name = n.name;
                 checkbox.value = n.name;
-                checkbox.checked = true;
+                checkbox.checked = n.checked;
+                checkbox.id = n.id.toString();
+                checkbox.onclick=function(){handleCheckBoxFilterClick(this);};
                 s1.appendChild(checkbox);
 
                 var label = document.createElement('label')
@@ -362,6 +364,19 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 s1.appendChild(document.createElement("br"));
             }
         }
+    }
+
+    function handleCheckBoxFilterClick(checkbox) {
+        var pid = getPID();
+        $.ajax({
+            type: 'POST',
+            url: '/updateNodeFilters/pid='+pid,
+            headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
+            dataType: 'json',
+            contentType: "application/json; charset=utf-8",
+            data:JSON.stringify(checkbox.id)
+        });
+        updateVisualisation(document.getElementById("myRange").value);
     }
 
     function compareBasedOnIndex(a,b){
@@ -379,6 +394,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         var nodes = [];
         for(var i = 0; i < dataNodes.length; i++){
             var node = dataNodes[i];
+            if(node.checked !== true)
+                continue;
             if(node.x != null && node.y != null){
                 x = node.x;
                 y = node.y;
@@ -403,6 +420,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             var weight = edge.weight;
             var source = graphNodes.find(function (value) { return(value.id === sourceNodeIndex)});
             var target = graphNodes.find(function (value) { return (value.id === destinationNodeIndex) });
+            if(source == null || target == null)
+                continue;
             edges.push({
                 source: source,
                 target: target,
@@ -477,7 +496,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         // Update the current slider value (each time you drag the slider handle)
         slider.oninput = function() {
             output.innerHTML = this.value;
-            updateVisualisation(this.value, false)
+            updateVisualisation(this.value)
         };
     }
 
@@ -500,7 +519,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
             setSliderValues(min, max, false);
             graph.updateGraph();
-            populateCheckboxFilters("dataSetContent", dataNodes);
+            // populateCheckboxFilters("dataSetContent", dataNodes);
             $.ajax({
                 type: 'POST',
                 url: '/storeGraphState',
@@ -528,6 +547,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         fetch("/data/pid="+pid+"/minVal=1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
+            console.log(dataNodes);
+            console.log(dataEdges);
             var graphNodes = constructNodesForGraph(dataNodes);
             var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
             var root = getRoot(dataNodes,dataEdges);

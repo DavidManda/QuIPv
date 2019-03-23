@@ -15,4 +15,7 @@ public interface GraphNodeRepository extends CrudRepository<GraphNodeEntity, Int
 
     @Query("SELECT n FROM GraphNodeEntity n WHERE n.user = :user AND n.projectId = :pid")
     List<GraphNodeEntity> findNodesForUserAndProject(@Param("user") String user, @Param("pid") Integer pid);
+
+    @Query("SELECT n FROM GraphNodeEntity n WHERE n.user = :user AND n.projectId = :pid and n.nodeIndex = :index")
+    GraphNodeEntity findNodeByIndex(@Param("user") String user, @Param("pid") Integer pid, @Param("index") Integer index);
 }

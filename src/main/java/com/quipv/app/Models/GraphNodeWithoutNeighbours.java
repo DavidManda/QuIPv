@@ -4,6 +4,7 @@ public class GraphNodeWithoutNeighbours {
     private String name;
     private int id;
     private boolean isDriver;
+    private boolean isChecked;
     private Float x;
     private Float y;
 
@@ -13,10 +14,11 @@ public class GraphNodeWithoutNeighbours {
         this.isDriver = node.isDriver();
     }
 
-    public GraphNodeWithoutNeighbours(String name, int index, boolean isDriver, Float x, Float y){
+    public GraphNodeWithoutNeighbours(String name, int index, boolean isDriver, boolean isChecked, Float x, Float y){
         this.name = name;
         this.id = index;
         this.isDriver = isDriver;
+        this.isChecked = isChecked;
         this.x = x;
         this.y = y;
     }
@@ -47,5 +49,13 @@ public class GraphNodeWithoutNeighbours {
 
     public void setY(Float y) {
         this.y = y;
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }

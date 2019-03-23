@@ -33,7 +33,7 @@ public class DataController {
         //TODO filter for projectId
         graphNodeRepository.findNodesForUserAndProject(username, pid).forEach(graphNodeEntities::add);
         edgeRepository.findEdgesForUserAndProject(username, pid).forEach(edgeEntities::add);
-        List<GraphNodeWithoutNeighbours> vertices = graphNodeEntities.stream().map(node -> new GraphNodeWithoutNeighbours(node.getName(), node.getIndex(), node.isDriver(), node.getX(), node.getY())).collect(Collectors.toList());
+        List<GraphNodeWithoutNeighbours> vertices = graphNodeEntities.stream().map(node -> new GraphNodeWithoutNeighbours(node.getName(), node.getNodeIndex(), node.isDriver(), node.isChecked(), node.getX(), node.getY())).collect(Collectors.toList());
         List<Edge> edges = edgeEntities.stream().map(edge -> new Edge(edge.getSourceIndex(), edge.getDestinationIndex(), edge.getWeight())).collect(Collectors.toList());
         VisualisationGraph graph = new VisualisationGraph(vertices, edges);
         graph = GraphHelper.filterEdges(graph, minWeight);
@@ -53,7 +53,7 @@ public class DataController {
         graphNodeRepository.findNodesForUserAndProject(username,pid).forEach(graphNodeEntities::add);
         for(int i = 0; i<graphNodeEntities.size(); i++){
             final GraphNodeEntity graphNodeEntity = graphNodeEntities.get(i);
-            GraphNodeWithoutNeighbours node = Arrays.stream(nodes).filter(n -> n.getId() == graphNodeEntity.getIndex()).findAny().orElse(null);
+            GraphNodeWithoutNeighbours node = Arrays.stream(nodes).filter(n -> n.getId() == graphNodeEntity.getNodeIndex()).findAny().orElse(null);
             if(node != null){
                 graphNodeEntities.get(i).setX(node.getX());
                 graphNodeEntities.get(i).setY(node.getY());
@@ -70,10 +70,17 @@ public class DataController {
         List<GraphNodeEntity> graphNodeEntities = new ArrayList<>();
         //TODO filter for projectId
         graphNodeRepository.findNodesForUserAndProject(username,pid).forEach(graphNodeEntities::add);
-        GraphNodeEntity graphNodeEntity = graphNodeEntities.stream().filter(n -> n.getIndex() == node.getId()).findAny().get();
+        GraphNodeEntity graphNodeEntity = graphNodeEntities.stream().filter(n -> n.getNodeIndex() == node.getId()).findAny().get();
         graphNodeEntity.setX(node.getX());
         graphNodeEntity.setY(node.getY());
         graphNodeRepository.save(graphNodeEntity);
+    }
+
+    @PostMapping("/updateNodeFilters/pid={pid}")
+    public void updateNodeFilters(@RequestBody Integer index, @PathVariable(value="pid") Integer pid){
+        GraphNodeEntity node = graphNodeRepository.findNodeByIndex(UserHelper.getUserName(), pid, index);
+        node.setChecked(!node.isChecked());
+        graphNodeRepository.save(node);
     }
 
 }

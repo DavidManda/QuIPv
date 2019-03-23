@@ -1,20 +1,18 @@
 package com.quipv.app.Models;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 
 @Entity
 @Table(name = "nodes", schema = "quipv")
-//@NamedQuery(name = "GraphNodeEntity.findByName", query = "SELECT n FROM GraphNodeEntity n WHERE n.user = ?1")
 public class GraphNodeEntity {
     private int id;
-    private int index;
+    private int nodeIndex;
     private Float x;
     private Float y;
     private String user;
     private String name;
     private boolean isDriver;
+    private boolean isChecked;
     private int projectId;
 
     @Id
@@ -30,11 +28,12 @@ public class GraphNodeEntity {
 
     public GraphNodeEntity(){}
 
-    public GraphNodeEntity(String user, String name, int projectId, int index, boolean isDriver){
+    public GraphNodeEntity(String user, String name, int projectId, int index, boolean isDriver, boolean isChecked) {
+        this.isChecked = isChecked;
         this.user = user;
         this.name = name;
         this.projectId = projectId;
-        this.index = index;
+        this.nodeIndex = index;
         this.isDriver =  isDriver;
     }
 
@@ -90,12 +89,12 @@ public class GraphNodeEntity {
 
     @Basic
     @Column(name = "nodeIndex",nullable = false)
-    public int getIndex() {
-        return index;
+    public int getNodeIndex() {
+        return nodeIndex;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
+    public void setNodeIndex(int index) {
+        this.nodeIndex = index;
     }
 
     @Basic
@@ -106,6 +105,16 @@ public class GraphNodeEntity {
 
     public void setDriver(boolean driver) {
         isDriver = driver;
+    }
+
+    @Basic
+    @Column(name = "isChecked",nullable = false)
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 }
 

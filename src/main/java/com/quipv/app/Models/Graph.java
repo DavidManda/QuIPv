@@ -97,7 +97,7 @@ public class Graph extends ArrayList<GraphNode> {
 
     public void saveToDb(int projectId, GraphNodeRepository graphNodeRepository, EdgeRepository edgeRepository){
         String username = UserHelper.getUserName();
-        List<GraphNodeEntity> graphNodeEntities = this.vertices.stream().map(node -> new GraphNodeEntity(username, node.getName(), projectId, node.getIndex(), node.isDriver())).collect(Collectors.toList());
+        List<GraphNodeEntity> graphNodeEntities = this.vertices.stream().map(node -> new GraphNodeEntity(username, node.getName(), projectId, node.getIndex(), node.isDriver(), true)).collect(Collectors.toList());
         List<EdgeEntity> edgeEntities = this.edges.stream().map(edge -> new EdgeEntity(edge.getOriginIndex(), edge.getDestinationIndex(), edge.getWeight(), projectId, username)).collect(Collectors.toList());
         graphNodeRepository.saveAll(graphNodeEntities);
         edgeRepository.saveAll(edgeEntities);
