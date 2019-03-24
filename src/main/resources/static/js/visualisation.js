@@ -375,8 +375,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             dataType: 'json',
             contentType: "application/json; charset=utf-8",
             data:JSON.stringify(checkbox.id)
+        }).always(function () {
+            console.log("hello");
+            updateVisualisation(document.getElementById("myRange").value);
         });
-        updateVisualisation(document.getElementById("myRange").value);
     }
 
     function compareBasedOnIndex(a,b){
@@ -519,10 +521,10 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
             setSliderValues(min, max, false);
             graph.updateGraph();
-            // populateCheckboxFilters("dataSetContent", dataNodes);
+            populateCheckboxFilters("dataSetContent", dataNodes);
             $.ajax({
                 type: 'POST',
-                url: '/storeGraphState',
+                url: '/storeGraphState/pid='+pid,
                 headers: {"X-CSRF-TOKEN": $("input[name='_csrf']").val()},
                 dataType: 'json',
                 contentType: "application/json; charset=utf-8",
