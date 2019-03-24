@@ -57,6 +57,13 @@
             color: white;
             margin-bottom: 15px;
         }
+        /* The alert message box */
+        .alert2 {
+            padding: 20px;
+            background-color: orange;
+            color: white;
+            margin-bottom: 15px;
+        }
         /* The success message box */
         .success {
             padding: 20px;
@@ -278,7 +285,9 @@
                 else{return false;}
             }
         </script>
+        <hr/>
     </div>
+
 
     <a href="#">Projects</a>
     <div>
@@ -295,7 +304,32 @@
     <a href="javascript:;" onClick="openCloseFormat()">Format</a>
     <div id="FormatContent" style="display:none;">Format the visualisation here</div>
 
-    <a href="#">Export Visualisation</a>
+    <a href="javascript:;" onClick="openCloseVis()">Export Visualisation</a>
+    <div id="visContent" style="display:none;">
+        <div class="row text-center">
+            <div class="col-sm-12" id="jpgAlert" style="display:block;">
+                <div class="alert2">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Alert</strong> To export as .jpg, fill screen with Visualisation, export will only include what is on the screen.
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button type="button" id="static" class="btn btn-light">Export .jpg</button>
+            </div>
+        </div>
+        <br>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button type="button" id="dynamic" class="btn btn-light">Export dynamic</button>
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+
     <a href="/">Home Page</a>
     <form class="text-center pt-1" th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-outline-light">Sign out</button>
@@ -358,6 +392,18 @@
         if(i_3 === 1){
             i_3 = 0;
             return document.getElementById('FormatContent').style.display='none';
+        }
+    }
+
+    var i_4 = 0;
+    function openCloseVis(){
+        if(i_4 === 0) {
+            i_4 = 1;
+            return document.getElementById('visContent').style.display = 'block';
+        }
+        if(i_4 === 1){
+            i_4 = 0;
+            return document.getElementById('visContent').style.display='none';
         }
     }
     //slider JS
