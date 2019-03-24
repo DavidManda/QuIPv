@@ -50,7 +50,6 @@
             .sidenav {padding-top: 15px;}
             .sidenav a {font-size: 18px;}
         }
-
         /* The alert message box */
         .alert {
             padding: 20px;
@@ -58,7 +57,13 @@
             color: white;
             margin-bottom: 15px;
         }
-
+        /* The alert message box */
+        .alert2 {
+            padding: 20px;
+            background-color: orange;
+            color: white;
+            margin-bottom: 15px;
+        }
         /* The success message box */
         .success {
             padding: 20px;
@@ -66,7 +71,6 @@
             color: white;
             margin-bottom: 15px;
         }
-
         /* The close button */
         .closebtn {
             margin-left: 15px;
@@ -78,7 +82,6 @@
             cursor: pointer;
             transition: 0.3s;
         }
-
         /* When moving the mouse over the close button */
         .closebtn:hover {
             color: black;
@@ -137,13 +140,31 @@
         <br>
 
         <div class="row text-center">
-            <div class="col-sm-12" id="uploadAlert" style="display:none;">
+            <div class="col-sm-12" id="projectNameAlert" style="display:none;">
                 <div class="alert">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                    <strong>Error</strong> Please upload all files
+                    <strong>Error</strong> Please enter a project name
                 </div>
             </div>
         </div>
+
+        <div class="row text-center">
+            <div class="col-sm-12" id="maintableUploadAlert" style="display:none;">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Error</strong> Please upload maintable
+                </div>
+            </div>
+        </div>
+        <div class="row text-center">
+            <div class="col-sm-12" id="sankeyUploadAlert" style="display:none;">
+                <div class="alert">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Error</strong> Please upload sankey
+                </div>
+            </div>
+        </div>
+
         <div class="row text-center">
             <div class="col-sm-12" id="mainFileTypeAlert" style="display:none;">
                 <div class="alert">
@@ -170,21 +191,21 @@
         </div>
 
         <script type="text/javascript">
-            var filesSelected = 0;
             realFileButton1 = document.getElementById("file1");
             customButton1 = document.getElementById("custom_button1");
             customText1 = document.getElementById("custom_text1");
             customButton1.addEventListener("click", function(){
                 realFileButton1.click();
             });
+            var maintableUploaded= 0;
             realFileButton1.addEventListener("change", function(){
                 if(realFileButton1.value){
                     customText1.innerHTML = realFileButton1.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-                    filesSelected++;
+                    maintableUploaded = 1;
                 }
                 else{
                     customText1.innerHTML = "No file selected";
-                    filesSelected--;
+                    maintableUploaded = 0;
                 }
             });
             realFileButton2 = document.getElementById("file2");
@@ -193,21 +214,29 @@
             customButton2.addEventListener("click", function(){
                 realFileButton2.click();
             });
+            var sankeyUploaded = 0;
             realFileButton2.addEventListener("change", function(){
                 if(realFileButton2.value){
                     customText2.innerHTML = realFileButton2.value.match(/[\/\\]([\w\d\s\.\-\(\)]+)$/)[1];
-                    filesSelected++;
+                    sankeyUploaded = 1;
                 }
                 else{
                     customText2.innerHTML = "No file selected";
-                    filesSelected--;
+                    sankeyUploaded = 0;
                 }
             });
-
             document.getElementById("uploadButton").addEventListener("click", function (){
-                if(filesSelected !== 2){
-                    document.getElementById('uploadAlert').style.display = 'block';
+                document.getElementById('projectNameAlert').style.display = 'none';
+                document.getElementById('maintableUploadAlert').style.display = 'none';
+                document.getElementById('sankeyUploadAlert').style.display = 'none';
+                document.getElementById('mainFileTypeAlert').style.display = 'none';
+                document.getElementById('sankeyFileTypeAlert').style.display = 'none';
+                document.getElementById('uploadSuccess').style.display = 'none';
+
+                if(projectName() === false) {
+                    document.getElementById('projectNameAlert').style.display = 'block';
                 }
+
                 if(maintableFileValidation() === false){
                     document.getElementById('mainFileTypeAlert').style.display = 'block';
                 }
@@ -215,13 +244,20 @@
                     document.getElementById('sankeyFileTypeAlert').style.display = 'block';
                 }
 
-                if(filesSelected === 2){
+                if(maintableUploaded === 0){
+                    document.getElementById('maintableUploadAlert').style.display = 'block';
+                    document.getElementById('mainFileTypeAlert').style.display = 'none';
+                }
+                if(sankeyUploaded === 0) {
+                    document.getElementById('sankeyUploadAlert').style.display = 'block';
+                    document.getElementById('sankeyFileTypeAlert').style.display = 'none';
+                }
+
+                if(maintableUploaded === 1  && sankeyUploaded === 1  && projectName() === true && maintableFileValidation() === true && sankeyFileValidation() === true){
                     document.getElementById('uploadSuccess').style.display = 'block';
                     document.getElementById("formUpload").click();
                 }
             });
-
-
             function maintableFileValidation() {
                 var fileInput = document.getElementById('file1');
                 var filePath = fileInput.value;
@@ -229,8 +265,8 @@
                 if (!allowedExtensions.exec(filePath)) {
                     return false;
                 }
+                else{return true;}
             }
-
             function sankeyFileValidation() {
                 var fileInput = document.getElementById('file2');
                 var filePath = fileInput.value;
@@ -238,9 +274,20 @@
                 if (!allowedExtensions.exec(filePath)) {
                     return false;
                 }
+                else{return true;}
+            }
+
+            function projectName(){
+                var input = document.getElementById("projectName");
+                if (input && input.value) {
+                    return true;
+                }
+                else{return false;}
             }
         </script>
+        <hr/>
     </div>
+
 
     <a href="#">Projects</a>
     <div>
@@ -257,7 +304,32 @@
     <a href="javascript:;" onClick="openCloseFormat()">Format</a>
     <div id="FormatContent" style="display:none;">Format the visualisation here</div>
 
-    <a href="#">Export Visualisation</a>
+    <a href="javascript:;" onClick="openCloseVis()">Export Visualisation</a>
+    <div id="visContent" style="display:none;">
+        <div class="row text-center">
+            <div class="col-sm-12" id="jpgAlert" style="display:block;">
+                <div class="alert2">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    <strong>Alert</strong> To export as .jpg, fill screen with Visualisation, export will only include what is on the screen.
+                </div>
+            </div>
+        </div>
+
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button type="button" id="static" class="btn btn-light">Export .jpg</button>
+            </div>
+        </div>
+        <br>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button type="button" id="dynamic" class="btn btn-light">Export dynamic</button>
+            </div>
+        </div>
+        <hr/>
+    </div>
+
+
     <a href="/">Home Page</a>
     <form class="text-center pt-1" th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-outline-light">Sign out</button>
@@ -320,6 +392,18 @@
         if(i_3 === 1){
             i_3 = 0;
             return document.getElementById('FormatContent').style.display='none';
+        }
+    }
+
+    var i_4 = 0;
+    function openCloseVis(){
+        if(i_4 === 0) {
+            i_4 = 1;
+            return document.getElementById('visContent').style.display = 'block';
+        }
+        if(i_4 === 1){
+            i_4 = 0;
+            return document.getElementById('visContent').style.display='none';
         }
     }
     //slider JS
