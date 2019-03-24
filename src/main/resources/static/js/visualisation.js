@@ -376,7 +376,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             contentType: "application/json; charset=utf-8",
             data:JSON.stringify(checkbox.id)
         }).always(function () {
-            console.log("hello");
             updateVisualisation(document.getElementById("myRange").value);
         });
     }
@@ -388,7 +387,6 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     }
 
     function filterNodes(nodes, edges) {
-        console.log(edges[0]);
         var sourceIndeces = edges.map(function (value) { return value.source.id; });
         var destinationIndeces = edges.map(function (value) { return value.target.id; });
         var usedIndeces = sourceIndeces.concat(destinationIndeces);
@@ -398,7 +396,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
     // Insert all nodes into graphNodes, node with id k will be at position k in the array.
     // This property must be preserved.
-    function constructNodesForGraph(dataNodes, dataEdges){
+    function constructNodesForGraph(dataNodes){
         var x = 600, y = 400;
         // Sort nodes based on index
         dataNodes.sort(compareBasedOnIndex);
@@ -559,12 +557,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         fetch("/data/pid="+pid+"/minVal=1").then(function (value) { return value.json()}).then(function (data) {
             var dataNodes = data.vertices;
             var dataEdges = data.edgesList;
-            console.log(dataNodes);
-            console.log(dataEdges);
             var graphNodes = constructNodesForGraph(dataNodes, dataEdges);
             var graphEdges = constructEdgesForGraph(dataEdges,graphNodes);
-            console.log(graphNodes);
-            console.log(graphEdges);
             graphNodes = filterNodes(graphNodes, graphEdges);
             var root = getRoot(dataNodes,dataEdges);
             if(!nodesHaveCoordinates(dataNodes)){
