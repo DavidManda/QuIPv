@@ -38,10 +38,11 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         defs.append('svg:marker')
             .attr('id', 'mark-end-arrow')
             .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 7)
+            .attr('refX',7)
             .attr('markerWidth', 3.5)
             .attr('markerHeight', 3.5)
             .attr('orient', 'auto')
+            .attr('markerUnits','strokeWidth')
             .append('svg:path')
             .attr('d', 'M0,-5L10,0L0,5');
 
@@ -207,6 +208,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             return String(d.source.id) + "+" + String(d.target.id);
         });
         var paths = thisGraph.paths;
+
         // update existing paths
         paths.style('marker-end', 'url(#end-arrow)')
             .classed(consts.selectedClass, function(d){
@@ -215,7 +217,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             .attr("d", function(d){
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
             })
-            .attr("stroke-width", function(d) { return (d.edgeWeight); })
+            .attr("stroke-width", function(d) {return (6+d.edgeWeight)+"px"})
+            // .attr('refX', function(d){return d.edgeWeight+7})
         ;
 
         // add new paths
@@ -226,10 +229,9 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             .attr("d", function(d){
                 return "M" + d.source.x + "," + d.source.y + "L" + d.target.x + "," + d.target.y;
             })
-            .attr("stroke-width", function(d) { return (d.edgeWeight); })
+            .attr("stroke-width", function(d){return (6+d.edgeWeight)+"px"})
+            // .attr('refX', function(d){return d.edgeWeight+7})
         ;
-
-
 
         // remove old links
         paths.exit().remove();
