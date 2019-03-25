@@ -1,4 +1,4 @@
-package com.quipv.app;
+package com.quipv.app.Models;
 
 import com.quipv.app.Models.Question;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.quipv.app;
+package com.quipv.app.Helpers;
 
 import com.quipv.app.Models.InterviewEntry;
 import org.junit.Test;

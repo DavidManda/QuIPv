@@ -1,7 +1,8 @@
-package com.quipv.app;
+package com.quipv.app.Helpers;
 
-import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.*;
+import com.quipv.app.Helpers.GraphHelper;
+import com.quipv.app.Helpers.ProjectHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProjectHelperTest {
+public class GraphHelperTest{
     private List<MaintableEntity> interviewEntries = new ArrayList<>();
     private List<SankeyEntity> sankeyEntries = new ArrayList<>();
 
@@ -26,7 +27,7 @@ public class ProjectHelperTest {
         entry1.setOutcome1("O1");
         entry1.setOutcome2("O2");
         entry1.setOutcome3("O3");
-        entry1.setProjectName("Test Project Name 1");
+        entry1.setProjectName("Test project name");
         entry1.setQuestionId("Test QuestionID 1");
         entry1.setQuestion("Test question 1");
         entry1.setFullAnswer("Test full answer 1");
@@ -39,27 +40,14 @@ public class ProjectHelperTest {
         entry2.setDriverOfChange("D2");
         entry2.setOutcome1("O3");
         entry2.setOutcome2("O4");
-        entry2.setProjectName("Test Project Name 1");
+        entry2.setOutcome3("O1");
+        entry2.setProjectName("Test project name");
         entry2.setQuestionId("Test QuestionID 2");
         entry2.setQuestion("Test question 2");
         entry2.setFullAnswer("Test full answer 2");
         entry2.setBrokenAnswer("Test broken answer 2");
         entry2.setRespondentId("Test resp ID 2");
         entry2.setInterviewType("Test interview type 2");
-
-        MaintableEntity entry3 = new MaintableEntity();
-        entry3.setRowId(3);
-        entry3.setDriverOfChange("D1");
-        entry3.setOutcome1("O2");
-        entry3.setOutcome2("O4");
-        entry3.setOutcome3("O5");
-        entry3.setProjectName("Test Project Name 1");
-        entry3.setQuestionId("Test QuestionID 2");
-        entry3.setQuestion("Test question 2");
-        entry3.setFullAnswer("Test full answer 3");
-        entry3.setBrokenAnswer("Test broken answer 3");
-        entry3.setRespondentId("Test resp ID 3");
-        entry3.setInterviewType("Test interview type 2");
 
         SankeyEntity sankey1 = new SankeyEntity();
         sankey1.setId(1);
@@ -134,82 +122,44 @@ public class ProjectHelperTest {
         SankeyEntity sankey6 = new SankeyEntity();
         sankey6.setId(6);
         sankey6.setProjectname("Test Project Name 1");
-        sankey6.setRowId(3);
+        sankey6.setRowId(2);
         sankey6.setInterviewType("Test Interview Type 2");
-        sankey6.setSource("D1");
-        sankey6.setTarget("O2");
-        sankey6.setSourceDescription("Test Driver 1");
-        sankey6.setTargetDescription("Test Outcome 2");
+        sankey6.setSource("O4");
+        sankey6.setTarget("O1");
+        sankey6.setSourceDescription("Test Outcome 4");
+        sankey6.setTargetDescription("Test Outcome 1");
         sankey6.setFileinstanceId(1);
         sankey6.setSourceNegPos("Test Source NegPos 6");
         sankey6.setTargetNegPos("Test Target NegPos 6");
         sankey6.setInterviewType("Test interview type 2");
 
-        SankeyEntity sankey7 = new SankeyEntity();
-        sankey7.setId(7);
-        sankey7.setProjectname("Test Project Name 1");
-        sankey7.setRowId(3);
-        sankey7.setInterviewType("Test Interview Type 2");
-        sankey7.setSource("O2");
-        sankey7.setTarget("O4");
-        sankey7.setSourceDescription("Test Outcome 2");
-        sankey7.setTargetDescription("Test Outcome 4");
-        sankey7.setFileinstanceId(1);
-        sankey7.setSourceNegPos("Test Source NegPos 7");
-        sankey7.setTargetNegPos("Test Target NegPos 7");
-        sankey7.setInterviewType("Test interview type 2");
-
-        SankeyEntity sankey8 = new SankeyEntity();
-        sankey8.setId(8);
-        sankey8.setProjectname("Test Project Name 1");
-        sankey8.setRowId(3);
-        sankey8.setInterviewType("Test Interview Type 2");
-        sankey8.setSource("O4");
-        sankey8.setTarget("O5");
-        sankey8.setSourceDescription("Test Outcome 4");
-        sankey8.setTargetDescription("Test Outcome 5");
-        sankey8.setFileinstanceId(1);
-        sankey8.setSourceNegPos("Test Source NegPos 8");
-        sankey8.setTargetNegPos("Test Target NegPos 8");
-        sankey8.setInterviewType("Test interview type 2");
-
         //Add entries to List
         interviewEntries.add(entry1);
         interviewEntries.add(entry2);
-        interviewEntries.add(entry3);
         sankeyEntries.add(sankey1);
         sankeyEntries.add(sankey2);
         sankeyEntries.add(sankey3);
         sankeyEntries.add(sankey4);
         sankeyEntries.add(sankey5);
         sankeyEntries.add(sankey6);
-        sankeyEntries.add(sankey7);
-        sankeyEntries.add(sankey8);
     }
 
     @Test
-    public void testProjectCreation(){
+    public void testGraphIsConstructedCorrectly(){
         Project project = ProjectHelper.populate(interviewEntries,sankeyEntries);
-        //Name: Test Project Name 1
-        //Questions: Test QuestionID 1, Test QuestionID 2
-        //Answers:Test full answer 1, Test full answer 2, Test full answer 3
-        //Respondents: Test resp ID 1, Test resp ID 2, Test resp ID 3
-
-        ArrayList<Question> questions = project.getQuestions();
-        List<Answer> answers = project.getAnswers();
-        ArrayList<Respondent> respondents = project.getRespondents();
-
-        Assert.assertEquals(project.getName(), "Test Project Name 1");
-        Assert.assertEquals(questions.size(), 2);
-        Assert.assertEquals(questions.get(0).getQuestionID(), "Test QuestionID 1");
-        Assert.assertEquals(questions.get(1).getQuestionID(), "Test QuestionID 2");
-        Assert.assertEquals(answers.size(), 3);
-        Assert.assertEquals(answers.get(0).getFullAnswer(), "Test full answer 1");
-        Assert.assertEquals(answers.get(1).getFullAnswer(), "Test full answer 2");
-        Assert.assertEquals(answers.get(2).getFullAnswer(), "Test full answer 3");
-        Assert.assertEquals(respondents.size(), 3);
-        Assert.assertEquals(respondents.get(0).getRespondentID(), "Test resp ID 1");
-        Assert.assertEquals(respondents.get(1).getRespondentID(), "Test resp ID 2");
-        Assert.assertEquals(respondents.get(2).getRespondentID(), "Test resp ID 3");
+        Graph graph = GraphHelper.constructGraph(project);
+        //Vertices should be D1, D2, O1, O2, O3, O4
+        Assert.assertEquals(6,graph.getVertices().size());
+        GraphNode D1 = graph.getNodeByName("Test Driver 1").get();
+        GraphNode O1 = graph.getNodeByName("Test Outcome 1").get();
+        GraphNode O2 = graph.getNodeByName("Test Outcome 2").get();
+        GraphNode O3 = graph.getNodeByName("Test Outcome 3").get();
+        GraphNode O4 = graph.getNodeByName("Test Outcome 4").get();
+        Assert.assertTrue(D1.getNeighbourNodes().contains(O1));
+        Assert.assertTrue(O1.getNeighbourNodes().contains(O2));
+        Assert.assertTrue(O2.getNeighbourNodes().contains(O3));
+        Assert.assertTrue(O4.getNeighbourNodes().contains(O1));
     }
+
+
 }
