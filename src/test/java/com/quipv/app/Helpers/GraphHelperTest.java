@@ -1,8 +1,6 @@
 package com.quipv.app.Helpers;
 
 import com.quipv.app.Models.*;
-import com.quipv.app.Helpers.GraphHelper;
-import com.quipv.app.Helpers.ProjectHelper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -148,6 +146,7 @@ public class GraphHelperTest{
     public void testGraphIsConstructedCorrectly(){
         Project project = ProjectHelper.populate(interviewEntries,sankeyEntries);
         Graph graph = GraphHelper.constructGraph(project);
+
         //Vertices should be D1, D2, O1, O2, O3, O4
         Assert.assertEquals(6,graph.getVertices().size());
         GraphNode D1 = graph.getNodeByName("Test Driver 1").get();
@@ -159,6 +158,29 @@ public class GraphHelperTest{
         Assert.assertTrue(O1.getNeighbourNodes().contains(O2));
         Assert.assertTrue(O2.getNeighbourNodes().contains(O3));
         Assert.assertTrue(O4.getNeighbourNodes().contains(O1));
+    }
+
+    @Test
+    public void testManipulateGraph(){
+        Project project = ProjectHelper.populate(interviewEntries,sankeyEntries);
+        Graph graph = GraphHelper.constructGraph(project);
+
+        //Vertices should be D1, D2, O1, O2, O3, O4
+        List<GraphNodeWithoutNeighbours> nodes = new ArrayList<>();
+        nodes.add(new GraphNodeWithoutNeighbours("Test Driver 1",1,true,true,(float)1.5,(float) 1.5));
+        nodes.add(new GraphNodeWithoutNeighbours("Test Outcome 1",1,true,true,(float)1.5,(float) 1.5));
+        nodes.add(new GraphNodeWithoutNeighbours("Test Outcome 2",1,true,true,(float)1.5,(float) 1.5));
+        nodes.add(new GraphNodeWithoutNeighbours("Test Outcome 3",1,true,true,(float)1.5,(float) 1.5));
+        nodes.add(new GraphNodeWithoutNeighbours("Test Driver 2",1,true,true,(float)1.5,(float) 1.5));
+        nodes.add(new GraphNodeWithoutNeighbours("Test Outcome 4",1,true,true,(float)1.5,(float) 1.5));
+
+        Assert.assertEquals(6,GraphHelper.getListOfNodes(graph).size());
+        Assert.assertEquals(nodes.get(0).getName(),GraphHelper.getListOfNodes(graph).get(0).getName());
+        Assert.assertEquals(nodes.get(1).getName(),GraphHelper.getListOfNodes(graph).get(1).getName());
+        Assert.assertEquals(nodes.get(2).getName(),GraphHelper.getListOfNodes(graph).get(2).getName());
+        Assert.assertEquals(nodes.get(3).getName(),GraphHelper.getListOfNodes(graph).get(3).getName());
+        Assert.assertEquals(nodes.get(4).getName(),GraphHelper.getListOfNodes(graph).get(4).getName());
+        Assert.assertEquals(nodes.get(5).getName(),GraphHelper.getListOfNodes(graph).get(5).getName());
     }
 
 
