@@ -1,9 +1,5 @@
 package com.quipv.app.Models;
 
-import com.quipv.app.Models.Answer;
-import com.quipv.app.Models.Project;
-import com.quipv.app.Models.Question;
-import com.quipv.app.Models.Respondent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,16 +14,10 @@ import java.util.ArrayList;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ProjectTest
-{
+public class ProjectTest {
 
-
-    /**
-     * Rigourous Test :-)
-     */
     @Test
-    public void testCreateProject()
-    {
+    public void testCreateProject() {
         ArrayList<String> outcomes = new ArrayList<>();
         outcomes.add("O1");
         outcomes.add("O2");
@@ -59,10 +49,15 @@ public class ProjectTest
             $.respondents = new ArrayList<Respondent>(){{add(respondent1);}};
         }).build();
 
-
+        //Test Project Created Correctly
         assertEquals( "TP1", project.getName());
         assertEquals( new ArrayList<Question>(){{add(question1);}}, project.getQuestions());
         assertEquals( new ArrayList<Answer>(){{add(answer);}}, project.getAnswers());
         assertEquals( new ArrayList<Respondent>(){{add(respondent1);}}, project.getRespondents());
+
+        //Test toString
+        String expected = "Questions: 1, \nAnswers: 11, \nRespondents: 1, \n\n";
+        assertEquals(expected, project.toString());
     }
+
 }

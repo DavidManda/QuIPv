@@ -1,6 +1,5 @@
 package com.quipv.app.Models;
 
-import com.quipv.app.Models.Respondent;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,20 +8,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-
 /**
  * Unit test for Respondent module.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class RespondentTest
-{
-    /**
-     * Rigourous Test :-)
-     */
+public class RespondentTest {
+
     @Test
-    public void testCreateRespondent()
-    {
+    public void testCreateRespondent() {
 
        Respondent respondent1 = new Respondent.RespondentBuilder().with($ -> {
             $.respondentID = "1";

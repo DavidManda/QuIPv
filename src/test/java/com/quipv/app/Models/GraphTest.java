@@ -1,13 +1,14 @@
 package com.quipv.app.Models;
 
-
-import com.quipv.app.Models.Graph;
-import com.quipv.app.Models.GraphNode;
+import com.quipv.app.Repositories.EdgeRepository;
+import com.quipv.app.Repositories.GraphNodeRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 /**
  * Unit test for simple App.
@@ -89,6 +90,9 @@ public class GraphTest
         graph.addEdge(node2, node1);
         Assert.assertEquals(1, getEdgeWeight(graph, "T2", "T1"));
         Assert.assertEquals(2,getEdgeWeight(graph, "T1", "T2"));
+
+        //Test no node found
+        Assert.assertEquals(Optional.empty(), graph.getNodeByName("NaName"));
     }
 
     private int getEdgeWeight(Graph graph, String source, String destination){
@@ -96,5 +100,22 @@ public class GraphTest
                 .filter(p -> p.getOriginIndex() == graph.getNodeByName(source).get().getIndex())
                 .filter(p -> p.getDestinationIndex() == graph.getNodeByName(destination).get().getIndex())
                 .findFirst().get().getWeight();
+    }
+
+    @Test
+    public void testSaveToDB(){
+        Graph graph = new Graph();
+        GraphNode node1 = new GraphNode("T1", 1, true);
+        GraphNode node2 = new GraphNode("T2", 1, true);
+        //GraphNodeRepository gnr;
+        //EdgeRepository er;
+
+        //Test empty repo
+        //graph.saveToDb(1,gnr,er);
+
+
+        //Test repo with one edge
+        graph.addEdge(node1, node2);
+        Assert.assertTrue(true);
     }
 }
