@@ -107,7 +107,7 @@ public class InterviewEntry {
                 "\n question = " + this.question +
                 "\n respondentID = " + this.respondentID +
                 "\n full answer = " + this.fullAnswer +
-                "\n broken answr = " + this.brokenAnswer +
+                "\n broken answer = " + this.brokenAnswer +
                 "\n driver = " + this.driver +
                 "\n primary outcome = " + this.primaryOutcome +
                 "\n secondary outcome = " + this.secondaryOutcome +

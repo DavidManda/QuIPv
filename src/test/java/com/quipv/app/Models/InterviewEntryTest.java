@@ -1,6 +1,5 @@
-package com.quipv.app.Helpers;
+package com.quipv.app.Models;
 
-import com.quipv.app.Models.InterviewEntry;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,20 +7,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
-
 /**
  * Unit test for InterviewEntry module.
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class InterviewEntryTest
-{
-    /**
-     * Rigourous Test :-)
-     */
+public class InterviewEntryTest {
+
     @Test
-    public void testCreateInterviewEntry()
-    {
+    public void testCreateInterviewEntry() {
         InterviewEntry interviewEntry = new InterviewEntry.InterviewEntryBuilder().with($ -> {
             $.questionID = "1";
             $.question = "Question1";
@@ -36,6 +30,7 @@ public class InterviewEntryTest
             $.projectName = "Project1";
         }).build();
 
+        //Test Creation
         assertEquals( "1", interviewEntry.getQuestionID());
         assertEquals( "Question1", interviewEntry.getQuestion());
         assertEquals( "2", interviewEntry.getRespondentID());
@@ -48,5 +43,10 @@ public class InterviewEntryTest
         assertEquals( "Out3", interviewEntry.getTertiaryOutcome());
         assertEquals( "Project1", interviewEntry.getProjectName());
 
+        //Test toString
+        String expected = "Interview entry with:\n questionID = 1\n question = Question1\n respondentID = 2" +
+                "\n full answer = FA1\n broken answer = BA1\n driver = DR1\n primary outcome = " +
+                "Out1\n secondary outcome = Out2\n tertiary outcome = Out3\n project name = Project1\n";
+        assertEquals(expected,interviewEntry.toString());
     }
 }
