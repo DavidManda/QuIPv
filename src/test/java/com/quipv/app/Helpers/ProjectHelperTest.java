@@ -1,6 +1,5 @@
 package com.quipv.app.Helpers;
 
-import com.quipv.app.Helpers.ProjectHelper;
 import com.quipv.app.Models.*;
 import org.junit.Assert;
 import org.junit.Before;
@@ -199,17 +198,18 @@ public class ProjectHelperTest {
         List<Answer> answers = project.getAnswers();
         ArrayList<Respondent> respondents = project.getRespondents();
 
-        Assert.assertEquals(project.getName(), "Test Project Name 1");
-        Assert.assertEquals(questions.size(), 2);
-        Assert.assertEquals(questions.get(0).getQuestionID(), "Test QuestionID 1");
-        Assert.assertEquals(questions.get(1).getQuestionID(), "Test QuestionID 2");
-        Assert.assertEquals(answers.size(), 3);
-        Assert.assertEquals(answers.get(0).getFullAnswer(), "Test full answer 1");
-        Assert.assertEquals(answers.get(1).getFullAnswer(), "Test full answer 2");
-        Assert.assertEquals(answers.get(2).getFullAnswer(), "Test full answer 3");
-        Assert.assertEquals(respondents.size(), 3);
-        Assert.assertEquals(respondents.get(0).getRespondentID(), "Test resp ID 1");
-        Assert.assertEquals(respondents.get(1).getRespondentID(), "Test resp ID 2");
-        Assert.assertEquals(respondents.get(2).getRespondentID(), "Test resp ID 3");
+        Assert.assertNull(ProjectHelper.populate(new ArrayList<>(), sankeyEntries));
+        Assert.assertEquals("Test Project Name 1", project.getName());
+        Assert.assertEquals(2, questions.size());
+        Assert.assertEquals("Test QuestionID 1", questions.get(0).getQuestionID());
+        Assert.assertEquals("Test QuestionID 2", questions.get(1).getQuestionID());
+        Assert.assertEquals(3, answers.size());
+        Assert.assertEquals("Test full answer 1", answers.get(0).getFullAnswer());
+        Assert.assertEquals("Test full answer 2", answers.get(1).getFullAnswer());
+        Assert.assertEquals("Test full answer 3", answers.get(2).getFullAnswer());
+        Assert.assertEquals(3, respondents.size());
+        Assert.assertEquals("Test resp ID 1", respondents.get(0).getRespondentID());
+        Assert.assertEquals("Test resp ID 2", respondents.get(1).getRespondentID());
+        Assert.assertEquals("Test resp ID 3", respondents.get(2).getRespondentID());
     }
 }
