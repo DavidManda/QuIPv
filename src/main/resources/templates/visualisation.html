@@ -11,6 +11,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="/js/html2canvas.js"></script>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -93,6 +94,16 @@
 <body layout:fragment="content">
 <div id="mySidenav" class="sidenav">
     <a href="javascript:void(0)" class="closeButton" onclick="closeNav()">&times;</a>
+
+    <script>
+        function screenshot(){
+            html2canvas(document.querySelector("#mySidenav")).then(function(canvas) {
+                var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            console.log(image);
+            window.location.href=image;
+        });
+        }
+    </script>
 
     <a href="javascript:;" onClick="openCloseImportData()">Import Data</a>
     <div id="importDataContent" style="display:none;">
@@ -317,16 +328,11 @@
 
         <div class="row text-center">
             <div class="col-sm-12">
-                <button type="button" id="static" class="btn btn-light">Export .jpg</button>
-            </div>
-        </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-12">
-                <button type="button" id="dynamic" class="btn btn-light">Export dynamic</button>
+                <button type="button" id="static" class="btn btn-light" onclick="screenshot()">Export .jpg</button>
             </div>
         </div>
         <hr/>
+
     </div>
 
 
@@ -408,6 +414,8 @@
     }
     //slider JS
 </script>
+
+
 
 </body>
 </html>
