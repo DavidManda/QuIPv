@@ -97,8 +97,8 @@
 
     <script>
         function screenshot(){
-            html2canvas(document.querySelector("#mySidenav")).then(function(canvas) {
-                var image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+            html2canvas(document.querySelector("body")).then(function(canvas) {
+                var image = canvas.toDataURL("image/jpeg").replace("image/jpeg", "image/octet-stream");
             console.log(image);
             window.location.href=image;
         });
@@ -300,20 +300,20 @@
     </div>
 
 
-    <a href="#">Projects</a>
-    <div>
-        <ul>
-            <li th:each="project: ${projectList}">
-                <a th:href="@{/visualisation/pid={pid}(pid=${project.id})}" th:text="${project.name}"></a>
-            </li>
-        </ul>
+    <a href="javascript:;" onClick="openCloseProjects()">Projects</a>
+    <div id="projectsContents" style="display:none;">
+        <div>
+            <ul>
+                <li th:each="project: ${projectList}">
+                    <a th:href="@{/visualisation/pid={pid}(pid=${project.id})}" th:text="${project.name}"></a>
+                </li>
+            </ul>
+        </div>
+        <hr/>
     </div>
 
     <a href="javascript:;" onClick="openCloseDataSet()">DataSet</a>
     <div id="dataSetContent" style="display:none;"></div>
-
-    <a href="javascript:;" onClick="openCloseFormat()">Format</a>
-    <div id="FormatContent" style="display:none;">Format the visualisation here</div>
 
     <a href="javascript:;" onClick="openCloseVis()">Export Visualisation</a>
     <div id="visContent" style="display:none;">
@@ -329,6 +329,12 @@
         <div class="row text-center">
             <div class="col-sm-12">
                 <button type="button" id="static" class="btn btn-light" onclick="screenshot()">Export .jpg</button>
+            </div>
+        </div>
+        <br>
+        <div class="row text-center">
+            <div class="col-sm-12">
+                <button type="button" id="svg" class="btn btn-light" onclick="saveSvg(svg, 'visualisation.svg')">svg</button>
             </div>
         </div>
         <hr/>
@@ -347,11 +353,29 @@
     <a style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
 </div>
 
-<div class="main">
+<div id="vis" class="main">
     <script src="//d3js.org/d3.v3.js" charset="utf-8"></script>
     <script src="//cdn.jsdelivr.net/filesaver.js/0.1/FileSaver.min.js"></script>
     <script src="/js/visualisation.js"></script>
+
+    <script>
+        function saveSvg(svgEl, name) {
+            svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            var svgData = svgEl.outerHTML;
+            var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+            var svgBlob = new Blob([preface, svgData], {type:"image/svg+xml;charset=utf-8"});
+            var svgUrl = URL.createObjectURL(svgBlob);
+            var downloadLink = document.createElement("a");
+            downloadLink.href = svgUrl;
+            downloadLink.download = name;
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        }
+    </script>
 </div>
+
+
 
 <div class="slidecontainer">
     <input type="range" class="slider" id="myRange">
@@ -410,6 +434,18 @@
         if(i_4 === 1){
             i_4 = 0;
             return document.getElementById('visContent').style.display='none';
+        }
+    }
+
+    var i_5 = 0;
+    function openCloseProjects(){
+        if(i_5 === 0) {
+            i_5 = 1;
+            return document.getElementById('projectsContents').style.display = 'block';
+        }
+        if(i_5 === 1){
+            i_5 = 0;
+            return document.getElementById('projectsContents').style.display='none';
         }
     }
     //slider JS
