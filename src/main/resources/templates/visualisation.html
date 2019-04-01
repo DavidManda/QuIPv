@@ -87,6 +87,13 @@
         .closebtn:hover {
             color: black;
         }
+
+        .list{
+            
+            font-size: 25px;
+            color: #F9F0F0;
+        }
+
     </style>
 
 </head>
@@ -303,11 +310,11 @@
     <a href="javascript:;" onClick="openCloseProjects()">Projects</a>
     <div id="projectsContents" style="display:none;">
         <div>
-            <ul>
+            <ol class="list">
                 <li th:each="project: ${projectList}">
                     <a th:href="@{/visualisation/pid={pid}(pid=${project.id})}" th:text="${project.name}"></a>
                 </li>
-            </ul>
+            </ol>
         </div>
         <hr/>
     </div>
@@ -343,6 +350,8 @@
 
 
     <a href="/">Home Page</a>
+
+
     <form class="text-center pt-1" th:action="@{/logout}" method="post">
         <button type="submit" class="btn btn-outline-light">Sign out</button>
     </form>
