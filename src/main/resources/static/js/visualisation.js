@@ -342,10 +342,19 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var width = window.innerWidth || docEl.clientWidth || bodyEl.clientWidth,
         height =  window.innerHeight|| docEl.clientHeight|| bodyEl.clientHeight;
 
-    function populateCheckboxFilters(id, nodes) {
-        var s1 = document.getElementById(id);
-        s1.innerHTML = "";
+    function getDrivers(nodes){
+        return nodes.filter(function (node) {
+            return node.driver;
+        });
+    }
 
+    function getOutcomes(nodes){
+        return nodes.filter(function (node) {
+            return !node.driver;
+        });
+    }
+
+    function addCheckboxes(element, nodes){
         for (var node in nodes) {
             if (nodes.hasOwnProperty(node)) {
                 var n = nodes[node];
@@ -356,16 +365,26 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 checkbox.checked = n.checked;
                 checkbox.id = n.id.toString();
                 checkbox.onclick=function(){handleCheckBoxFilterClick(this);};
-                s1.appendChild(checkbox);
+                element.appendChild(checkbox);
 
                 var label = document.createElement('label')
                 label.htmlFor = n.name;
                 label.appendChild(document.createTextNode(n.name));
 
-                s1.appendChild(label);
-                s1.appendChild(document.createElement("br"));
+                element.appendChild(label);
+                element.appendChild(document.createElement("br"));
             }
         }
+    }
+
+    function populateCheckboxFilters(nodes) {
+        var driversElement = document.getElementById("driverCheckboxes");
+        var outcomesElement = document.getElementById("outcomeCheckboxes");
+        driversElement.innerHTML = "";
+        outcomesElement.innerHTML = "";
+        addCheckboxes(driversElement, getDrivers(nodes));
+        addCheckboxes(outcomesElement, getOutcomes(nodes));
+
     }
 
     function handleCheckBoxFilterClick(checkbox) {
@@ -531,7 +550,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
             setSliderValues(min, max, false);
             graph.updateGraph();
-            populateCheckboxFilters("dataSetContent", dataNodes);
+            populateCheckboxFilters(dataNodes);
             $.ajax({
                 type: 'POST',
                 url: '/storeGraphState/pid='+pid,
@@ -573,7 +592,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
 
             graph = new GraphCreator(svg, graphNodes, graphEdges);
             graph.updateGraph();
-            populateCheckboxFilters("dataSetContent",dataNodes);
+            populateCheckboxFilters(dataNodes);
             $.ajax({
                 type: 'POST',
                 url: '/storeGraphState/pid='+pid,
