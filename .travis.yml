@@ -8,5 +8,6 @@ addons:
 before_install:
   - chmod +x mvnw
   - mysql -e 'CREATE DATABASE quipv;'
+  - cp src/main/resources/app.prop.github src/main/resources/application.properties
 services:
 - mysql
