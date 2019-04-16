@@ -319,12 +319,11 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             var neighbourIndex = neighbours[i];
             if (nodeIsVisited[neighbourIndex] === false) {
                 nodeIsVisited[neighbourIndex] = true;
-                graphNodes[neighbourIndex].x = x+400;
-                graphNodes[neighbourIndex].y = y + (i - Math.floor(neighbours.length/2))*100;
-                DFS(neighbourIndex, graphNodes, graphEdges, nodeIsVisited, x + 200, y + (i - Math.floor(neighbours.length/2))*200);
-            }
-            else{
-                graphNodes[nodeIndex].y -= 200;
+                x += 2000;
+                y += i*200;
+                graphNodes[neighbourIndex].x = x;
+                graphNodes[neighbourIndex].y = y;
+                DFS(neighbourIndex, graphNodes, graphEdges, nodeIsVisited, x, y);
             }
         }
     }
@@ -434,7 +433,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
                 title: node.name,
                 id: node.id,
                 x: x,
-                y: y
+                y: y,
+                driver: node.driver
             });
             x += 200;
         }
@@ -479,14 +479,24 @@ document.onload = (function(d3, saveAs, Blob, undefined){
         return 0;
     }
 
-    function modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges){
+    function modifyNodesCoordinatesForVisualisation(graphNodes, graphEdges){
+        var drivers = getDrivers(graphNodes);
+        var outcomes = getOutcomes(graphNodes);
+        var x = 100, y = -3000;
+        var i, nodeIndex;
         var isVisited = new Array(graphNodes.length);
         isVisited.fill(false);
-        var x = 600, y = 400;
-        graphNodes[root].x = x;
-        graphNodes[root].y = y;
-        isVisited[root] = true;
-        DFS(root, graphNodes, graphEdges, isVisited, x, y);
+        for(i=0; i<drivers.length; i++){
+            nodeIndex = drivers[i].id;
+            graphNodes[nodeIndex].x = x;
+            graphNodes[nodeIndex].y = y;
+            var x_ = x, y_= y;
+            DFS(nodeIndex, graphNodes, graphEdges, isVisited, x, y);
+            // get x and y value before DFS call
+            x = x_;
+            y = y_;
+            y += 300;
+        }
     }
 
     function nodesHaveCoordinates(nodes){
@@ -545,7 +555,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             graph.nodes = filterNodes(graph.nodes, graph.edges);
             var root = getRoot(dataNodes,dataEdges);
             if(!nodesHaveCoordinates(dataNodes)){
-                modifyNodesCoordinatesForVisualisation(graph.nodes, root, graph.edges);
+                modifyNodesCoordinatesForVisualisation(graph.nodes, graph.edges);
             }
 
             setSliderValues(min, max, false);
@@ -583,7 +593,7 @@ document.onload = (function(d3, saveAs, Blob, undefined){
             graphNodes = filterNodes(graphNodes, graphEdges);
             var root = getRoot(dataNodes,dataEdges);
             if(!nodesHaveCoordinates(dataNodes)){
-                modifyNodesCoordinatesForVisualisation(graphNodes, root, graphEdges);
+                modifyNodesCoordinatesForVisualisation(graphNodes, graphEdges);
             }
 
             setSliderValues(findMinWeight(dataEdges), findMaxWeight(dataEdges), true);
