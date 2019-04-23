@@ -30,7 +30,7 @@ The procedure needed to produce a visual report of the data is protracted and th
 ### Solution 
 
 Our solution is a bespoke applicaton for BSDR that will:
-1. Run on both Windows and Mac;
+1. Be able to run on machines running different operating systems, therefore we will make a web application;
 2. Be able to import data from an SQL database;
 3. Process data and filter it according to selected attributes; 
 4. Create several causal chain diagrams from the import data; 
