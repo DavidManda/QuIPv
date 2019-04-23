@@ -11,7 +11,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/jquery-1.10.2.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-    <script src="/js/html2canvas.js"></script>
+    <!--<script src="/js/html2canvas.js"></script>-->
+    <script src="/js/saveSvgAsPng.js"></script>
     <style>
         body {
             font-family: "Lato", sans-serif;
@@ -333,22 +334,21 @@
             <div class="col-sm-12" id="jpgAlert" style="display:block;">
                 <div class="alert2">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-                    <strong>Alert</strong> To export as .jpg, fill screen with Visualisation, export will only include what is on the screen.
                 </div>
             </div>
         </div>
 
         <div class="row text-center">
             <div class="col-sm-12">
-                <button type="button" id="static" class="btn btn-light" onclick="screenshot()">Export .jpg</button>
+                <button type="button" id="static" class="btn btn-light" onclick="saveSvgAsPng(document.getElementById('visualisation'), 'visualisation.png', {backgroundColor: 'white'});"> Export .png </button>
             </div>
         </div>
-        <br>
-        <div class="row text-center">
-            <div class="col-sm-12">
-                <button type="button" id="svg" class="btn btn-light" onclick="saveSvg(svg, 'visualisation.svg')">svg</button>
-            </div>
-        </div>
+        <!--<br>-->
+        <!--<div class="row text-center">-->
+            <!--<div class="col-sm-12">-->
+                <!--<button type="button" id="svg" class="btn btn-light" onclick="svg2png()">svg</button>-->
+            <!--</div>-->
+        <!--</div>-->
         <hr/>
 
     </div>
@@ -462,7 +462,7 @@
             return document.getElementById('projectsContents').style.display='none';
         }
     }
-    //slider JS
+
 </script>
 
 
