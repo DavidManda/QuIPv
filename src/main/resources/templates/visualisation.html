@@ -330,6 +330,7 @@
     <a href="javascript:;" onClick="openCloseVis()">Export Visualisation</a>
     <div id="visContent" style="display:none;">
         <div class="row text-center">
+<<<<<<< Updated upstream
             <div class="col-sm-12" id="jpgAlert" style="display:block;">
                 <div class="alert2">
                     <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
@@ -347,6 +348,11 @@
         <div class="row text-center">
             <div class="col-sm-12">
                 <button type="button" id="svg" class="btn btn-light" onclick="saveSvg(svg, 'visualisation.svg')">svg</button>
+=======
+            <div class="col-sm-12">
+                <input type="text" name="fileName" id="fileName" placeholder='File name'>
+                <button type="button" id="static" class="btn btn-light" onclick="saveSvgAsPng(document.getElementById('visualisation'), document.getElementById('fileName').value, {backgroundColor: 'white'});"> Export to PNG File </button>
+>>>>>>> Stashed changes
             </div>
         </div>
         <hr/>
