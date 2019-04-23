@@ -35,6 +35,7 @@ Our solution is a bespoke applicaton for BSDR that will:
 3. Process data and filter it according to selected attributes; 
 4. Create several causal chain diagrams from the import data; 
 5. Allow the user to edit the diagram;
+6. Export the diagram as a png file; 
 
 #### References
 [_Bath Social and Development Research Ltd._](http://bathsdr.org/) 9/11/18
