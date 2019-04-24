@@ -1,7 +1,7 @@
 ## OO Design & UML
 
 ### High-level diagram
-![](https://raw.githubusercontent.com/DavidManda/QuIPv/master/Portfolio%20A/images/Highlevel.png)
+![](https://raw.githubusercontent.com/DavidManda/QuIPv/master/Portfolio%20A/Highlevel.png)
 
 The above diagram illustrates the architecture of our web application. The user can log into our app and upload CSV files that follow a structure specific to our client. Each upload creates a project with a corresponding visualisation, a directed graph.
 
