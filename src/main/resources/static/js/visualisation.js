@@ -544,7 +544,8 @@ document.onload = (function(d3, saveAs, Blob, undefined){
     var graph;
     var svg = d3.select("body").append("svg")
         .attr("width", width)
-        .attr("height", height);
+        .attr("height", height)
+        .attr("id", "visualisation");
     function updateVisualisation(sliderValue){
         var pid = getPID();
         fetch("/data/pid="+pid+"/minVal="+sliderValue).then(function (value) { return value.json()}).then(function (data) {
