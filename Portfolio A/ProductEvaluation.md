@@ -21,37 +21,13 @@ we wanted to find out how technically minded the current users of our product we
 
 When designing our questionnaire, we had to consider how much we could trust our findings, which meant we had to 
 design a questionnaire that didnt lead our client to answer that wasn't necessarily true, or was loaded and put them in a difficult position.
-For example it would have been wrong to ask them if the product is easy to use, and this would put them in a difficult position
-alternatively, we had to find this out ourselves. We acomplished this 
+For example it would have been wrong to ask them if the product was easy to use, as this would put them in a difficult position.
+Alternatively, we had to find this out ourselves, we accomplished this by task-based evaluation. We gave our clients a specific 
+task and observed how they handled it.
 
-- Tasked-based evaluation
-    -	Get real users to try out system functionality 
-    -	Give them specific task to achieve using system
-    -	Observe how well they get on 
-    -	Document areas that need improvement
-    
--	Quantitative and qualitative
-        -	Tit – numerically
-        -	Lit – measure literally
-
-After all this we would make the necessary changes and repeat the process.
- 
-
-we wanted to find out... in order to pull out useful knowledge, making evolutionary system changes, iterative process
-
-
-- Usefulness = utility x usability
-    - Utility           
-        - System should do what the users need
-        - Need to get people to try it out
-        - Assessed “in the wild”, in realistic context and environment
-     - Usability
-        -	Efficient, reliable, satisfying, learnable, maintainable, safe, secure, accessible, memorable, configurable, available
-
--	What do we want to know we have to improve about UI
--	How usable is product
-        -	Should meet client’s requirements
-
+After all the feedback we would continue developing the product, and make the changes requested as well as reflecting on the feedback
+to determine if there was things not requested that needed changing, for instance, usability. We would then repeat this process to ensure 
+the client for completely content with the product. 
 
 #####Questionnaire
 1.	On a scale of 1-10 how technically minded would you say you are? About how long did it take you to get to grips with MicroStrategy?
