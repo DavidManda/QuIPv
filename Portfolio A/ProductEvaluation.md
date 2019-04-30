@@ -1,41 +1,45 @@
 ﻿Product Evaluation
 ===
-### summary 
-- how documented insights and feedback from evaluation
-- how we used finding to refine final iterations of system
-
----
 
 ### Why Evaluate
-
 We evaluate so we can judge how good each
 release is and to systematically evaluate the product to make the necessary improvements required by the client. 
 After the initial requirements, some subtle qualities of the system may have been missed either by us or the client, by evaluating 
 we ensure the product is what the client envisioned. 
----
 
 ### Evaluation Approach 
 Our evaluation approach consisted of; giving the client access to regularly deployed updates, 
 this allowed them to use the product in their own real working environment and determine what needed changing with the product. 
-Which they could then tell us about in a following meeting. While in these meeting we were about to conduct
-our own evaluation, both by a questionnaire and observing how the client used the product.
+They could then email us about some fixes and tell us about the rest in a following meeting. 
+While in these meeting we were about to conduct our own evaluation, both by a questionnaire and
+observing how the client used the product.
 
-We decided on a questionnaire, because our clients were the people who'd be using the product and new people would
-be rarely using it, so it only made sense to just get their feedback on it. As part of our questionnaire, we wanted to 
-find out how technically minded the current employees were, to ensure any new employees would find it just
-as easy to get to grips with our product. 
+We decided on a questionnaire because our client was already telling us most of what they thought the product was missing. 
+Therefore by a questionnaire and observation we could find ways which we could improve the product that they hadn't originally imagined. For instance, 
+we wanted to find out how technically minded the current users of our product were and how they were coping with understanding how to use it
+, to ensure that future users wouldn't have problems getting to grips with our product. 
 
 When designing our questionnaire, we had to consider how much we could trust our findings, which meant we had to 
-design a questionnaire that took into consideration...
+design a questionnaire that didnt lead our client to answer that wasn't necessarily true, or was loaded and put them in a difficult position.
+For example it would have been wrong to ask them if the product is easy to use, and this would put them in a difficult position
+alternatively, we had to find this out ourselves. We acomplished this 
 
+- Tasked-based evaluation
+    -	Get real users to try out system functionality 
+    -	Give them specific task to achieve using system
+    -	Observe how well they get on 
+    -	Document areas that need improvement
+    
+-	Quantitative and qualitative
+        -	Tit – numerically
+        -	Lit – measure literally
 
 After all this we would make the necessary changes and repeat the process.
-
-
-
-- why we used this type of evaluation 
+ 
 
 we wanted to find out... in order to pull out useful knowledge, making evolutionary system changes, iterative process
+
+
 - Usefulness = utility x usability
     - Utility           
         - System should do what the users need
@@ -44,35 +48,9 @@ we wanted to find out... in order to pull out useful knowledge, making evolution
      - Usability
         -	Efficient, reliable, satisfying, learnable, maintainable, safe, secure, accessible, memorable, configurable, available
 
-- Tasked-based evaluation
-    -	Get real users to try out system functionality 
-    -	Give them specific task to achieve using system
-    -	Observe how well they get on 
-    -	Document areas that need improvement
-
--	Quantitative and qualitative
-        -	Tit – numerically
-        -	Lit – measure literally
-
--	Bad questions
-        -	Leading, tries to convince responder
-        -	Loaded, put responder in difficult position
-        -	Double-barrelled, has more than one element
-        -	Absolute, using “always” or “ever”, we can always think of an exception
-        -	Irrelevant, something we don’t care about, or can’t do anything about
-        -	Truism, of course it is so pointless to ask
-        -	Indeterminable, can’t gauge what’s being asked
-        -	Indecipherable, hard for respondent to understand question
-        -	Vague, doesn’t provide any useful info
-
-
-
-
 -	What do we want to know we have to improve about UI
 -	How usable is product
         -	Should meet client’s requirements
-        -	Try it out, couple clicks
--	Efficient, reliable, satisfying, learnable, maintainable, safe, secure, accessible, memorable, configurable, available
 
 
 #####Questionnaire
@@ -88,19 +66,30 @@ we wanted to find out... in order to pull out useful knowledge, making evolution
 1.	Do you have a need to be able to change the text on nodes or edges?
 
 
----
-
 
 ### 1st Feedback
-first, filtering based on node weight
+-   all knew how to use programs basically and had the ability to work things out, but said they were not technically minded, 
+but refereeing to knowing the back end of things.
+-   Based of their use, the usability was great
+-   Wanted
+    -   silder, filtering based on node weight
+    -   Data protection, safe access to database, user permission 
+    -   outcome various numbers (edge cases)
+    -   document/user guide
+    -   export vis
 
----
 
 ### 2nd Feedback
-final one, weigh on nodes
+-   doesn't work with large file sizes
+-   seperate dataset, to drivers and outcomes
+-   citation count/value on edges
+-   delete rename project
+-   select all/ deselect all for dataset
+-   finish up user guide
+-   nodes without outline, or smaller text to avoid overlapping
+-   exporting visualisation 
+
+-   happy that vis kept shape
+-   already used product to prepare for presentations with their own clients
 
 
-
----
-
-### 
