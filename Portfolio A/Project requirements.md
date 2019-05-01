@@ -42,10 +42,10 @@ This then that...
 
 ### Main Goal
 
-The main goal of the project is to decrease the time and effort needed to create visualisations for causal chain analysis. In order to achieve this, we need to provide a cross platform application (Windows and macOS).
+The main goal of the project is to decrease the time and effort needed to create visualisations for causal chain analysis. In order to achieve this, we need to provide a web applicationn.
 
 We will take the following steps to achieve this goal:
-- Create a function which gets all project data from a MySQL database
+- Allow user to upload projects in the form of csv files
 - Create a data structure to store project data in a weighted, directed graph
 - Allow simple, one-click filtering of fields in the data set
 - Provide intuitive UI as outlined in the requirements
@@ -63,29 +63,23 @@ Cases of exceptional **(e)** or alternative **(a)** flow include:
     1. data is represented internally as a graph structure that connects drivers to outcomes using weighted edges
 1. Manipulating the data:
     1. edges can be filtered out of the visualisations by their weight values
-    1. nodes can be filtered out of the visualisations using column headings from the database
-    1. nodes can be filtered out of the visualisations using specific queries/ key words in data entries
+    1. nodes can be filtered out of the visualisations using their name
 1. Creating visualisations:
     1. data is presented to the user as a directed, weighted graph
     1. the user can move nodes on the graph around to rearrange the visualisation
-    1. information about nodes (drivers, outcomes) is displayed when the user hovers over them
-    1. information about edges is displayed when the user hovers over them
     1. a vertex can be displayed as both a driver and an outcome
 1. Exporting the visualisations:
     1. the graph can be  exported as a static image file e.g. .png
-    1. the graph can be exported as an interactive file e.g. .html/.js
 
 ### Non-functional requirements
 1. User Interface
     1. Use of all features of the program can be learnt within 1 hour from a guide
     1. The general flow of drivers to outcomes in the visualisation will be left to right
 1. Maintainability & Extendability
-    1. The underlying structure of the data will allow it to be used in different ways by allowing different types of connections between nodes in graphs
     1. The data strucutre for each node will allow any number of nodes to be implemented in a graph
 1. Security
     1. Standard security protocols will be used to retrieve data from MySql database
     1. Exportation of the visualisations will be accompanied with a checksum(MD5) for safe file sharing
-    1. No local data relating to QuIP research will be stored after the application is exited
 1. Performance
     1. Data will be loaded from MySQL within 10 seconds on a 25Mbps network for a project with 24 interviewees (standard for QuIP methodology)
     1. Visualisations will be created within 15 seconds for the 24 interviewees
