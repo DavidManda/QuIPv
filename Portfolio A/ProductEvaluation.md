@@ -15,7 +15,7 @@ While in these meeting we were about to conduct our own evaluation, both by a qu
 observing how the client used the product.
 
 We decided on a questionnaire because our client was already telling us most of what they thought the product was missing. 
-Therefore by a questionnaire and observation we could find ways which we could improve the product that they hadn't originally imagined. For instance, 
+Therefore by a questionnaire and with help from observations we could find ways in which to improve the product in ways that they hadn't originally imagined. For instance, 
 we wanted to find out how technically minded the current users of our product were and how they were coping with understanding how to use it
 , to ensure that future users wouldn't have problems getting to grips with our product. 
 
@@ -29,7 +29,7 @@ After all the feedback we would continue developing the product, and make the ch
 to determine if there was things not requested that needed changing, for instance, usability. We would then repeat this process to ensure 
 the client for completely content with the product. 
 
-#####Questionnaire
+####Questionnaire
 1.	On a scale of 1-10 how technically minded would you say you are? About how long did it take you to get to grips with MicroStrategy?
 1.	Observe how well they get on with figuring out how the system works?
         1.	How many button clicks on average
@@ -40,7 +40,6 @@ the client for completely content with the product.
 1.	On a scale of 1-10 how well does our product translate the features you needed from MicroStrategy?
 1.	What features from MicroStrategy may be missing from our product?
 1.	Do you have a need to be able to change the text on nodes or edges?
-
 
 
 ### 1st Feedback

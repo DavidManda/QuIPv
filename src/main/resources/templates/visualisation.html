@@ -322,10 +322,12 @@
 
     <a href="javascript:;" onClick="openCloseDataSet()">Filters</a>
     <div id="dataSetContent" style="display:none;">
-        <h4>Drivers</h4>
-        <div id="driverCheckboxes"></div>
-        <h4>Outcomes</h4>
-        <div id="outcomeCheckboxes"></div>
+        <h4 href="javascript:;" onClick="openCloseDrivers()">&nbsp;&nbsp;&nbsp;&nbsp;Drivers</h4>
+        <div id="driverCheckboxes" style="display:none;"></div>
+        <h4 href="javascript:;" onClick="openCloseOutcomes()">&nbsp;&nbsp;&nbsp;&nbsp;Outcomes</h4>
+        <div id="outcomeCheckboxes" style="display:none;"></div>
+
+        <hr/>
     </div>
 
     <a href="javascript:;" onClick="openCloseVis()">Export Visualisation</a>
@@ -351,7 +353,7 @@
 </div>
 
 <div>
-    <a style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
+    <a id="openButton" style="display:block; font-size:30px;cursor:pointer" onclick="openNav()">&#9776; open</a>
 </div>
 
 <div id="vis" class="main">
@@ -385,10 +387,13 @@
 
 <script>
     function openNav() {
+        document.getElementById('openButton').style.display = 'none';
         document.getElementById("mySidenav").style.width = "320px";
         document.getElementById("main").style.marginLeft = "320px";
+
     }
     function closeNav() {
+        document.getElementById('openButton').style.display = 'block';
         document.getElementById("mySidenav").style.width = "0";
         document.getElementById("main").style.marginLeft= "0";
     }
@@ -449,6 +454,30 @@
             return document.getElementById('projectsContents').style.display='none';
         }
     }
+
+    var i_6 = 0;
+    function openCloseDrivers(){
+        if(i_6 === 0) {
+            i_6 = 1;
+            return document.getElementById('driverCheckboxes').style.display = 'block';
+        }
+        if(i_6 === 1){
+            i_6 = 0;
+            return document.getElementById('driverCheckboxes').style.display='none';
+        }
+    }
+    var i_7 = 0;
+    function openCloseOutcomes(){
+        if(i_7 === 0) {
+            i_7 = 1;
+            return document.getElementById('outcomeCheckboxes').style.display = 'block';
+        }
+        if(i_7 === 1){
+            i_7 = 0;
+            return document.getElementById('outcomeCheckboxes').style.display='none';
+        }
+    }
+
 
 </script>
 
