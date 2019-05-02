@@ -31,7 +31,7 @@ The procedure needed to produce a visual report of the data is protracted and th
 
 Our solution is a bespoke applicaton for BSDR that will:
 1. Receive CSV data, generate a causal chain graph and store it in a database;
-2. Allow the used to filter out nodes by name, or edges by weight;
+2. Allow the user to filter out nodes by name, or edges by weight;
 3. The position of the nodes persists, as metadata about them is stored in the database. 
 4. Allow the user to edit the diagram;
 5. Allow diagrams to be exported as an image file. 
