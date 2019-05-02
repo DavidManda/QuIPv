@@ -21,7 +21,7 @@ This then that...
 
 ![high-level use-case diagram](usecase.jpg)
 
-###Achieving Use-Case Goals
+### Achieving Use-Case Goals
 - Reporting - Have a range of useful visualisations to utilise in report for client
     1. Ensure sufficient qualitative data is collected, it is coded correctly and ready to be imported into visualisation software.
     1. Visualisation software correctly uses the coded data to represents the collected data. It must also have a few variations of ways to display chosen data. 
