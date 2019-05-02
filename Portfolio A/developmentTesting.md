@@ -3,18 +3,49 @@ Development Testing
 
 ### Overview
 
-We have used a multi level testing strategy for our fi nal product. Originally we planned to create [Unit Tests](http://softwaretestingfundamentals.com/unit-testing/)
- for each module of our project  but decided that not all individual models needed testing or could be tested simply. We deemed it more valuable to test UI & some database controllers in a more real world approach by using the application ourselves. This allowed us to test a lot more inputs on the components without the overhead of setting up test data which would have been more time consuming.
+We have used a multi level testing strategy for our final product. We have used [Unit Testing](http://softwaretestingfundamentals.com/unit-testing/)
+ for operations relating to the structure of the visualisation i.e. the data Models and modules relating to creating the visualisation. 
+ Other modules we found were considerably complex and not as effective to test by unit testing. 
+ We deemed it more valuable to test UI & some database controllers in a more real world approach by using the application ourselves.
+ This allowed us to test a lot more inputs on the components without the overhead of setting up test data which would have been more time consuming.
 
-For some modules that relied on others (e.g. Config relied on Models & Helpers) we used [Integration Testing](http://softwaretestingfundamentals.com/integration-testing/). This allowed us to build on our unit tests in order to validate the correct functioning of groups of modules.
+For the UI we decided that [Systems Testing](http://softwaretestingfundamentals.com/system-testing/) was the best option. 
+We were able to utilise Black Box [_(BBt)_](http://softwaretestingfundamentals.com/black-box-testing/), White Box [_(WBt)_](http://softwaretestingfundamentals.com/white-box-testing/) 
+and Gray Box [_(GBt)_](http://softwaretestingfundamentals.com/gray-box-testing/) testing in order to both assess real world 
+usage of the application whilst digging deeper to investigate edge cases only known to the developers. This was accomplished 
+using group members that created the UI (BBt), group members who didn't work on the UI but had knowledge of the system (GBt) 
+and the client (WBt). Examples of this working well are exampled by on of our UI developers discovery that, due to a bug in the 
+D3 library, if a node was placed on another then moved away a new edge would erroneously be created. Our client was also able to 
+inform us that the file size restrictions used for the file upload were too restrictive as when they uploaded a different dataset 
+(one we did not have access to) they recieved a Whitelabel error. We were then able to fix this bug quite quickly due to their feedback.
 
-For the UI we decided that [Systems Testing](http://softwaretestingfundamentals.com/system-testing/) was the best option. We were able to utilise Black Box [_(BBt)_](http://softwaretestingfundamentals.com/black-box-testing/), White Box [_(WBt)_](http://softwaretestingfundamentals.com/white-box-testing/) and Gray Box [_(GBt)_](http://softwaretestingfundamentals.com/gray-box-testing/) testing in order to both assess real world usage of the application whilst digging deeper to investigate edge cases only known to the developers. This was accomplished using group members that created the UI (BBt), group members who didn't work on the UI but had knowledge of the system (GBt) and the client (WBt). Examples of this working well are example by on of our UI developers discovery that, due to a bug in the D3 library, if a node was placed on another then moved away a new edge would erroneously be created. Our client was also able to inform us that the file size restrictions used for the file upload were too restrictive as when they uploaded a different dataset (one we did not have access to) they recieved a Whitelabel error. We were then able to fix this bug quite quickly due to their feedback.
-
-Our client was also vital to the [Acceptance Testing](http://softwaretestingfundamentals.com/acceptance-testing/) of our application. Working with them we had created a set of functionality goals for the application which we worked towards and could measure to some extent for ourselves. This is how we initially tested our application before releasing it to the client. However, their feedback was more informative as to what they wanted as the expectations evolved throughout the project. Their continued feedback in the latter stages of the project was of great assistance to help guide our priorities when completing the application. BSDR testing gives us insight into how the application will be used in the real world, exposing bugs or flaws not apparent to our development team.
+Our client was also vital to the [Acceptance Testing](http://softwaretestingfundamentals.com/acceptance-testing/) of our application. 
+Working with them we had created a set of functionality goals for the application which we worked towards and could measure to some 
+extent for ourselves. This is how we initially tested our application before releasing it to the client. However, their feedback was 
+more informative as to what they wanted as the expectations evolved throughout the project. Their continued feedback in the latter 
+stages of the project was of great assistance to help guide our priorities when completing the application. Bath SDR using the application gave us 
+insight into how the application will be used in the real world, exposing bugs or flaws not apparent to our development team.
 
 ---
 
-### Back End Testing
+### Visualisation Graph Testing
+
+Below is a detailed description of the testing strategies used for the dynamic UML diagram in the previous section.
+
+
+(Frameworks used + where + why)
+
+| Module | Challenges  | Framework | Testing |
+|:---:|:---:|:---|:---:|
+| File Upload Controller |A|A|A|
+| Project Helper |A|A|A|
+| Project |A|A|A|
+| Graph Helper |A|A|A|
+| Graph |A|A|A|
+
+---
+
+(Maven, JUnit, Springboot Test, TravisCI)
 
 Below is an outline of testing for each module in the application back end:
 
