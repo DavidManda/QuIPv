@@ -31,44 +31,19 @@ insight into how the application will be used in the real world, exposing bugs o
 ### Visualisation Graph Testing
 
 Below is a detailed description of the testing strategies used for the dynamic UML diagram in the previous section.
+This relates to the uploading and processing of data files used to create the causal chain visualisation.
 
+We have used Travis CI to automatically run testing of the application whenever code is pushed to our git repository.
+Maven is used to manage the build of the application in order to run our testing modules. These modules use JUnit and
+Springboot testing frameworks to test the logic of Helpers (ProjectHelper & GraphHelper) and Models (Project & Graph).
 
-(Frameworks used + where + why)
-
-| Module | Challenges  | Framework | Testing |
-|:---:|:---:|:---|:---:|
-| File Upload Controller |A|A|A|
-| Project Helper |A|A|A|
-| Project |A|A|A|
-| Graph Helper |A|A|A|
-| Graph |A|A|A|
-
----
-
-(Maven, JUnit, Springboot Test, TravisCI)
-
-Below is an outline of testing for each module in the application back end:
-
-| Module | Test |
-|:---:|:---:|
-| Config | Integration Testing using `JUnit` & `SpringBoot Tests` building on Models & Helpers Unit Testing (WBt) |
-| Controllers | System Testing uploading files with various flaws, looking for edges cases. Also using real world data from our clients (WBt, GBt, BBt) |
-| Helpers | Unit Testing using `JUnit` & `SpringBoot Tests`. We have 100% code coverage to ensure everything functions as intended (WBt) |
-| Models | Unit Testing using `JUnit` & `SpringBoot Tests`. We have 100% code coverage to ensure everything functions as intended (WBt) |
-| Service | System Testing creating new users & security with various flaws, looking for edges cases. Also using real world data from our clients (WBt, GBt, BBt) |
-| Validator | System Testing logging in with various flaws, looking for edges cases. Also using real world data from our clients (WBt, GBt, BBt) |
-
----
-
-### Challenges
-
-|Challenge | Action |
-|:---:|:---:|
-|Creating tests to cover all possibilities, especially in UI|Constantly review & update tests for new developments after each sprint. Focus on boundary values and erroneous data to look for shortfalls in system|
-|Integration testing across components|We will use sequence diagrams to split up tests into logic sections i.e. between UI interactions. Ideally, sections will overlap to ensure complete test coverage|
-|Not allowing programmer knowledge of system influence testing|We don't want a situation where all our tests pass without really testing our application's boundaries. WBt is useful for looking at nuances in code, but we also want the overall functions to be tested stand alone. We will accomplish this using grey box testing, where team members not working on the modules in question design the tests without much knowledge of internal structures.|
-|Ensuring a full run through of the program can occur without unhandled failure|We will incorporate systems testing in order to verify that all sections from high level design work together. This includes appropiately handling errors that may occur at various points in the execution of the application|
-|Test need to be up to date & inline with the clients needs|We will review & update tests after every sprint we complete. This includes reviewing our testing methodology, with the aim that this scrutiny will expose any problems with our methods before they grow further down the line of development.|
+| Module | Challenges | Testing |
+|:---:|:---:|:---:|
+| File Upload Controller | Ensuring the files are of the correct format and file type, responding appropriately to unexpected input. | Both our team and the client used the application ourselves to look for errors. We could quickly test different cases using minor changes to .csv files. The client tested a wider variety of datasets, not available to us. This made it quicker to find errors and update the response messages than using unit testing. |
+| Project Helper | Removing null fields from legitimate datasets, linking data from across two files.  | We used unit testing to look ensure the complex logic and lambda expressions in this class functioned as expected using small datasets. We could then make sure it scaled by using the application ourselves on the full dataset of real client data. |
+| Project | Making sure all the data is correctly stored when called upon by the ProjectHelper. | Identical methodolgy to ProjectHelper. A fairly simple class to test. |
+| Graph Helper | Ensuring the graph is correctly weighted and directed. | Identical methodolgy to ProjectHelper. Using the application allowed our team to test our filtering the data which calls upon Graph. |
+| Graph | Ensuring the logic functions correctly, making sure the graph updates correctly in the database after every action. | Identical methodolgy to ProjectHelper. Using the application allowed us to see if changes were persistent in the graph storage. We were also able to see that the visualisation filters and node positions were saved between sessions using the application. |
 
 ---
 
