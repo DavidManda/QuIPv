@@ -1,9 +1,6 @@
 ﻿System Stakeholders
 ===
 
-This then that...
-
-
 ### About the Stakeholders
 - Clients - Commission the collection of qualitative data bespoke to their own requirements, other clients may just use pre-existing collected data. Examples of clients are;
     - Donors (individuals/groups)
@@ -22,10 +19,13 @@ This then that...
 ![high-level use-case diagram](usecase.jpg)
 
 ### Achieving Use-Case Goals
-- Reporting - Have a range of useful visualisations to utilise in report for client
+- Reporting - Have a visualisations that effectively conveys drivers and outcomes to utilise in report for client
     1. Ensure sufficient qualitative data is collected, it is coded correctly and ready to be imported into visualisation software.
-    1. Visualisation software correctly uses the coded data to represents the collected data. It must also have a few variations of ways to display chosen data. 
-    1. Visualisation software exports the visualisation ready for use in the report, there may be multiple export types, static and dynamic.
+    1. Visualisation software correctly uses the coded data to represents the collected data.  
+    1. The visualisation software can reduce the data set, so that only drivers with outcomes of significant weight is displayed
+    1. The visualisation allows for manipulation of the graph, so it can be presented neatly, with minimal edges crossing over.
+    1. Visualisation software exports the visualisation as a .png ready for use in the report.
+    1. The product allows for separate users, so accounts can be created for the clients clients to view dynamic visualisations.
     1. An unintended path through system, would be having limited variations of ways to display the data, and only being able to export the visualisation as a static image.
 - Evaluation Community - To be able to assess process of investigation and the final findings to ensure QuiP is working
     1. Firstly the evaluation community would need to assess the collection of data, and how process of preparing it for use in the visualisation software. The QuiP is a part of this 
@@ -36,13 +36,17 @@ This then that...
     1. Firstly they'll need to have conducted some sort of work that needs to have its impact assessed.
     1. The client then must contact BSDR to create with a bespoke solution to assessing the impact of their work.
     1. The client will then wait for the report which will detail drivers of change, the client can then themselves determine the impact of their work done.
+    1. The client will also receive a log in for our product so they can see a dynamic version of the visualisation of the drivers of change.
     1. Alternative path would be being a client that doesn't need to assess impact of specific work, but would make use of already documented drivers of change. 
 
 -----
 
 ### Main Goal
 
-The main goal of the project is to decrease the time and effort needed to create visualisations for causal chain analysis. In order to achieve this, we need to provide a web applicationn.
+The main goal of the project is to decrease the time and effort needed to create visualisations for causal chain analysis. The current method
+of using MicroStrategy is slow, clunky and produces a low quality visualisation. Additionally there is no way of saving the visualisation between
+sessions, meaning progress is lost, this progress is also reset when filtering by respondent count. 
+In order to achieve this, we need to provide a web application.
 
 We will take the following steps to achieve this goal:
 - Allow user to upload projects in the form of csv files
@@ -73,10 +77,10 @@ Cases of exceptional **(e)** or alternative **(a)** flow include:
 
 ### Non-functional requirements
 1. User Interface
-    1. Use of all features of the program can be learnt within 1 hour from a guide
+    1. Use of all features of the program can be learnt in at most 5-10 minutes, due to its similarity of the clients previous system MicroStrategy.
     1. The general flow of drivers to outcomes in the visualisation will be left to right
 1. Maintainability & Extendability
-    1. The data strucutre for each node will allow any number of nodes to be implemented in a graph
+    1. The data structure for each node will allow any number of nodes to be implemented in a graph
 1. Security
     1. Standard security protocols will be used to retrieve data from MySql database
     1. Exportation of the visualisations will be accompanied with a checksum(MD5) for safe file sharing
