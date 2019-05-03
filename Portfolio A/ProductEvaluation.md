@@ -15,18 +15,18 @@ While in these meeting we were about to conduct our own evaluation, both by a qu
 observing how the client used the product.
 
 We decided on a questionnaire because our client was already telling us most of what they thought the product was missing. 
-Therefore by a questionnaire and with help from observations we could find ways in which to improve the product in ways that they hadn't originally imagined. For instance, 
+Therefore, by a questionnaire and with help from observations we could find ways in which to improve the product in ways that they hadn't originally imagined. For instance, 
 we wanted to find out how technically minded the current users of our product were and how they were coping with understanding how to use it
 , to ensure that future users wouldn't have problems getting to grips with our product. 
 
 When designing our questionnaire, we had to consider how much we could trust our findings, which meant we had to 
-design a questionnaire that didnt lead our client to answer that wasn't necessarily true, or was loaded and put them in a difficult position.
-For example it would have been wrong to ask them if the product was easy to use, as this would put them in a difficult position.
+design a questionnaire that didn't lead our client to answer that wasn't necessarily true or was loaded and put them in a difficult position.
+For example, it would have been wrong to ask them if the product was easy to use, as this would put them in a difficult position.
 Alternatively, we had to find this out ourselves, we accomplished this by task-based evaluation. We gave our clients a specific 
 task and observed how they handled it.
 
 After all the feedback we would continue developing the product, and make the changes requested as well as reflecting on the feedback
-to determine if there was things not requested that needed changing, for instance, usability. We would then repeat this process to ensure 
+to determine if there were things not requested that needed changing, for instance, usability. We would then repeat this process to ensure 
 the client for completely content with the product. 
 
 ####Questionnaire
@@ -43,28 +43,31 @@ the client for completely content with the product.
 
 
 ### 1st Feedback
--   all knew how to use programs basically and had the ability to work things out, but said they were not technically minded, 
-but refereeing to knowing the back end of things.
--   Based of their use, the usability was great
--   Wanted
-    -   silder, filtering based on node weight
-    -   Data protection, safe access to database, user permission 
-    -   outcome various numbers (edge cases)
-    -   document/user guide
-    -   export vis
+In our first round of evaluation, we were able to find out that our clients were not that technically minded, but could
+use basic programs. When using our product, they were easily able to complete the tasks we asked. Therefore, we felt
+the usability was great, any future users of our product should have no problems using it no matter their skill level. 
 
+Our clients also fed back to us some features that were missing from our product. They needed a slider so that they could
+filter the graph based on the weight of the nodes. This was then implemented into the system, but we were unable to fulfil
+their other request of displaying the node weight due to some issue with the D3 library, however the client was able to work
+around this. They also needed to make sure the data was protected; this issue was solved by enabling the client to make 
+separate accounts on the product.
 
 ### 2nd Feedback
--   doesn't work with large file sizes
--   seperate dataset, to drivers and outcomes
--   citation count/value on edges
--   delete rename project
--   select all/ deselect all for dataset
--   finish up user guide
--   nodes without outline, or smaller text to avoid overlapping
--   exporting visualisation 
+Our final round of evaluation was to ensure we were handing off a polished product to the client. After some more testing 
+on their side, they had discovered the product could only handle files up to a certain size, meaning they were unable to 
+upload some project. Even though they could screenshot the visualisation, which would render better quality than they
+previously had, they wanted to have a button that exported the visualisation. These features along with a few other minor 
+changes were added. However, there were still some things they'd have liked implemented that we were unable to do, 
+but the product delivered addressed all the original requirements. 
+In the end the client said they were very happy with the product, and showed us that they were already using it to present to
+their own clients.
 
--   happy that vis kept shape
--   already used product to prepare for presentations with their own clients
+
+
+
+
+
+
 
 
