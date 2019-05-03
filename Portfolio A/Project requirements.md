@@ -55,25 +55,26 @@ We will take the following steps to achieve this goal:
 - Provide intuitive UI as outlined in the requirements
 
 Cases of exceptional **(e)** or alternative **(a)** flow include:
-- `e` Trying to create a visualisation before importing data. This will result in a message informing the user to first import some data  
-- `e` Trying to export a visualisation before importing data will be handled as above
+- `e` Trying to create a project without a name, missing files, or non .csv files will result in an error message informing the user to correct what they've done wrong.
+- `a` Using the product not to create and export a visualisation, but to create one, and then allow the client to log in to view a dynamic version of the visualisation.
 - `a` Exporting data before creating a visualisation. This will create a visualisation the export it, without giving the user the chance to edit node positions
 
 ----
 
 ### Functional requirements
 1. Loading and storing data:
-    1. data is loaded from a mySQL database
+    1. data is loaded from two uploaded .csv files, named maintable and sankey.
     1. data is represented internally as a graph structure that connects drivers to outcomes using weighted edges
 1. Manipulating the data:
-    1. edges can be filtered out of the visualisations by their weight values
-    1. nodes can be filtered out of the visualisations using their name
+    1. edges can be filtered out of the visualisations by their weight values, using a slider
+    1. nodes can be filtered out of the visualisations by their name, using checkboxes in the sidebar, under categories of outcomes and drivers.
 1. Creating visualisations:
     1. data is presented to the user as a directed, weighted graph
     1. the user can move nodes on the graph around to rearrange the visualisation
     1. a vertex can be displayed as both a driver and an outcome
 1. Exporting the visualisations:
-    1. the graph can be  exported as a static image file e.g. .png
+    1. the graph can be exported as a static image file e.g. .png
+    1. the graph can be additionally exported by sending login details to the client for them to view a dynamic version of the visualisation.
 
 ### Non-functional requirements
 1. User Interface
