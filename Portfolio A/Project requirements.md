@@ -83,12 +83,12 @@ Cases of exceptional **(e)** or alternative **(a)** flow include:
 1. Maintainability & Extendability
     1. The data structure for each node will allow any number of nodes to be implemented in a graph
 1. Security
-    1. Standard security protocols will be used to retrieve data from MySql database
-    1. Exportation of the visualisations will be accompanied with a checksum(MD5) for safe file sharing
+    1. Security will come in the form of users having their own separate account
+    1. New accounts can be created once a current user has logged in
 1. Performance
-    1. Data will be loaded from MySQL within 10 seconds on a 25Mbps network for a project with 24 interviewees (standard for QuIP methodology)
+    1. Data will be loaded from .csv files within 5 seconds.
     1. Visualisations will be created within 15 seconds for the 24 interviewees
-    1. All visualisations will be exported within 15 seconds
+    1. All visualisations will be exported within 5 seconds
 
 
 #### References
