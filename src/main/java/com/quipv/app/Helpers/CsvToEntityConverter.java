@@ -20,9 +20,10 @@ public class CsvToEntityConverter {
         String username = UserHelper.getUserName();
         List<MaintableEntity> maintableEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()),'|')) {
             String[] values = null;
-            while ((values = csvReader.readNext()) != null) {
+
+            while ((values = (String[]) csvReader.readNext()) != null) {
                 records.add(Arrays.asList(values));
             }
         }
@@ -30,7 +31,7 @@ public class CsvToEntityConverter {
             //TODO implement this
         }
 
-        records.remove(0);
+        //records.remove(0); //No Longer Using field headers
         for(List<String> record:records){
             maintableEntities.add(getMaintableEntityFromString(record,username));
         }
@@ -41,9 +42,9 @@ public class CsvToEntityConverter {
         String username = UserHelper.getUserName();
         List<SankeyEntity> sankeyEntities = new ArrayList<>();
         List<List<String>> records = new ArrayList<>();
-        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()))) {
+        try (CSVReader csvReader = new CSVReader(new InputStreamReader(file.getInputStream()),'|')) {
             String[] values = null;
-            while ((values = csvReader.readNext()) != null) {
+            while ((values = (String[]) csvReader.readNext()) != null) {
                 records.add(Arrays.asList(values));
             }
         }
@@ -51,7 +52,7 @@ public class CsvToEntityConverter {
             //TODO implement this
         }
 
-        records.remove(0);
+        // records.remove(0); // No Longer using field headers
         for(List<String> record:records){
             sankeyEntities.add(getSankeyEntityFromString(record,username));
         }
@@ -91,7 +92,14 @@ public class CsvToEntityConverter {
         String attribution = nullStringHelper(record.get(20));
         String posNegAtribution = nullStringHelper(record.get(21));
         String attributionSummary = nullStringHelper(record.get(22));
-        Integer fileinstanceId = null;
+        Integer fileinstanceId;
+
+        if (nullStringHelper(record.get(23)) != null) {
+            fileinstanceId = Integer.valueOf(nullStringHelper(record.get(23)));
+        } else {
+            //ERROR
+            fileinstanceId = -1;
+        }
         try{
             fileinstanceId = Integer.parseInt(record.get(23));
         }catch (Exception e){}
